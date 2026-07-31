@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e6f4ff;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
+section {
+    background-color: white;
+    border: 2px solid #4a90d9;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+footer {
+    background-color: #4a90d9;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+aside {
+    background-color: #4a90d9;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin: 15px;
+}
