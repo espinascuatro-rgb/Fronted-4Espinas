@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Traslado y trazablidad</title>
-    <link rel="stylesheet" href="traslados.css">
+    <title>Hospital de traslados</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <Header div="he41">
+    <Header id="headertrastaldo">
         <h1>Hospital de clinicas</h1>
     <h2>Sistema de traslados y trazabilidad</h2>
     </Header>
-
-    <section>Buscar paciente:
+<main>
+    <section id="traslado1"> 
+        <p>Buscar paciente:</p>
     <input type="text" placeholder="Ingrese nombre o ID">
     <button>Buscar</button>
     </section>
     
-    <section>
+    <section id="traslado2">
         <h1>Datos del paciente</h1>
         <label>Nombre:</label>
         <input type="text" readonly><br><br>
@@ -31,7 +32,7 @@
         <input type="text" readonly><br><br>
     </section>
 
-<section>
+<section id="traslado3">
     <h3>Registrar traslado</h3>
 
     <label>Origen:</label>
@@ -45,8 +46,8 @@
 
     <br><br>
 
-     <label>Destino:</label>
     <select>
+             <label>Destino:</label>
         <option>Urgencias</option>
         <option>Habitacion</option>
         <option>Rayos X</option>
@@ -71,8 +72,10 @@
 
     <label>Motivo</label>
     <input type="text">
-
-    <br><br>
+    </section>
+    </main>
+</body>
+</html>
 
     <button>Registrar traslado</button>
 
