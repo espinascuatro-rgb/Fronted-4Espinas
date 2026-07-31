@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traslado y trazablidad</title>
+    <link rel="stylesheet" href="traslados.css">
+</head>
+<body>
+    <Header div="he41">
+        <h1>Hospital de clinicas</h1>
+    <h2>Sistema de traslados y trazabilidad</h2>
+    </Header>
+
+    <section>Buscar paciente:
+    <input type="text" placeholder="Ingrese nombre o ID">
+    <button>Buscar</button>
+    </section>
+    
+    <section>
+        <h1>Datos del paciente</h1>
+        <label>Nombre:</label>
+        <input type="text" readonly><br><br>
+        <Label>ID:</Label>
+        <input type="text" readonly><br><br>
+        <label>Edad:</label>
+        <input type="text" readonly><br><br>
+        <label>Habitacion:</label>
+        <input type="text" readonly><br><br>
+        <label>Estado:</label>
+        <input type="text" readonly><br><br>
+    </section>
+
+<section>
+    <h3>Registrar traslado</h3>
+
+    <label>Origen:</label>
+    <select>
+        <option>Urgencias</option>
+        <option>Habitacion</option>
+        <option>Rayos X</option>
+        <option>Laboratorio</option>
+        <option>Quirofano</option>
+    </select>
+
+    <br><br>
+
+     <label>Destino:</label>
+    <select>
+        <option>Urgencias</option>
+        <option>Habitacion</option>
+        <option>Rayos X</option>
+        <option>Laboratorio</option>
+        <option>Quirofano</option>
+    </select>
+
+    <label>Fecha:</label>
+    <input type="date">
+
+    <br><br>
+
+    <label>Hora:</label>
+    <input type="time">
+
+    <br><br>
+
+    <label>Responsable:</label>
+    <input type="Text">
+    
+    <br><br>
+
+    <label>Motivo</label>
+    <input type="text">
+
+    <br><br>
+
+    <button>Registrar traslado</button>
+
+</body>
+
+</html>
