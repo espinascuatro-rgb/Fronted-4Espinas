@@ -1,44 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital de clinicas</title>
+    <title>Iniciar Sesión - Hospital de Clínicas</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header>
-        <h1>Hospital de clinicas.</h1>
+        <div class="logo">Hospital de Clínicas</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Iniciar sesión</a></li>
+                <li><a href="registro.html">Registrarse</a></li>
+                <li><a href="guia.html">Guía del Hospital</a></li>
+                <li><a href="Tratamientos.html">Tratamientos</a></li>
+                <li><a href="encuesta.html">Encuesta</a></li>
+                <li><a href="traslado.html">Traslado de Pacientes</a></li>
+            </ul>
+        </nav>
     </header>
+
     <main>
-        <section>
-            <h2>Inicie secion: </h2>
-            <p>
-                <label for="usuario">Nombre usuario: </label>
-                <input type="text" id="usuario" name="usuario">
-            </p>
-            <p>
-                <label for="contrasena">Contraseña: </label>
-                <input type="password" id="contrasena" name="contrasena">
-            </p>
-            <p>
-                <label for="cedula">Cedula de identidad: </label>
-                <input type="text" id="cedula" name="cedula">
-            </p>
+        <section id="login">
+            <h1>Portal del Paciente</h1>
+            <h2>Iniciá sesión</h2>
+            <p>Accedé con tu usuario y cédula de identidad para gestionar tus policlínicas, ver tus tratamientos y solicitar traslados.</p>
+
+            <form action="#" method="post">
+                <p>
+                    <label for="usuario">Nombre de usuario:</label>
+                    <input type="text" id="usuario" name="usuario" autocomplete="username" required>
+                </p>
+                <p>
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" autocomplete="current-password" required>
+                </p>
+                <p>
+                    <label for="cedula">Cédula de identidad:</label>
+                    <input type="text" id="cedula" name="cedula" placeholder="Ej: 1234567-8" pattern="[0-9]{6,8}-?[0-9]?" required>
+                </p>
+                <p>
+                    <a href="#">¿Olvidaste tu contraseña?</a>
+                </p>
+                <button type="submit">Iniciar sesión</button>
+            </form>
+
+            <p>¿Todavía no tenés una cuenta?</p>
             <button><a href="registro.html">Registrate</a></button>
         </section>
-        <aside>
-            <img src="Hp.jpg" height="380" width="470">
 
-            <img src="hp2.jpg" height="380" width="470">
+        <aside>
+            <img src="Hp.jpg" height="380" width="470" alt="Fachada del Hospital de Clínicas">
+            <img src="hp2.jpg" height="380" width="470" alt="Instalaciones del Hospital de Clínicas">
+
+            <h2>¿Por qué crear tu cuenta?</h2>
+            <ul>
+                <li>Gestioná tus turnos en policlínicas desde cualquier lugar.</li>
+                <li>Consultá información sobre tus tratamientos.</li>
+                <li>Solicitá traslados entre servicios o instituciones.</li>
+                <li>Compartí tu opinión a través de nuestra encuesta de satisfacción.</li>
+            </ul>
+            <p>Conocé más en la <a href="guia.html">Guía del Hospital</a>.</p>
         </aside>
     </main>
+
     <footer>
-        <p>Hospital de clinica</p>
-        <p>Todos los derechos reservados por ...</p>
+        <p>Hospital de Clínicas "Dr. Manuel Quintela" — Universidad de la República (Udelar)</p>
+        <p>Av. Italia s/n, Montevideo, Uruguay · Central: 1953 · atencionalusuario@hc.edu.uy</p>
+        <p>Equipo 4 Espinas — Mateo Cáceres, Dominicke Álvarez, Emiliano Stagi, Thomas Zabala</p>
     </footer>
+
     <script src="java.js"></script>
 </body>
 

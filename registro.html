@@ -1,47 +1,88 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital de clinicas</title>
+    <title>Registro - Hospital de Clínicas</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header>
-        <h1>Hospital de clinicas.</h1>
+        <div class="logo">Hospital de Clínicas</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Iniciar sesión</a></li>
+                <li><a href="registro.html">Registrarse</a></li>
+                <li><a href="guia.html">Guía del Hospital</a></li>
+                <li><a href="Tratamientos.html">Tratamientos</a></li>
+                <li><a href="encuesta.html">Encuesta</a></li>
+                <li><a href="traslado.html">Traslado de Pacientes</a></li>
+            </ul>
+        </nav>
     </header>
+
     <main>
-        <section>
-            <h2>Registro: </h2>
-            <p>
-                <label for="nombre">Nombre de usuario: </label>
-                <input type="nombre">
-            </p>
-            <p>
-                <label for="Contrasena1">Escribe una contraseña: </label>
-                <input type="Contrasena1">
-            </p>
-            <p>
-                <label for="contra2">Confirma la contraseña: </label>
-                <input type="contra2">
-            </p>
-            <p>
-                <label for="Cedula">Escribe tu cedula: </label>
-                <input type="Cedula">
-            </p>
-            <button><a href="index.html">Inicia secion</a></button>
+        <section id="registro">
+            <h1>Registro de Paciente</h1>
+            <h2>Creá tu cuenta</h2>
+            <p>Completá tus datos para acceder al portal del paciente y gestionar tus consultas, tratamientos y traslados.</p>
+
+            <form action="#" method="post">
+                <p>
+                    <label for="nombre">Nombre de usuario:</label>
+                    <input type="text" id="nombre" name="nombre" autocomplete="username" required>
+                </p>
+                <p>
+                    <label for="contrasena1">Escribe una contraseña:</label>
+                    <input type="password" id="contrasena1" name="contrasena1" autocomplete="new-password" minlength="8" required>
+                </p>
+                <p>
+                    <label for="contra2">Confirmá la contraseña:</label>
+                    <input type="password" id="contra2" name="contra2" autocomplete="new-password" minlength="8" required>
+                </p>
+                <p>
+                    <label for="cedula">Escribe tu cédula de identidad:</label>
+                    <input type="text" id="cedula" name="cedula" placeholder="Ej: 1234567-8" pattern="[0-9]{6,8}-?[0-9]?" required>
+                </p>
+                <p>
+                    <label for="correo">Correo electrónico:</label>
+                    <input type="email" id="correo" name="correo" autocomplete="email" required>
+                </p>
+                <p>
+                    <label for="terminos">
+                        <input type="checkbox" id="terminos" name="terminos" required>
+                        Acepto los términos y condiciones del Hospital de Clínicas.
+                    </label>
+                </p>
+                <button type="submit">Registrarme</button>
+            </form>
+
+            <p>¿Ya tenés una cuenta?</p>
+            <button><a href="index.html">Iniciá sesión</a></button>
         </section>
+
         <aside>
-            <img src="hp2.jpg" height="380" width="470"> 
-            <img src="Hp.jpg"  height="380" width="470">
+            <img src="hp2.jpg" height="380" width="470" alt="Instalaciones del Hospital de Clínicas">
+            <img src="Hp.jpg" height="380" width="470" alt="Fachada del Hospital de Clínicas">
+
+            <h2>Beneficios de registrarte</h2>
+            <ul>
+                <li>Agenda de policlínicas y seguimiento de turnos.</li>
+                <li>Acceso a información de tus tratamientos.</li>
+                <li>Solicitud de traslados de pacientes en línea.</li>
+                <li>Posibilidad de completar la encuesta de satisfacción.</li>
+            </ul>
         </aside>
     </main>
+
     <footer>
-        <p>Hospital de clinica</p>
-        <p>Todos los derechos reservados por ...</p>
+        <p>Hospital de Clínicas "Dr. Manuel Quintela" — Universidad de la República (Udelar)</p>
+        <p>Av. Italia s/n, Montevideo, Uruguay · Central: 1953 · atencionalusuario@hc.edu.uy</p>
+        <p>Equipo 4 Espinas — Mateo Cáceres, Dominicke Álvarez, Emiliano Stagi, Thomas Zabala</p>
     </footer>
+
     <script src="java.js"></script>
 </body>
 

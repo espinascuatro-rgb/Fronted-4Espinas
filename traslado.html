@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traslado de Pacientes - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">Hospital de Clínicas</div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Iniciar sesión</a></li>
+            <li><a href="registro.html">Registrarse</a></li>
+            <li><a href="guia.html">Guía del Hospital</a></li>
+            <li><a href="Tratamientos.html">Tratamientos</a></li>
+            <li><a href="encuesta.html">Encuesta</a></li>
+            <li><a href="traslado.html">Traslado de Pacientes</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="container">
+    <section id="intro">
+        <h1>Servicio de Traslado de Pacientes</h1>
+        <p>
+            El Hospital de Clínicas cuenta con un servicio de coordinación de
+            traslados para garantizar que los pacientes se movilicen de forma
+            segura entre servicios internos, hacia otras instituciones de salud
+            o hacia su domicilio, según las indicaciones médicas correspondientes.
+        </p>
+    </section>
+
+    <section id="tipos">
+        <h2>Tipos de Traslado</h2>
+
+        <article class="servicio-item">
+            <h3>Traslados de Emergencia</h3>
+            <p>Movilización inmediata de pacientes en situación crítica, coordinada con el Departamento de Emergencia y equipos de soporte vital.</p>
+        </article>
+
+        <article class="servicio-item">
+            <h3>Traslados Programados</h3>
+            <p>Traslados agendados con anticipación para estudios, procedimientos o consultas en policlínicas, dentro del propio Hospital o hacia centros externos.</p>
+        </article>
+
+        <article class="servicio-item">
+            <h3>Traslados Interinstitucionales</h3>
+            <p>Derivación de pacientes entre el Hospital de Clínicas y otras instituciones de salud (públicas o privadas), habitualmente para procedimientos de alta complejidad o continuidad de tratamiento.</p>
+        </article>
+
+        <article class="servicio-item">
+            <h3>Traslados para Pacientes del Interior</h3>
+            <p>Coordinación de traslado y alojamiento (Hotel de Pacientes) para quienes llegan desde el interior del país a realizar tratamientos prolongados, como radioterapia u oncología.</p>
+        </article>
+    </section>
+
+    <section id="requisitos">
+        <h2>Requisitos para Solicitar un Traslado</h2>
+        <ul>
+            <li>Orden o indicación médica que justifique el traslado.</li>
+            <li>Cédula de identidad del paciente.</li>
+            <li>Datos de contacto de un familiar o acompañante responsable.</li>
+            <li>Información del centro de origen y destino, si corresponde.</li>
+        </ul>
+    </section>
+
+    <section id="video">
+        <h2>Conocé Cómo Funciona el Traslado</h2>
+        <div class="video-grid">
+            <div class="video-card">
+                <h3>Coordinación de traslados en el Hospital de Clínicas</h3>
+                <iframe src="https://www.youtube.com/embed/hrE0miD4uGg" title="Servicio de traslado de pacientes - Hospital de Clínicas" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section id="formulario">
+        <h2>Solicitar un Traslado</h2>
+        <form action="#" method="post">
+            <p>
+                <label for="nombre_paciente">Nombre completo del paciente:</label>
+                <input type="text" id="nombre_paciente" name="nombre_paciente" required>
+            </p>
+            <p>
+                <label for="cedula_paciente">Cédula de identidad:</label>
+                <input type="text" id="cedula_paciente" name="cedula_paciente" placeholder="Ej: 1234567-8" pattern="[0-9]{6,8}-?[0-9]?" required>
+            </p>
+            <p>
+                <label for="tipo_traslado">Tipo de traslado:</label>
+                <select id="tipo_traslado" name="tipo_traslado" required>
+                    <option value="">Seleccioná una opción</option>
+                    <option value="emergencia">Traslado de emergencia</option>
+                    <option value="programado">Traslado programado</option>
+                    <option value="interinstitucional">Traslado interinstitucional</option>
+                    <option value="interior">Traslado para paciente del interior</option>
+                </select>
+            </p>
+            <p>
+                <label for="origen">Servicio o institución de origen:</label>
+                <input type="text" id="origen" name="origen" required>
+            </p>
+            <p>
+                <label for="destino">Destino:</label>
+                <input type="text" id="destino" name="destino" required>
+            </p>
+            <p>
+                <label for="fecha_traslado">Fecha solicitada:</label>
+                <input type="date" id="fecha_traslado" name="fecha_traslado" required>
+            </p>
+            <p>
+                <label for="motivo">Motivo del traslado:</label><br>
+                <textarea id="motivo" name="motivo" rows="4" cols="40" placeholder="Indicá brevemente el motivo médico del traslado" required></textarea>
+            </p>
+            <p>
+                <label for="contacto">Teléfono de contacto:</label>
+                <input type="tel" id="contacto" name="contacto" required>
+            </p>
+            <button type="submit">Enviar Solicitud</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <p>Hospital de Clínicas "Dr. Manuel Quintela" — Universidad de la República (Udelar)</p>
+    <p>Av. Italia s/n, Montevideo, Uruguay · Central: 1953 · atencionalusuario@hc.edu.uy</p>
+    <p>Equipo 4 Espinas — Mateo Cáceres, Dominicke Álvarez, Emiliano Stagi, Thomas Zabala</p>
+</footer>
+
+</body>
+</html>

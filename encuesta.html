@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Satisfacción - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <div class="logo">Hospital de Clínicas</div>
+    <nav>
+        <ul>
+            <li><a href="index.html">Iniciar sesión</a></li>
+            <li><a href="registro.html">Registrarse</a></li>
+            <li><a href="guia.html">Guía del Hospital</a></li>
+            <li><a href="Tratamientos.html">Tratamientos</a></li>
+            <li><a href="encuesta.html">Encuesta</a></li>
+            <li><a href="traslado.html">Traslado de Pacientes</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="container">
+    <section id="intro">
+        <h1>Encuesta de Satisfacción del Paciente</h1>
+        <p>
+            Tu opinión nos ayuda a mejorar la calidad de la atención que brindamos.
+            El Hospital de Clínicas "Dr. Manuel Quintela" utiliza esta encuesta para
+            evaluar de forma continua sus servicios asistenciales, administrativos
+            y de infraestructura, y así fortalecer su compromiso con la calidad
+            asistencial y la mejora continua.
+        </p>
+    </section>
+
+    <section id="que-evaluamos">
+        <h2>¿Qué evaluamos?</h2>
+        <ul>
+            <li><strong>Atención médica:</strong> trato del personal médico y de enfermería.</li>
+            <li><strong>Tiempos de espera:</strong> en policlínicas, emergencia y estudios.</li>
+            <li><strong>Instalaciones:</strong> comodidad, limpieza y accesibilidad.</li>
+            <li><strong>Atención administrativa:</strong> agenda, registro y atención al usuario.</li>
+            <li><strong>Información recibida:</strong> claridad sobre diagnósticos y tratamientos.</li>
+            <li><strong>Alimentación y hotelería:</strong> en internación y en el Hotel de Pacientes.</li>
+        </ul>
+    </section>
+
+    <section id="video">
+        <h2>Nuestro Compromiso con la Calidad</h2>
+        <p>Conocé cómo el Hospital trabaja para mejorar la experiencia de sus pacientes a partir de sus comentarios.</p>
+        <div class="video-grid">
+            <div class="video-card">
+                <h3>Compromiso institucional con la calidad asistencial</h3>
+                <iframe src="https://www.youtube.com/embed/6ftBT7RPCDU" title="Compromiso con la calidad asistencial - Hospital de Clínicas" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <section id="formulario">
+        <h2>Completá tu Encuesta</h2>
+        <form action="#" method="post">
+            <p>
+                <label for="servicio">Servicio o policlínica que utilizaste:</label>
+                <input type="text" id="servicio" name="servicio" placeholder="Ej: Cardiología, Emergencia, CTI..." required>
+            </p>
+            <p>
+                <label for="fecha">Fecha de atención:</label>
+                <input type="date" id="fecha" name="fecha" required>
+            </p>
+
+            <fieldset>
+                <legend>Calificá los siguientes aspectos (1 = Muy malo, 5 = Excelente)</legend>
+
+                <p>
+                    Atención médica:
+                    <label><input type="radio" name="atencion_medica" value="1" required> 1</label>
+                    <label><input type="radio" name="atencion_medica" value="2"> 2</label>
+                    <label><input type="radio" name="atencion_medica" value="3"> 3</label>
+                    <label><input type="radio" name="atencion_medica" value="4"> 4</label>
+                    <label><input type="radio" name="atencion_medica" value="5"> 5</label>
+                </p>
+
+                <p>
+                    Tiempo de espera:
+                    <label><input type="radio" name="tiempo_espera" value="1" required> 1</label>
+                    <label><input type="radio" name="tiempo_espera" value="2"> 2</label>
+                    <label><input type="radio" name="tiempo_espera" value="3"> 3</label>
+                    <label><input type="radio" name="tiempo_espera" value="4"> 4</label>
+                    <label><input type="radio" name="tiempo_espera" value="5"> 5</label>
+                </p>
+
+                <p>
+                    Instalaciones y limpieza:
+                    <label><input type="radio" name="instalaciones" value="1" required> 1</label>
+                    <label><input type="radio" name="instalaciones" value="2"> 2</label>
+                    <label><input type="radio" name="instalaciones" value="3"> 3</label>
+                    <label><input type="radio" name="instalaciones" value="4"> 4</label>
+                    <label><input type="radio" name="instalaciones" value="5"> 5</label>
+                </p>
+
+                <p>
+                    Atención administrativa:
+                    <label><input type="radio" name="atencion_admin" value="1" required> 1</label>
+                    <label><input type="radio" name="atencion_admin" value="2"> 2</label>
+                    <label><input type="radio" name="atencion_admin" value="3"> 3</label>
+                    <label><input type="radio" name="atencion_admin" value="4"> 4</label>
+                    <label><input type="radio" name="atencion_admin" value="5"> 5</label>
+                </p>
+            </fieldset>
+
+            <p>
+                <label for="comentarios">Comentarios y sugerencias:</label><br>
+                <textarea id="comentarios" name="comentarios" rows="5" cols="40" placeholder="Contanos tu experiencia..."></textarea>
+            </p>
+
+            <p>
+                <label>
+                    <input type="checkbox" id="anonimo" name="anonimo">
+                    Enviar de forma anónima
+                </label>
+            </p>
+
+            <button type="submit">Enviar Encuesta</button>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <p>Hospital de Clínicas "Dr. Manuel Quintela" — Universidad de la República (Udelar)</p>
+    <p>Av. Italia s/n, Montevideo, Uruguay · Central: 1953 · atencionalusuario@hc.edu.uy</p>
+    <p>Equipo 4 Espinas — Mateo Cáceres, Dominicke Álvarez, Emiliano Stagi, Thomas Zabala</p>
+</footer>
+
+</body>
+</html>
