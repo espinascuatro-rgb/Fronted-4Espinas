@@ -1,8 +1,11 @@
 body {
-    font-family: Arial, sans-serif;
+
     background-color: #e6f4ff;
 }
-
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', Arial, sans-serif;
+}
 .mainsesion {
     display: grid;
     grid-template-columns: 1fr 2fr;
@@ -12,6 +15,8 @@ body {
 .sectionsesion {
     background-color: white;
     border: 2px solid #0400f9;
+    box-shadow: 0 2px 4px rgb(0, 149, 255);
+    color: rgb(0, 13, 129);
     border-radius: 8px;
     padding: 15px;
 }
@@ -46,12 +51,34 @@ footer {
     text-align: center;
 }
 label {
-  display: inline-block;
-  width: 160px; 
+  color: #0032fa;
+  font-weight: 600;
+  font-size: 14px;
+  display: block;
+  margin-bottom: 6px;
 }
 
 input {
-  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 15px;
+  color: #1251ff;
+  background-color: #ffffff;
+  border: 2px solid #0015ff;
+  box-shadow: 0 2px 4px rgb(0, 149, 255);
+  border-radius: 8px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+input::placeholder {
+  color: #005eff;
 }
 #Headerguia {
     background-color: #4a90d9;
@@ -77,6 +104,8 @@ input {
 #sectionguia {
     background-color: white;
     border: 2px solid #0400f9;
+    box-shadow: 0 2px 4px rgb(0, 149, 255);
+    color: rgb(0, 13, 129);
     border-radius: 8px;
     padding: 15px;
     margin: 15px;
@@ -84,6 +113,8 @@ input {
 #sectionguia2 {
     background-color: white;
     border: 2px solid #0400f9;
+    box-shadow: 0 2px 4px rgb(0, 149, 255);
+    color: rgb(0, 13, 129);
     border-radius: 8px;
     padding: 15px;
     margin: 15px;
@@ -91,6 +122,7 @@ input {
 #asideguia {
     background-color: #4a90d9;
     background: linear-gradient(to right, #0e0477, #004cc7);
+    box-shadow: 0 4px 7px rgb(0, 149, 255);
     color: white;
     padding: 20px;
     text-align: center;
@@ -99,4 +131,33 @@ input {
     align-items: center;
     border-radius: 8px;
     margin: 15px;
+}
+button {
+  background-color: #63dcfd;
+  background: linear-gradient(to right, #0040ff, #000dff);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border: 2px solid #0522ff;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 7px rgb(12, 110, 248);
+  transition: all 0.2s ease-in-out;
+}
+button:hover {
+  background-color: #3dc8fa;
+  background: linear-gradient(to right, #287cf3, #1943ff);
+  box-shadow: 0 6px 8px rgba(0, 143, 253, 0.581);
+  transform: translateY(-2px);
+}
+button:active {
+  background-color: #61a0ff;
+  background: linear-gradient(to right, #3dc8fa, #61a0ff);
+  box-shadow: 0 2px 4px rgba(0, 247, 255, 0.2);
+  transform: translateY(1px);
+}
+a {
+  color: #ffffff;
+  text-decoration: none;
 }
