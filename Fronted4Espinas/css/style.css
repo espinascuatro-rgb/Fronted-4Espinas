@@ -31,6 +31,9 @@ footer {
 }
 
 .asidesesion {
+    display: flex;
+    align-items: center; 
+    gap: 20px; 
     background-color: #4a90d9;
     background: linear-gradient(to right, #0e0477, #004cc7);
     color: white;
@@ -42,7 +45,13 @@ footer {
     border-radius: 8px;
     margin: 15px;
 }
+img {
+    border-radius: 8px;
+}
 .headersesion {
+    display: flex;
+    align-items: center; 
+    gap: 20px; 
     background-color: #4a90d9;
     background: linear-gradient(to right, #0e0477, #004cc7);
     color: white;
@@ -81,6 +90,9 @@ input::placeholder {
   color: #005eff;
 }
 #Headerguia {
+    display: flex;
+    align-items: center; 
+    gap: 20px; 
     background-color: #4a90d9;
     background: linear-gradient(to right, #0e0477, #004cc7);
     color: white;
@@ -120,6 +132,11 @@ input::placeholder {
     margin: 15px;
 }
 #asideguia {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;     
+    gap: 20px;               
+    padding: 20px;
     background-color: #4a90d9;
     background: linear-gradient(to right, #0e0477, #004cc7);
     box-shadow: 0 4px 7px rgb(0, 149, 255);
@@ -130,6 +147,14 @@ input::placeholder {
     justify-content: center;
     align-items: center;
     border-radius: 8px;
+    margin: 15px;
+}
+video {
+    border-radius: 8px;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 4px 7px rgb(0, 149, 255);
+    border: 2px solid #0015ff;
     margin: 15px;
 }
 button {
@@ -160,4 +185,12 @@ button:active {
 a {
   color: #ffffff;
   text-decoration: none;
+}
+.logo {
+  background-color: #ffffff; 
+  background: linear-gradient(to right, #e6e4ff, #c3c3ff);
+  padding: 10px;             
+  border-radius: 8px;        
+  max-height: 90px;          
+  width: auto;               
 }
