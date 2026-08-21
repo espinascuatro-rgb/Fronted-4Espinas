@@ -187,10 +187,16 @@ a {
   text-decoration: none;
 }
 .logo {
-  background-color: #ffffff; 
-  background: linear-gradient(to right, #e6e4ff, #c3c3ff);
   padding: 10px;             
   border-radius: 8px;        
-  max-height: 90px;          
+  max-height: 100px;          
   width: auto;               
+}
+#bodyguia {
+    background-image: url('Noche-Hospital.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
 }
