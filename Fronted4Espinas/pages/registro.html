@@ -16,23 +16,44 @@
     <main class="mainsesion">
         <section class="sectionsesion">
             <h2>Registro: </h2>
+            <form action="insercion.php" method="POST">
             <p>
                 <label for="nombre">Nombre de usuario: </label>
-                <input type="nombre">
+                <input type="text" id="nombre" name="nombre" required>
+            </p>
+                        <p>
+                <label for="telefono">Numero de telefono: </label>
+                <input type="text" id="telefono" name="telefono">
+            </p>
+                        <p>
+                <label for="direccion">Direccion:  </label>
+                <input type="text" id="direccion" name="direccion">
+            </p>
+                        <p>
+                <label for="CdS">Carnet de salud:  </label>
+                <input type="text" id="CdS" name="CdS">
+            </p>
+            <p>
+                <label for="credencial">credenciales:  </label>
+                <input type="password" id="credencial" name="credencial" required>
             </p>
             <p>
                 <label for="Contrasena1">Escribe una contraseña: </label>
-                <input type="Contrasena1">
+                <input type="password" id="Contrasena1" name="Contrasena1" required>
             </p>
+            <!-- 
             <p>
                 <label for="contra2">Confirma la contraseña: </label>
-                <input type="contra2">
+                <input type="password" id="contra2" name="contra2" required>
             </p>
+            -->
             <p>
-                <label for="Cedula">Escribe tu cedula: </label>
-                <input type="Cedula">
+                <label for="cedula">Escribe tu cedula: </label>
+                <input type="text" id="cedula" name="cedula" required>
             </p>
-            <button><a href="index.html">Inicia secion</a></button>
+            <button type="submit">Registrar</button>
+            </form>
+           <!-- <button><a href="index.html">Inicia secion</a></button> -->
         </section>
         <aside class="asidesesion">
            <img src="Ejemplo-Hospital.jpg" height="380" width="470">
