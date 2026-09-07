@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['autenticado']) || $_SESSION['autenticado'] !== true) {
+    header("Location: index.html");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,6 +20,7 @@
     <header id="Headerguia" class="encabezado-app">
         <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
         <h1>Hospital de Clínicas "Dr. Manuel Quintela" </h1>
+        <p><center>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?> </center></p>
         <nav class="nav-app">
             <a href="../pages/guia.html" class="activo">Inicio</a>
             <a href="../pages/tratamientos.html">Pacientes</a>
@@ -48,6 +57,7 @@
     </main>
     <footer id="footerguia" class="pie-app">
         <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
+        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 </body>
 
