@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajustes de Perfil</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="encabezado-app">
+        <h1>Panel de Ajustes</h1>
+        <nav class="nav-app">
+            <a href="guia.html">Inicio</a>
+            <a href="ajustes.html" class="activo">Ajustes</a>
+        </nav>
+    </header>
+    <main>
+        <section class="tarjeta" style="max-width: 600px; margin: 0 auto; width: 100%;">
+            <h2 style="color: var(--azul-marino);">Mis Datos de Perfil</h2>
+            
+            <label for="ajuste-nombre">Nombre Completo:</label>
+            <input type="text" id="ajuste-nombre" value="Ejemplo Ejemplar" readonly>
+
+            <label for="ajuste-correo">Correo Electrónico Institucional:</label>
+            <input type="email" id="ajuste-correo" value="ejemplo@xd">
+
+            <label for="ajuste-pass">Nueva Contraseña:</label>
+            <input type="password" id="ajuste-pass" placeholder="No rellenes si no queres cambiar">
+
+            <hr>
+            <h3 style="color: var(--azul-medio);">Preferencias del Sistema</h3>
+            <label for="notificaciones">Notificaciones (ejemplo):</label>
+            <select id="notificaciones">
+                <option>Activar notificaciones</option>
+                <option>Mostrar algunas notificciones</option>
+                <option>No mostrar notificaciones</option>
+            </select>
+
+            <button class="btn-primary" style="margin-top: 20px;">Guardar Cambios</button>
+            <button class="btn-secondary" style="margin-top: 20px;"><a href="../index.html">Cerrar Sesión</a></button>
+        </section>
+    </main>
+</body>
+</html>
