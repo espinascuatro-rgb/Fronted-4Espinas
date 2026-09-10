@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,10 +15,10 @@
             <h2>Trazabilidad de Pacientes y Ambulancias</h2>
         </div>
         <nav class="nav-app">
-            <a href="../pages/guia.html">Inicio</a>
-            <a href="../pages/tratamientos.html">Pacientes</a>
-            <a href="../pages/traslados.html">Ambulancias</a>
-            <a href="../pages/ajustes.html">Ajustes</a>
+            <a href="../pages/guia.php">Inicio</a>
+            <a href="../pages/tratamientos.php">Pacientes</a>
+            <a href="../pages/traslados.php">Ambulancias</a>
+            <a href="../pages/ajustes.php">Ajustes</a>
         </nav>
     </header>
     <main>
@@ -45,6 +46,7 @@
     </main>
     <footer class="pie-app">
         <p>Equipo 4 Espinas</p>
+        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 </body>
 </html>

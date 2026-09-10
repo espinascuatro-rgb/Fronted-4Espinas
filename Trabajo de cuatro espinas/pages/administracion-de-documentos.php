@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

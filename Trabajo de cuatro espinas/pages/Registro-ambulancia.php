@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -81,6 +82,7 @@
     <footer>
         <p>Hospital de clínicas</p>
         <p>Todos los derechos reservados por Equipo 4 Espinas</p>
+        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 </body>
 </html>

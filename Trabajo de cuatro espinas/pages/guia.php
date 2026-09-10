@@ -1,11 +1,4 @@
-<?php
-session_start();
-
-if (!isset($_SESSION['autenticado']) || $_SESSION['autenticado'] !== true) {
-    header("Location: index.html");
-    exit();
-}
-?>
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,39 +13,39 @@ if (!isset($_SESSION['autenticado']) || $_SESSION['autenticado'] !== true) {
     <header id="Headerguia" class="encabezado-app">
         <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
         <h1>Hospital de Clínicas "Dr. Manuel Quintela" </h1>
-        <p><center>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?> </center></p>
+        <p>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></p>
         <nav class="nav-app">
-            <a href="../pages/guia.html" class="activo">Inicio</a>
-            <a href="../pages/tratamientos.html">Pacientes</a>
-            <a href="../pages/traslados.html">Ambulancias</a>
-            <a href="../pages/ajustes.html">Ajustes</a>
+            <a href="../pages/guia.php" class="activo">Inicio</a>
+            <a href="../pages/tratamientos.php">Pacientes</a>
+            <a href="../pages/traslados.php">Ambulancias</a>
+            <a href="../pages/ajustes.php">Ajustes</a>
         </nav>
     </header>
     <main id="mainguia">
         <section id="sectionguia">
             <h2>Guía para los pacientes</h2>
             <p>Obten una guía detallada de los servicios que brindamos</p>
-            <button class="btn-primary"><a href="../pages/tratamientos.html">Registros</a></button>
+            <button class="btn-primary"><a href="../pages/tratamientos.php">Registros</a></button>
              <h2>Administra documentos </h2>
             <p>Si eres funcionarios puedes cargar archivos</p>
-            <button class="btn-secondary" style="margin-top: 10px;"><a href="../pages/administracion-de-documentos.html">Ver Documentos</a></button>
+            <button class="btn-secondary" style="margin-top: 10px;"><a href="../pages/administracion-de-documentos.php">Ver Documentos</a></button>
         </section>
         <section id="sectionguia2">
             <h2>Trazabilidad ambulancia</h2>
              <p>Mira el estado actual de los traslados y las antiguas peticiones</p>
-            <button class="btn-primary"><a href="../pages/trazabilidad.html">Redirijete aqui</a></button>
+            <button class="btn-primary"><a href="../pages/trazabilidad.php">Redirijete aqui</a></button>
             <h2>Visualización en el mapa</h2>
             <p>Mira en tiempo real todo lo que esta pasando</p>
-            <button class="btn-secondary" style="margin-top: 10px;"><a href="../pages/ver-ruta.html">Ver Mapa/Rutas</a></button>
+            <button class="btn-secondary" style="margin-top: 10px;"><a href="../pages/ver-ruta.php">Ver Mapa/Rutas</a></button>
         </section>
         <section id="sectionguia3">
             <h2>Registro de ambulancia</h2>
             <p>Añade los vehiculos nuevos (involucrados en traslados)</p>
-            <button class="btn-primary"><a href="../pages/registro.html">Redirijete aqui</a></button>
+            <button class="btn-primary"><a href="../pages/Registro-ambulancia.php">Redirijete aqui</a></button>
 
             <h2>Encuestas de satisfacción</h2>
             <p>Visualiza las encuestas respondidas por usuarios</p>
-            <button class="btn-secondary" style="margin-top: 10px;"><a href="../pages/encuesta.html">Resultados Encuestas</a></button>
+            <button class="btn-secondary" style="margin-top: 10px;"><a href="../pages/encuesta.php">Resultados Encuestas</a></button>
         </section>
     </main>
     <footer id="footerguia" class="pie-app">

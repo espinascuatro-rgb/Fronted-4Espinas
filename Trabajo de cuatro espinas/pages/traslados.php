@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -12,10 +13,10 @@
         <h1>Hospital de Clínicas "Dr. Manuel Quintela"</h1>
         <h2>Sistema de traslados y trazabilidad</h2>
         <nav class="nav-botonesguia">
-            <button class="btng"><a href="../pages/guia.html">Inicio</a></button>
-            <button class="btng"><a href="../pages/tratamientos.html">Pacientes</a></button>
-            <button class="btng"><a href="../pages/traslados.html">Ambulancias</a></button>
-            <button class="btng"><a href="../pages/ajustes.html">Ajustes</a></button>
+            <button class="btng"><a href="../pages/guia.php">Inicio</a></button>
+            <button class="btng"><a href="../pages/tratamientos.php">Pacientes</a></button>
+            <button class="btng"><a href="../pages/traslados.php">Ambulancias</a></button>
+            <button class="btng"><a href="../pages/ajustes.php">Ajustes</a></button>
         </nav>
     </header>
 <main>

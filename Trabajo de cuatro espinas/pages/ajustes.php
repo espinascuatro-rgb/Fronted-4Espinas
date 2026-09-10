@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -11,7 +12,7 @@
         <h1>Panel de Ajustes</h1>
         <nav class="nav-app">
             <a href="./guia.php">Inicio</a>
-            <a href="./ajustes.html" class="activo">Ajustes</a>
+            <a href="./ajustes.php" class="activo">Ajustes</a>
         </nav>
     </header>
     <main>
