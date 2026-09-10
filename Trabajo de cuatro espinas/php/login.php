@@ -2,6 +2,8 @@
 session_start();
 require_once 'conexion.php';
 
+header('Content-Type: application/json');
+
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -10,7 +12,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cedula      = $_POST['cedula'] ?? '';
 
     if (empty($usuario) || empty($contrasenia) || empty($cedula)) {
-        echo "Por favor, completa todos los campos.";
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Por favor, completa todos los campos.'
+        ]);
         exit();
     }
 
@@ -33,19 +38,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['usuario_nombre'] = $row['usuario'];
                 $_SESSION['autenticado']    = true;
 
-                header("Location: ../pages/guia.php"); 
+                echo json_encode([
+                    'status' => 'success',
+                    'redirect' => 'pages/guia.php'
+                ]);
                 exit();
             } else {
-                echo "Contraseña incorrecta.";
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Contraseña incorrecta.'
+                ]);
             }
         } else {
-            echo "Usuario o cédula no válidos.";
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Usuario o cédula no válidos.'
+            ]);
         }
 
         $stmt->close();
 
     } catch (mysqli_sql_exception $e) {
-        echo "Error en la autenticación: " . $e->getMessage();
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Error en la autenticación: ' . $e->getMessage()
+        ]);
     }
 }
 

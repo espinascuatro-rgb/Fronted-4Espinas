@@ -43,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (mysqli_sql_exception $exception) {
         $con->rollback();
 
-        // Respuesta JSON de ERROR
         echo json_encode([
             'status' => 'error',
             'message' => 'Error al guardar el registro: ' . $exception->getMessage()
