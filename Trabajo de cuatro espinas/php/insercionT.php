@@ -2,6 +2,8 @@
 require_once 'conexion.php';
 date_default_timezone_set('America/Montevideo');
 
+header('Content-Type: application/json');
+
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -32,11 +34,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt2->close();
 
         $con->commit();
-        echo "¡Registro de persona y funcionario guardado correctamente!";
+
+        echo json_encode([
+            'status' => 'success',
+            'message' => '¡Registro guardado correctamente!'
+        ]);
 
     } catch (mysqli_sql_exception $exception) {
         $con->rollback();
-        echo "Error al guardar el registro: " . $exception->getMessage();
+
+        // Respuesta JSON de ERROR
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Error al guardar el registro: ' . $exception->getMessage()
+        ]);
     }
 }
 
