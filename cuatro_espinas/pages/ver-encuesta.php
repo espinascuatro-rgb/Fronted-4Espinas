@@ -1,0 +1,40 @@
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Encuestas</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="encabezado-app">
+        <h2>Resultados de Encuestas de Satisfacción</h2>
+        <nav class="nav-app">
+            <a href="../pages/guia.php">Volver</a>
+        </nav>
+    </header>
+    <main>
+        <div class="video-grid"> 
+            <div class="tarjeta">
+                <h3 style="color: var(--azul-marino);">⭐⭐⭐⭐⭐ (5/5)</h3>
+                <p><strong>Traslado:</strong> TRAS-067</p>
+                <p>"El chofer era buena onda"</p>
+                <p style="font-size: 12px; color: gray;">Fecha: 24/10/2026</p>
+            </div>
+            <div class="tarjeta">
+                <h3 style="color: var(--azul-marino);">⭐⭐⭐ (3/5)</h3>
+                <p><strong>Traslado:</strong> TRAS-068</p>
+                <p>"La ambulancia se demoro banda, pero fueron cuidadosos"</p>
+                <p style="font-size: 12px; color: gray;">Fecha: 23/10/2026</p>
+            </div>
+            <div class="tarjeta">
+                <h3 style="color: var(--azul-marino);">⭐⭐⭐⭐ (4/5)</h3>
+                <p><strong>Traslado:</strong> TRAS-069</p>
+                <p>"Me falto información, pero buena atención hubo"</p>
+                <p style="font-size: 12px; color: gray;">Fecha: 22/10/2026</p>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
