@@ -14,9 +14,12 @@
     </header>
     <main>
 
-        <form action="../php/registrar_amb.php" method="POST">
+               <form action="../php/inyeccion2.php" method="POST">
             <section>
                 <h2>Registro ambulancias</h2>     
+
+                </h2>
+              <!--  
                 <h3>Datos del solicitante</h3>
                 <p>
                     <label for="nombre_solicitante">Nombre del solicitador</label>
@@ -27,7 +30,7 @@
                     <input type="text" id="telefono_solicitante" name="telefono_solicitante" required>
                 </p>
             </section>
-
+            
             <section>
                 <h3>Datos del paciente</h3>
                 <p>
@@ -43,7 +46,7 @@
                     <input type="text" id="condicion_paciente" name="condicion_paciente">
                 </p>
             </section>
-
+          
             <section>
                 <h3>Detalles del traslado</h3>
                 <p>
@@ -55,24 +58,20 @@
                     <input type="text" id="destino" name="destino" required>
                 </p>
             </section>
-
+        -->
             <section>
                 <h3>Detalles del vehículo</h3>
                 <p>
-                    <label for="id_ambulancia">Número de identificación</label>
-                    <input type="text" id="id_ambulancia" name="id_ambulancia" required>
+                    <label for="numero_de_serie">Número de identificación</label>
+                    <input type="text" id="numero_de_serie" name="numero_de_serie" required>
                 </p>
+                <p>
+                    <label for="kilometraje">Kilometraje</label>
+                    <input type="text" id="kilometraje" name="kilometraje" requiered>
+                    </p>
                 <p>
                     <label for="matricula">Matrícula</label>
                     <input type="text" id="matricula" name="matricula" required>
-                </p>
-                <p>
-                    <label for="marca_modelo">Marca y modelo del vehículo</label>
-                    <input type="text" id="marca_modelo" name="marca_modelo">
-                </p>
-                <p>
-                    <label for="tipo_ambulancia">Tipo de ambulancia</label>
-                    <input type="text" id="tipo_ambulancia" name="tipo_ambulancia">
                 </p>
               
                 <button type="submit">Registrar traslado de ambulancia</button>
