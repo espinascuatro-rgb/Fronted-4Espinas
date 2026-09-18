@@ -67,8 +67,8 @@
                 </p>
                 <p>
                     <label for="kilometraje">Kilometraje</label>
-                    <input type="text" id="kilometraje" name="kilometraje" requiered>
-                    </p>
+                    <input type="text" id="kilometraje" name="kilometraje" required>
+                </p>
                 <p>
                     <label for="matricula">Matrícula</label>
                     <input type="text" id="matricula" name="matricula" required>

@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?> // llama al script que verifica si el usuario esta verificado en la sesion.
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +13,7 @@
     <header id="Headerguia" class="encabezado-app">
         <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
         <h1>Hospital de Clínicas "Dr. Manuel Quintela" </h1>
-        <p>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></p>
+        <p>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></p> // muestra el nombre del usuario verificado en la sesion.
         <nav class="nav-app">
             <a href="../pages/guia.php" class="activo">Inicio</a>
             <a href="../pages/tratamientos.php">Pacientes</a>
