@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $sql = "SELECT f.usuario, f.contrasenia, p.cedula     //se establece una consulta para verificar datos del usuario.
+        $sql = "SELECT f.usuario, f.contrasenia, p.cedula     
                 FROM funcionario f
                 INNER JOIN persona p ON f.id_tipo = p.cedula
-                WHERE f.usuario = ? AND p.cedula = ?"; 
+                WHERE f.usuario = ? AND p.cedula = ?"; //se establece una consulta para verificar datos del usuario.
                 
         $stmt = $con->prepare($sql); //consulta preparada igual que en inserciont.
         $stmt->bind_param("ss", $usuario, $cedula);
