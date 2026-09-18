@@ -1,0 +1,33 @@
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoreo GPS - Rutas</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="encabezado-app">
+        <h1>Visualización en GPS</h1>
+        <nav class="nav-app">
+            <a href="../pages/trazabilidad.html">Volver a Trazabilidad</a>
+        </nav>
+    </header>
+    <main>
+        <section id="traslado2">
+            <h1>Detalles del traslado activo</h1>
+            <label>Unidad:</label>
+            <input type="text" value="Móvil 3" readonly>
+            <label>Chofer:</label>
+            <input type="text" value="Mateo" readonly>
+            <label>Tiempo Estimado:</label>
+            <input type="text" value="67 Minutos" readonly>
+        </section>
+
+        <section class="tarjeta">
+            <h2 style="color: var(--azul-marino);">Mapa GPS</h2>
+        </section>
+    </main>
+</body>
+</html>

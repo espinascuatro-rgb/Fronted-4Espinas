@@ -1,0 +1,45 @@
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Traslados</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="encabezado-app">
+        <h2>Últimos Traslados Realizados</h2>
+        <nav class="nav-app">
+            <a href="../pages/traslados.html">Volver a Operaciones</a>
+        </nav>
+    </header>
+    <main>
+        <div class="video-grid">
+            <section class="tarjeta" style="border-left: 5px solid green;">
+                <h3>Traslado: #068</h3>
+                <p><strong>Paciente:</strong> Dominicke</p>
+                <p><strong>Destino:</strong> Raos x</p>
+                <p><strong>Estado:</strong> Finalizado</p>
+                <p style="font-size: 13px; color: gray;">Fecha: Hoy 11:00</p>
+            </section>
+            
+            <section class="tarjeta" style="border-left: 5px solid orange;">
+                <h3>Traslado: #069</h3>
+                <p><strong>Paciente:</strong> Thomas</p>
+                <p><strong>Destino:</strong> Quirófano 3</p>
+                <p><strong>Estado:</strong> En progreso</p>
+                <p style="font-size: 13px; color: gray;">Fecha: Hoy 15:00 </p>
+            </section>
+            
+            <section class="tarjeta" style="border-left: 5px solid green;">
+                <h3>Traslado: #067</h3>
+                <p><strong>Paciente:</strong> Emiliano</p>
+                <p><strong>Destino:</strong> Habitación 402</p>
+                <p><strong>Estado:</strong> Finalizado</p>
+                <p style="font-size: 13px; color: gray;">Fecha: Hoy 10:00</p>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

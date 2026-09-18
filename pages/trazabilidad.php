@@ -1,0 +1,52 @@
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trazabilidad - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="encabezado-app">
+        <img src="../fotos-videos/Logo-Hospital.png" alt="Logo del hospital" class="logo">
+        <div>
+            <h1>Hospital de Clínicas</h1>
+            <h2>Trazabilidad de Pacientes y Ambulancias</h2>
+        </div>
+        <nav class="nav-app">
+            <a href="../pages/guia.php">Inicio</a>
+            <a href="../pages/tratamientos.php">Pacientes</a>
+            <a href="../pages/traslados.php">Ambulancias</a>
+            <a href="../pages/ajustes.php">Ajustes</a>
+        </nav>
+    </header>
+    <main>
+        <section id="traslado1"> 
+            <p>Buscar código de traslado:</p>
+            <input type="text" placeholder="Ingrese ID de traslado">
+            <button class="btn-primary">Rastrear</button>
+        </section>
+        
+        <section class="tarjeta">
+            <h2 style="color: var(--azul-marino);">Estado Actual del Traslado</h2>
+            <p><strong>Paciente:</strong> Ejemplo</p>
+            <p><strong>Vehículo:</strong> Mateo</p>
+            <p><strong>Origen:</strong> Aura</p>
+            <p><strong>Destino:</strong> Laura</p>
+            <hr>
+            <h3 style="color: var(--azul-medio);">Línea de tiempo:</h3>
+            <ul>
+                <li><strong>10:00</strong> Solicitud generada.</li>
+                <li><strong>13:00</strong> Ambulancia desplegada.</li>
+                <li><strong>15:00</strong> Paciente a bordo. (En tránsito)</li>
+                <li style="color: gray;">Llegada estimada: 22:00</li>
+            </ul>
+        </section>
+    </main>
+    <footer class="pie-app">
+        <p>Equipo 4 Espinas</p>
+        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
+    </footer>
+</body>
+</html>
