@@ -19,7 +19,7 @@
         <section class="tarjeta" style="max-width: 600px; margin: 0 auto; width: 100%;">
             <h2 style="color: var(--azul-marino);">Mis Datos de Perfil</h2>
             
-            <label for="ajuste-nombre">Nombre Completo: </label>
+            <label for="ajuste-nombre">Nombre Completo:</label>
             <input type="text" id="ajuste-nombre" value="Ejemplo Ejemplar" readonly>
 
             <label for="ajuste-correo">Correo Electrónico Institucional:</label>

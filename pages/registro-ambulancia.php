@@ -10,11 +10,11 @@
 <body>
     <header class="headersection">
         <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
-        <h1 style= "text-align: center;">Hospital de Clínicas</h1>
+        <h1>Hospital de Clínicas</h1>
     </header>
     <main>
 
-        <form action="../php/inyeccion2.php" method="POST">
+               <form action="../php/inyeccion2.php" method="POST">
             <section>
                 <h2>Registro ambulancias</h2>     
 
@@ -67,8 +67,8 @@
                 </p>
                 <p>
                     <label for="kilometraje">Kilometraje</label>
-                    <input type="text" id="kilometraje" name="kilometraje" requiered>
-                    </p>
+                    <input type="text" id="kilometraje" name="kilometraje" required>
+                </p>
                 <p>
                     <label for="matricula">Matrícula</label>
                     <input type="text" id="matricula" name="matricula" required>
@@ -81,6 +81,7 @@
     <footer>
         <p>Hospital de clínicas</p>
         <p>Todos los derechos reservados por Equipo 4 Espinas</p>
+        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// mata variables dela secion
+// mata variables de la secion
 $_SESSION = array();
 
 // mata a la secion
