@@ -1,4 +1,4 @@
-<?php require_once __DIR__ . '/../php/checksesion.php'; ?> <!-- llama al script que verifica si el usuario esta verificado en la sesion. -->
+  <!--llama al script que verifica si el usuario esta verificado en la sesion. -->
 <!DOCTYPE html>
 <html lang="en">
 

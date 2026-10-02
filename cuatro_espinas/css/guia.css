@@ -1,0 +1,31 @@
+:root {
+    --primer-color: #cfe1e4;
+    --segundo-color: #073272;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', Arial, sans-serif;
+}
+
+body {
+     display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--primer-color);
+    color: var(--segundo-color);
+}
+main {
+    display:grid;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+.sectionguia {
+    background-color: darkgreen;
+}
+.headerguia {
+    background-color: brown;
+}
+.footerguia {
+    background-color: blue;
+}
