@@ -7,19 +7,19 @@
     <title>Página de registro de ambulancias</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
-    <header class="headersection">
+<body class="bodyguia">
+    <header class="headerguia">
         <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
         <h1>Hospital de Clínicas</h1>
     </header>
-    <main>
+    <main class="mainguia">
 
                <form action="../php/inyeccion2.php" method="POST">
-            <section>
+    
                 <h2>Registro ambulancias</h2>     
 
-                </h2>
               <!--  
+                <section>
                 <h3>Datos del solicitante</h3>
                 <p>
                     <label for="nombre_solicitante">Nombre del solicitador</label>
@@ -59,7 +59,7 @@
                 </p>
             </section>
         -->
-            <section>
+            <section class="sectionR.A">
                 <h3>Detalles del vehículo</h3>
                 <p>
                     <label for="numero_de_serie">Número de identificación</label>
@@ -78,7 +78,7 @@
             </section>
         </form>
     </main>
-    <footer>
+    <footer class="footerguia">
         <p>Hospital de clínicas</p>
         <p>Todos los derechos reservados por Equipo 4 Espinas</p>
         <button><a href="../php/logout.php">Cerrar Sesión</a></button>

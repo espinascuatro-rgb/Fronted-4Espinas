@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 
-<body>
+<body class="bodyguia">
     <header id="Headerguia">
         <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
         <h1>Hospital de Clínicas "Dr. Manuel Quintela" - Encuesta de Satisfacción</h1>
@@ -20,7 +20,7 @@
         </nav>
     </header>
 
-    <main>
+    <main class="mainguia">
         <section class="sectionsesion" style="max-width: 800px; margin: 0 auto;">
             <h2>Tu opinión nos ayuda mejorar</h2>
             <p>Responde libremente y de forma critica</p>
@@ -79,7 +79,7 @@
         </section>
     </main>
 
-    <footer>
+    <footer class="footerguia">
         <button><a href="../php/logout.php">Cerrar Sesión</a></button>
         <p>Hospital de Clínicas</p>
         <p>Todos los derechos reservados por el Equipo 4 Espinas</p>
