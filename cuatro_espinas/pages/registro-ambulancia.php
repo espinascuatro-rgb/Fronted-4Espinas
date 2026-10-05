@@ -7,7 +7,7 @@
     <title>Página de registro de ambulancias</title>
     <link rel="stylesheet" href="../css/style.css">
 </head>
-<body class="bodyguia">
+<body>
     <header class="headerguia">
         <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
         <h1>Hospital de Clínicas</h1>

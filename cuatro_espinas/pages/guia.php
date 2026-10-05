@@ -1,4 +1,4 @@
-  <!--llama al script que verifica si el usuario esta verificado en la sesion. -->
+ <?php require_once __DIR__ . '/../php/checksesion.php'; ?> <!--llama al script que verifica si el usuario esta verificado en la sesion. -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,29 +23,20 @@
     </header>
     <main class="mainguia">
         <section class="sectionguia">
-            <h2>Guía para los pacientes</h2>
-            <p>Obten una guía detallada de los servicios que brindamos</p>
-            <button class="btnguiaP"><a href="../pages/tratamientos.php">Registros</a></button>
-             <h2>Administra documentos </h2>
-            <p>Si eres funcionarios puedes cargar archivos</p>
-            <button class="btnguiaS" style="margin-top: 10px;"><a href="../pages/administracion-de-documentos.php">Ver Documentos</a></button>
+            <button class="btnguia1"><a href="../pages/tratamientos.php">Registros</a></button>
+            <p>Aqui es la pagina de registro.</p>
+            <button class="btnguia2"><a href="../pages/administracion-de-documentos.php">Ver Documentos</a></button>
+            <p>Aqui par ver documentos</p>
+            <button class="btnguia3"><a href="../pages/encuesta.php">Resultados Encuestas</a></button>
+            <p>Aqui para ver los resultados de las encuestas</p>
         </section>
         <section id="sectionguia2">
-            <h2>Trazabilidad ambulancia</h2>
-             <p>Mira el estado actual de los traslados y las antiguas peticiones</p>
-            <button class="btnguiaP"><a href="../pages/trazabilidad.php">Redirijete aqui</a></button>
             <h2>Visualización en el mapa</h2>
-            <p>Mira en tiempo real todo lo que esta pasando</p>
-            <button class="btnguiaS" style="margin-top: 10px;"><a href="../pages/ver-ruta.php">Ver Mapa/Rutas</a></button>
-        </section>
-        <section id="sectionguia3">
-            <h2>Registro de ambulancia</h2>
-            <p>Añade los vehiculos nuevos (involucrados en traslados)</p>
-            <button class="btnguiaP"><a href="../pages/registro-ambulancia.php">Redirijete aqui</a></button>
+            <img src="" height="300" width="400"> <!-- Como no tenemos el mapa todavia, se deja el espacio para el con un img vacio -->
+            <button class="btnguia4"><a href="../pages/registro-ambulancia.php">Registro Ambulancia</a></button>
+            <button class="btnguia5"><a href="../pages/trazabilidad.php">Trazabilidad</a></button>
+            <button class="btnguia6"><a href="../pages/ver-ruta.php">Ver Mapa/Rutas</a></button>
 
-            <h2>Encuestas de satisfacción</h2>
-            <p>Visualiza las encuestas respondidas por usuarios</p>
-            <button class="btnguiaS" style="margin-top: 10px;"><a href="../pages/encuesta.php">Resultados Encuestas</a></button>
         </section>
     </main>
     <footer class="footerguia">
