@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <header class="headersection">
+    <header class="headerguia">
         <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
         <h1>Hospital de Clínicas</h1>
     </header>
