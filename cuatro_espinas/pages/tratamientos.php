@@ -1,0 +1,81 @@
+<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Tratamientos y Testimonios - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header id="Headerguia" class="encabezado-app">
+        <img src="../fotos-videos/Logo-Hospital.png" alt="Logo del hospital" class="logo">
+        <h1>Hospital de Clínicas "Dr. Manuel Quintela"</h1>
+        <h2>Guía de Tratamientos, Servicios y Experiencias de los Pacientes</h2>
+        <nav class="nav-app">
+            <a href="../pages/guia.php">Inicio</a>
+            <a href="../pages/tratamientos.php" class="activo">Pacientes</a>
+            <a href="../pages/traslados.php">Ambulancias</a>
+            <a href="../pages/ajustes.php">Ajustes</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <section>
+            <h2>1. Guía de los Tratamientos y Especialidades</h2>
+            <p>El Hospital de Clínicas es el hospital universitario de la Universidad de la República (Udelar) y centro de referencia nacional en procedimientos de alta complejidad en Montevideo, Uruguay.</p>
+            
+            <h3>A. Institutos de Medicina Altamente Especializada (IMAES) y Procedimientos Complejos</h3>
+            <ul>
+                <li><strong>Centro Cardiovascular Universitario:</strong> Procedimientos de angiocardiografía, hemodinamia, cirugía cardíaca y cateterismos.</li>
+                <li><strong>Centro de Nefrología:</strong> Procedimientos de hemodiálisis y trasplantes renales.</li>
+                <li><strong>Centro de Medicina Nuclear y Oncología:</strong> Tratamientos de quimioterapia, radioterapia e inmunoterapia.</li>
+            </ul>
+
+            <h3>B. Servicios de Internación y Cuidados Especiales</h3>
+            <ul>
+                <li><strong>Centro de Tratamiento Intensivo (CTI):</strong> Unidad de cuidados intensivos para pacientes críticos y cuidados intermedios.</li>
+                <li><strong>Centro de Recuperación Postanestésica:</strong> Cuidados posquirúrgicos continuos.</li>
+                <li><strong>Hospitalización (Piso 10 y otras salas):</strong> Modernos pisos de internación médica y quirúrgica.</li>
+            </ul>
+
+            <h3>C. Servicios de Diagnóstico y Tratamiento Continuo</h3>
+            <ul>
+                <li><strong>Policlínicas y Consultas Externas:</strong> Atención ambulatoria especializada (Cardiología, Gastroenterología, Infectología, Anestesiología, entre otros).</li>
+                <li><strong>Hospital de Día:</strong> Procedimientos y administración de medicamentos ambulatorios sin necesidad de pernocte.</li>
+                <li><strong>Departamento de Emergencia:</strong> Atención médica y quirúrgica de urgencias y emergencias 24/7.</li>
+                <li><strong>Hotel de Pacientes:</strong> Alojamiento temporal y confortable para pacientes derivados del interior del país mientras reciben tratamiento (como radioterapia u oncología).</li>
+            </ul>
+        </section>
+
+        <hr>
+
+        <section>
+            <h2>2. Testimonios y Experiencias de Pacientes (Vídeos de Guía)</h2>
+            <p>Conoce las vivencias en primera persona de pacientes que han realizado sus tratamientos e internaciones en el Hospital de Clínicas:</p>
+
+            <div class="video-grid">
+
+                <div class="video-card">
+                    <h3>La voz del paciente: Testimonios de Superación</h3>
+                    <p>Pacientes que realizaron tratamientos oncológicos (quimioterapia e inmunoterapia) comparten su vivencia y la atención humana recibida por los médicos y el personal.</p>
+                    <iframe src="https://www.youtube.com/embed/DmsZCjl8xDM" title="Testimonio de paciente - Hospital de Clínicas" allowfullscreen></iframe>
+                </div>
+
+                <div class="video-card">
+                    <h3>Instalaciones del Hotel de Pacientes</h3>
+                    <p>Recorrido y experiencia en el espacio acondicionado para alojar de forma digna a pacientes en tratamientos ambulatorios prolongados.</p>
+                    <iframe src="https://www.youtube.com/embed/sN9w-Bqx7vc" title="Hotel de Pacientes - Hospital de Clínicas" allowfullscreen></iframe>
+                </div>
+
+                <div class="video-card">
+                    <h3>Historias del Piso 10: Renovación e Internación</h3>
+                    <p>Vídeo conmemorativo que refleja las historias de lucha, recuperación y memoria viva de las salas de internación remodeladas.</p>
+                    <iframe src="https://www.youtube.com/embed/gqISiMsyLuQ" title="Las paredes del piso 10 - Historias de pacientes" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+    </div>
+
+</body>
+</html>
