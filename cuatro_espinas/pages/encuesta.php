@@ -20,7 +20,7 @@
         </nav>
     </header>
 
-    <main class="mainguia">
+    <main>
         <section class="sectionsesion" style="max-width: 800px; margin: 0 auto;">
             <h2>Tu opinión nos ayuda mejorar</h2>
             <p>Responde libremente y de forma critica</p>
@@ -79,7 +79,7 @@
         </section>
     </main>
 
-    <footer class="footerguia">
+    <footer>
         <button><a href="../php/logout.php">Cerrar Sesión</a></button>
         <p>Hospital de Clínicas</p>
         <p>Todos los derechos reservados por el Equipo 4 Espinas</p>

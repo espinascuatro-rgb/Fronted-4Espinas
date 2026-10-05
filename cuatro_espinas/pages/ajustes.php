@@ -8,19 +8,13 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-    <header class="headerguia">
+    <header class="encabezado-app">
         <h1>Panel de Ajustes</h1>
         <nav class="nav-app">
             <a href="./guia.php">Inicio</a>
+            <a href="./ajustes.php" class="activo">Ajustes</a>
         </nav>
     </header>
-    <aside class="ml-ajustes">
-        <h2>Opciones de Ajustes</h2>
-<a href="">Ajustes de perfil</a>
-<a href="">Preferencias del sistema</a>
-<a href="">Notificaciones</a>
-<a href="">Seguridad</a>
-    </aside>
     <main>
         <section class="tarjeta" style="max-width: 600px; margin: 0 auto; width: 100%;">
             <h2 style="color: var(--azul-marino);">Mis Datos de Perfil</h2>
@@ -47,9 +41,5 @@
             <button class="btn-secondary" style="margin-top: 20px;"><a href="../index.html">Cerrar Sesión</a></button>
         </section>
     </main>
-    <footer class="pie-app">
-        <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
-        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
-    </footer>
 </body>
 </html>
