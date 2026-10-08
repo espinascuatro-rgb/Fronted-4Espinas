@@ -11,7 +11,7 @@
     <header class="encabezado-app">
         <h1>Documentación Oficial</h1>
         <nav class="nav-app">
-            <a href="./guia.php">Inicio</a>
+            <a href="../guia.php">Inicio</a>
         </nav>
     </header>
     <main>

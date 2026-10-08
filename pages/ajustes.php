@@ -11,8 +11,8 @@
     <header class="encabezado-app">
         <h1>Panel de Ajustes</h1>
         <nav class="nav-app">
-            <a href="./guia.php">Inicio</a>
-            <a href="./ajustes.php" class="activo">Ajustes</a>
+            <a href="../guia.php">Inicio</a>
+            <a href="../ajustes.php" class="activo">Ajustes</a>
         </nav>
     </header>
     <main>
