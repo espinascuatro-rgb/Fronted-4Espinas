@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 echo json_encode([ // igual que en inserciont devuelve un json para el js.
                     'status' => 'success',
-                    'redirect' => 'pages/guia.php'
+                    'redirect' => '../Fronted-4Espinas/pages/guia.php'
                 ]);
                 exit();
             } else {
@@ -55,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'message' => 'Usuario o cédula no válidos.'
             ]);
         }
-
         $stmt->close();
 
     } catch (mysqli_sql_exception $e) {

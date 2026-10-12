@@ -1,5 +1,5 @@
 /* ==========================================================================
-   RESET BÁSICO Y ESTILOS GENERALES
+   cosas generales.
    ========================================================================== */
 * {
     box-sizing: border-box;
@@ -14,7 +14,6 @@
     min-height: 100vh;
 }
 
-/* Normalización de enlaces dentro de botones */
 a {
     text-decoration: none;
     color: inherit;
@@ -22,17 +21,18 @@ a {
     width: 100%;
     height: 100%;
 }
-
 /* ==========================================================================
-   1. HEADER
+   header
    ========================================================================== */
 .Headerguia {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #1c0ee3;
     padding: 15px 30px;
-    border-bottom: 2px solid #000;
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    color: #ffffff;
+    position: relative;
+    z-index: 10;
     gap: 15px;
     flex-wrap: wrap;
 }
@@ -41,61 +41,74 @@ a {
     max-height: 60px;
     width: auto;
     object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
 
 .Headerguia h1 {
     font-size: 1.5rem;
     text-align: center;
+    color: #ffffff;
 }
 
 .Headerguia p {
     font-weight: bold;
+    font-size: 0.95rem;
+    color: #eaf1f7;
 }
 
 .navguia {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     padding: 5px;
 }
 
 .navguia a {
-    border: 3px solid transparent;
-    background-color: #1942d6;
-    background: 
-        linear-gradient(#0465a0, #4acee5) padding-box, 
-        linear-gradient(90deg, #ff007f, #7f00ff, #00d4ff) border-box;
-    border-radius: 15px;
-    padding: 8px 15px;
+    border: none;
+    background-color: #f5f6ff;
+    color: #006eff;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 10px 20px;
     font-size: 0.9rem;
     text-align: center;
+    box-shadow: 0 2px 15px rgba(78, 196, 255, 0.594);
+    transition: all 0.3s ease;
+}
+
+.navguia a:hover {
+    background-color: #d7ebff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(64, 177, 238, 0.564);
 }
 
 /* ==========================================================================
-   2. MAIN (CONTENEDOR PRINCIPAL)
+    main
    ========================================================================== */
 .mainguia {
     display: flex;
-    flex-direction: row; /* Coloca ambas secciones lado a lado */
+    flex-direction: row;
     justify-content: space-between;
     gap: 20px;
-    padding: 20px;
-    flex: 1; /* Permite que empuje al footer hacia abajo */
+    padding: 25px;
+    flex: 1;
+    background-color: #ffffff;
 }
 
-/* Estilos compartidos para las dos secciones */
 .sectionguia,
 #sectionguia2 {
     flex: 1;
-    border: 3px solid #000;
-    border-radius: 30px;
+    background-color: #ffffff;
+    border: 3px solid #1d4ed8; 
+    border-radius: 20px;
     padding: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+box-shadow: 
+        0 0px 23px rgba(14, 197, 221, 0.533), 
+        0 0px 11px rgba(4, 26, 225, 0.4);
+    color: #1e293b;
 }
 
 /* --------------------------------------------------------------------------
-   2.1 SECCIÓN 1 (Visualización en mapa y Ambulancias -> #sectionguia2)
+   mapa
    -------------------------------------------------------------------------- */
 #sectionguia2 {
     display: flex;
@@ -105,21 +118,22 @@ a {
 }
 
 #sectionguia2 h2 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     text-align: center;
+    color: #ffffff;
+    margin-bottom: 5px;
 }
 
-/* Espacio delimitado para la imagen/mapa */
 #sectionguia2 img {
     width: 100%;
     max-width: 450px;
     height: 250px;
-    border: 3px solid #000;
-    border-radius: 30px;
+    border: none;
+    border-radius: 15px;
     object-fit: cover;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Disposición de los botones inferiores en la sección de mapa */
 #sectionguia2 .btnguia4,
 #sectionguia2 .btnguia5 {
     display: inline-block;
@@ -133,11 +147,11 @@ a {
 }
 
 /* --------------------------------------------------------------------------
-   2.2 SECCIÓN 2 (Funcionarios/Pacientes y Registros -> .sectionguia)
+   Seccion de funcionario.
    -------------------------------------------------------------------------- */
 .sectionguia {
     display: grid;
-    grid-template-columns: 1fr 1.5fr; /* Columna izquierda: botones, Columna derecha: párrafos */
+    grid-template-columns: 1fr 1.5fr;
     grid-template-rows: repeat(3, auto);
     gap: 20px 15px;
     align-items: center;
@@ -148,41 +162,76 @@ a {
 }
 
 .sectionguia p {
-    border: 2px solid #000;
-    border-radius: 5px;
+    border: none;
+    border-radius: 12px;
     padding: 15px;
     min-height: 60px;
     display: flex;
     align-items: center;
+    background-color: #ffffff;
+    border: 3px solid #2c5de4; 
+    color: #1a1a1a;
+    font-weight: 500;
+    box-shadow: 0 6px 15px rgba(32, 189, 246, 0.585);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* Estilos uniformes para todos los botones de las secciones */
+.sectionguia a,
+#sectionguia2 a {
+    color: #f7f8f9;
+}
 .sectionguia button,
 #sectionguia2 button {
-    border: 2px solid #000;
-    border-radius: 20px;
-    padding: 10px 15px;
-    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    background-color: #ffffff;
+    background: linear-gradient(135deg, #1840dd, #44abff);
+    font-weight: bold;
     cursor: pointer;
     font-size: 0.95rem;
     text-align: center;
+    box-shadow: 0 4px 19px rgb(0, 166, 255);
+    transition: all 0.3s ease;
+}
+
+.sectionguia button:hover,
+#sectionguia2 button:hover {
+    background: linear-gradient(135deg, #4669f3, #41b4f6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 25px rgb(0, 166, 255);
 }
 
 /* ==========================================================================
-   3. FOOTER
+   foter
    ========================================================================== */
 .footerguia {
-    border-top: 2px solid #000;
+    border: none;
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    color: #ffffff;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 10;
 }
 
 .footerguia button {
-    border: 2px solid #000;
-    border-radius: 15px;
-    padding: 6px 15px;
-    background-color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 18px;
+    background-color: #e80d23;
+    color: #ffffff;
+    font-weight: bold;
     cursor: pointer;
+    box-shadow: 0 4px 20px rgba(153, 0, 0, 0.332);
+    transition: all 0.3s ease;
+}
+
+.footerguia button:hover {
+    background-color: #ff0000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(212, 0, 0, 0.3);
 }
