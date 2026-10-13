@@ -1,0 +1,177 @@
+/* ==========================================================================
+   Cosas generales
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+}
+
+.sectionsesion button {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    background: linear-gradient(135deg, #1840dd, #44abff);
+    color: #ffffff; 
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.95rem;
+    text-align: center;
+    box-shadow: 0 4px 19px rgb(0, 166, 255);
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.sectionsesion button a {
+    color: #ffffff; 
+}
+
+.sectionsesion button:hover {
+    background: linear-gradient(135deg, #4669f3, #41b4f6);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 25px rgb(0, 166, 255);
+}
+
+/* ==========================================================================
+   Header 
+   ========================================================================== */
+.headersesion {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; 
+    gap: 20px; 
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    color: #ffffff;
+    position: relative;
+    z-index: 10;
+    flex-wrap: wrap;
+}
+
+.headersesion .logo {
+    max-height: 60px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.headersesion h1 {
+    font-size: 1.5rem;
+    text-align: left;
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   Main y Section
+   ========================================================================== */
+.mainsesion {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start; 
+    gap: 30px; 
+    padding: 30px 25px;
+    flex: 1;
+    background-color: #ffffff;
+    flex-wrap: wrap; 
+}
+
+.sectionsesion {
+    flex: 0 1 450px; 
+    width: 100%;
+    background-color: #ffffff;
+    border: 3px solid #1d4ed8; 
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 0px 23px rgba(14, 197, 221, 0.533), 0 0px 11px rgba(4, 26, 225, 0.4);
+    color: #1e293b;
+}
+
+.sectionsesion form p {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sectionsesion label {
+    font-weight: bold;
+    color: #1e293b;
+    font-size: 0.95rem;
+}
+
+.sectionsesion input[type="text"],
+.sectionsesion input[type="password"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+}
+
+.sectionsesion input:focus {
+    border-color: #1d4ed8;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(29, 78, 216, 0.2);
+}
+
+/* ==========================================================================
+   Aside
+   ========================================================================== */
+.asidesesion {
+    flex: 0 1 450px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    padding: 22px;
+    border-radius: 15px;
+    box-shadow: 0 0px 23px rgba(14, 197, 221, 0.533), 0 0px 11px rgba(4, 26, 225, 0.4);
+}
+
+.asidesesion img {
+    width: 100%;
+    max-width: 400px;
+    height: 230px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.footersesion {
+    border: none;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    color: #ffffff;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 10;
+}
