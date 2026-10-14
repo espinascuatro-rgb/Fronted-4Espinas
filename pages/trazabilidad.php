@@ -9,9 +9,9 @@
     <style>
         .badge {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 12px;
-            font-size: 0.85em;
+            font-size: 0.9em;
             font-weight: bold;
             text-transform: uppercase;
         }
@@ -56,14 +56,14 @@
 
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 12px;
             margin-bottom: 15px;
         }
 
         .info-card {
             background-color: #f8f9fa;
-            padding: 10px 14px;
+            padding: 12px 16px;
             border-radius: 6px;
             border-left: 4px solid #0a192f;
         }
@@ -96,45 +96,31 @@
         
         <section class="tarjeta">
             <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-                <h2 style="color: var(--azul-marino);">Estado Actual del Traslado #<span id="lblIdTraslado">1</span></h2>
+                <h2 style="color: var(--azul-marino);">Estado del Traslado #<span id="lblIdTraslado">1</span></h2>
                 <span id="badgeEstado" class="badge badge-pendiente">Cargando...</span>
             </div>
 
             <div class="info-grid">
                 <div class="info-card">
                     <strong>Ambulancia / Unidad:</strong>
-                    <div id="lblAmbulancia" style="font-weight: bold; color: #007bff;">Sin asignar</div>
+                    <div id="lblAmbulancia" style="font-weight: bold; color: #007bff; font-size: 1.1em; margin-top: 4px;">Cargando...</div>
                 </div>
                 <div class="info-card">
                     <strong>Chofer Asignado:</strong>
-                    <div id="lblChofer" style="font-weight: bold; color: #007bff;">Sin asignar</div>
+                    <div id="lblChofer" style="font-weight: bold; color: #007bff; font-size: 1.1em; margin-top: 4px;">Cargando...</div>
                 </div>
                 <div class="info-card">
                     <strong>Acompañante:</strong>
-                    <div id="lblAcompanante" style="font-weight: bold; color: #007bff;">Sin acompañante</div>
-                </div>
-                <div class="info-card">
-                    <strong>Origen:</strong>
-                    <div id="lblOrigen">Hospital de Clínicas</div>
-                </div>
-                <div class="info-card">
-                    <strong>Destino:</strong>
-                    <div id="lblDestino" style="font-weight: bold;">Sin especificar</div>
+                    <div id="lblAcompanante" style="font-weight: bold; color: #007bff; font-size: 1.1em; margin-top: 4px;">Sin acompañante</div>
                 </div>
             </div>
 
             <hr>
             
-            <h3 style="color: var(--azul-medio);">Línea de Tiempo en Tiempo Real</h3>
+            <h3 style="color: var(--azul-medio);">Monitoreo de Estado</h3>
             <ul class="timeline-list">
                 <li id="step1" class="timeline-item">
-                    <strong>Hora de Salida:</strong> <span id="lblHoraSalida">Pendiente</span>
-                </li>
-                <li id="step2" class="timeline-item">
-                    <strong>Estado del Trayecto:</strong> <span id="lblEstadoTexto">Esperando inicio...</span>
-                </li>
-                <li id="step3" class="timeline-item">
-                    <strong>Hora Estimada de Llegada (GPS):</strong> <span id="lblHoraLlegada" style="font-weight: bold; color: #007bff;">Calculando...</span>
+                    <strong>Estado del GPS:</strong> <span id="lblEstadoTexto">Esperando transmisión...</span>
                 </li>
             </ul>
         </section>
@@ -157,16 +143,8 @@
             const lblAmbulancia = document.getElementById('lblAmbulancia');
             const lblChofer = document.getElementById('lblChofer');
             const lblAcompanante = document.getElementById('lblAcompanante');
-            const lblOrigen = document.getElementById('lblOrigen');
-            const lblDestino = document.getElementById('lblDestino');
-
-            const lblHoraSalida = document.getElementById('lblHoraSalida');
             const lblEstadoTexto = document.getElementById('lblEstadoTexto');
-            const lblHoraLlegada = document.getElementById('lblHoraLlegada');
-
             const step1 = document.getElementById('step1');
-            const step2 = document.getElementById('step2');
-            const step3 = document.getElementById('step3');
 
             async function consultarTrazabilidad() {
                 try {
@@ -177,8 +155,6 @@
                         const d = json.data;
 
                         lblIdTraslado.textContent = d.id_traslado;
-                        lblOrigen.textContent = d.origen ? d.origen : 'Hospital de Clínicas';
-                        lblDestino.textContent = (d.destino && d.destino.trim() !== '') ? d.destino : 'Sin especificar';
                         
                         // Mostrar ambulancia
                         lblAmbulancia.textContent = (d.matricula_ambulancia && d.matricula_ambulancia.trim() !== '') ? `Móvil / Matrícula #${d.matricula_ambulancia}` : 'Sin asignar';
@@ -199,39 +175,21 @@
 
                         if (estado === 'en_proceso') {
                             badgeEstado.className = 'badge badge-proceso';
-                            badgeEstado.textContent = 'En Proceso / En Tránsito';
-
-                            lblHoraSalida.textContent = d.hora_de_salida ? `${d.hora_de_salida} hs` : 'Iniciado';
-                            lblEstadoTexto.textContent = 'Unidad en trayecto activo monitoreada por GPS';
-                            lblHoraLlegada.textContent = d.hora_estimada_gps ? d.hora_estimada_gps : 'Calculando por GPS...';
-
+                            badgeEstado.textContent = 'En Tránsito / Activo';
+                            lblEstadoTexto.textContent = 'Móvil en movimiento con señal GPS activa';
                             step1.classList.remove('inactivo');
-                            step2.classList.remove('inactivo');
-                            step3.classList.remove('inactivo');
 
                         } else if (estado === 'finalizado') {
                             badgeEstado.className = 'badge badge-finalizado';
-                            badgeEstado.textContent = 'Finalizado / Completado';
-
-                            lblHoraSalida.textContent = d.hora_de_salida ? `${d.hora_de_salida} hs` : 'Completado';
-                            lblEstadoTexto.textContent = 'El móvil ha llegado al destino final';
-                            lblHoraLlegada.textContent = d.hora_de_llegada ? `Llegó a las ${d.hora_de_llegada} hs` : 'Finalizado';
-
+                            badgeEstado.textContent = 'Finalizado';
+                            lblEstadoTexto.textContent = 'Traslado completado exitosamente';
                             step1.classList.remove('inactivo');
-                            step2.classList.remove('inactivo');
-                            step3.classList.remove('inactivo');
 
                         } else {
                             badgeEstado.className = 'badge badge-pendiente';
                             badgeEstado.textContent = 'Pendiente / En Espera';
-
-                            lblHoraSalida.textContent = 'Sin iniciar';
-                            lblEstadoTexto.textContent = 'Esperando inicio del traslado en el mapa';
-                            lblHoraLlegada.textContent = 'Sin iniciar';
-
+                            lblEstadoTexto.textContent = 'Esperando inicio de traslado desde el panel administrativo';
                             step1.classList.add('inactivo');
-                            step2.classList.add('inactivo');
-                            step3.classList.add('inactivo');
                         }
                     } else {
                         badgeEstado.className = 'badge badge-pendiente';
@@ -239,14 +197,14 @@
                         lblChofer.textContent = 'ID Inexistente';
                         lblAmbulancia.textContent = '-';
                         lblAcompanante.textContent = '-';
-                        lblDestino.textContent = '-';
+                        lblEstadoTexto.textContent = 'Sin registro';
                     }
                 } catch (e) {
                     console.error('Error actualizando trazabilidad:', e);
                 }
             }
 
-            // Refresco constante cada 2 segundos
+            // Consultar inmediatamente y refrescar cada 2 segundos
             consultarTrazabilidad();
             setInterval(consultarTrazabilidad, 2000);
 

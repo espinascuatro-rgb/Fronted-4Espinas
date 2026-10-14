@@ -25,7 +25,14 @@ if ($accion === 'guardar_datos_chofer') {
     $acompanante = $conexion->real_escape_string($_POST['acompanante'] ?? '');
     $ambulancia = $conexion->real_escape_string($_POST['ambulancia'] ?? '');
 
-    $sql = "UPDATE traslado SET cedula_funcionario = '$chofer', acompanante = '$acompanante', matricula_ambulancia = '$ambulancia' WHERE id_traslado = $id_traslado";
+    // Comprobar si el registro existe previamente
+    $check = $conexion->query("SELECT id_traslado FROM traslado WHERE id_traslado = $id_traslado");
+    if ($check && $check->num_rows === 0) {
+        $sql = "INSERT INTO traslado (id_traslado, origen, cedula_funcionario, acompanante, matricula_ambulancia, estado) 
+                VALUES ($id_traslado, 'Hospital de Clínicas', '$chofer', '$acompanante', '$ambulancia', 'pendiente')";
+    } else {
+        $sql = "UPDATE traslado SET cedula_funcionario = '$chofer', acompanante = '$acompanante', matricula_ambulancia = '$ambulancia' WHERE id_traslado = $id_traslado";
+    }
 
     if ($conexion->query($sql)) {
         echo json_encode(['status' => 'ok']);
@@ -33,7 +40,7 @@ if ($accion === 'guardar_datos_chofer') {
         echo json_encode(['status' => 'error', 'msg' => $conexion->error]);
     }
 
-// 2. Guardar ubicación GPS del Chofer
+// 2. Guardar ubicación GPS enviada por el móvil del Chofer
 } elseif ($accion === 'actualizar_chofer') {
     $lat = floatval($_POST['lat'] ?? 0);
     $lng = floatval($_POST['lng'] ?? 0);
@@ -46,7 +53,7 @@ if ($accion === 'guardar_datos_chofer') {
         echo json_encode(['status' => 'error', 'msg' => 'Coordenadas inválidas']);
     }
 
-// 3. Guardar Hora Estimada de Llegada según GPS
+// 3. Guardar Hora Estimada de Llegada calculada por el GPS
 } elseif ($accion === 'actualizar_tiempo_gps') {
     $hora_estimada = $conexion->real_escape_string($_POST['hora_estimada'] ?? '');
 
@@ -58,11 +65,18 @@ if ($accion === 'guardar_datos_chofer') {
 } elseif ($accion === 'actualizar_destino') {
     $direccion = $conexion->real_escape_string($_POST['direccion'] ?? '');
 
-    $sql = "UPDATE traslado SET destino = '$direccion' WHERE id_traslado = $id_traslado";
-    $conexion->query($sql);
-    echo json_encode(['status' => 'ok']);
+    if (!empty($direccion)) {
+        $sql = "UPDATE traslado SET destino = '$direccion' WHERE id_traslado = $id_traslado";
+        if ($conexion->query($sql)) {
+            echo json_encode(['status' => 'ok']);
+        } else {
+            echo json_encode(['status' => 'error', 'msg' => $conexion->error]);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'msg' => 'Dirección vacía']);
+    }
 
-// 5. Consultar todo el estado cruzando la cédula con la tabla funcionario
+// 5. Consultar todo el estado en tiempo real para Trazabilidad
 } elseif ($accion === 'obtener_estado') {
     $sql = "SELECT t.*, f.usuario AS nombre_usuario_chofer 
             FROM traslado t 
