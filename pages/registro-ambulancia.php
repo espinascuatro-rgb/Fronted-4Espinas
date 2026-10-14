@@ -5,21 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de registro de ambulancias</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/elementosC.css">
+    <link rel="stylesheet" href="../css/registroambu.css">
 </head>
 <body>
-    <header class="headerguia">
-        <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
-        <h1>Hospital de Clínicas</h1>
+    <header class="Headerguia">
+       <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
+        <h2>Registro de Ambulancias</h2>
+        <nav class="navguia">
+            <a href="../pages/guia.php">Inicio</a>
+            <a href="../pages/tratamientos.php">Pacientes</a>
+            <a href="../pages/traslados.php">Ambulancias</a>
+            <a href="../pages/ajustes.php">Ajustes</a>
+        </nav>
     </header>
-    <main>
-
-               <form action="../php/inyeccion2.php" method="POST">
-            <section>
+    <main class="mainregistroambu">
+           
                 <h2>Registro ambulancias</h2>     
-
-                </h2>
+                <form action="../php/inyeccion2.php" method="POST">
               <!--  
+                 <section>
                 <h3>Datos del solicitante</h3>
                 <p>
                     <label for="nombre_solicitante">Nombre del solicitador</label>
@@ -59,7 +64,7 @@
                 </p>
             </section>
         -->
-            <section>
+            <section id="sectionregistroambu">
                 <h3>Detalles del vehículo</h3>
                 <p>
                     <label for="numero_de_serie">Número de identificación</label>
@@ -78,10 +83,9 @@
             </section>
         </form>
     </main>
-    <footer>
-        <p>Hospital de clínicas</p>
-        <p>Todos los derechos reservados por Equipo 4 Espinas</p>
-        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
+        <footer class="footerguia">
+        <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
+        <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 </body>
 </html>
