@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-10-2026 a las 04:34:47
+-- Tiempo de generación: 15-10-2026 a las 01:49:25
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -89,15 +89,6 @@ CREATE TABLE `funcionario` (
   `cedula` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `funcionario`
---
-
-INSERT INTO `funcionario` (`id_tipo`, `usuario`, `contrasenia`, `credenciales`, `cedula`) VALUES
-('1234', 'zMatepan', '$2y$10$X0bBYdiDoBV6IgbPYoPom.y8Ryh3IoV1lKTBShbTXP7ekibvOcqZC', '1234', NULL),
-('1234567', 'Thomas', '$2y$10$65dkXWG.TU.NWjSemaAiG.d7g99ZmmhK3vrA62p95RBMLn/fLWYbO', 'viejo', NULL),
-('54321', 'Mateo', '$2y$10$DPzB29SOOK77/lCi9sK59u3fuadN5EJDQCaEA0nuipN6TjWUeVnbq', '12345', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -117,6 +108,10 @@ CREATE TABLE `funcionario_carga_documento` (
 
 CREATE TABLE `persona` (
   `cedula` varchar(20) NOT NULL,
+  `primer_nombre` varchar(50) DEFAULT NULL,
+  `segundo_nombre` varchar(50) DEFAULT NULL,
+  `primer_apellido` varchar(50) DEFAULT NULL,
+  `segundo_apellido` varchar(50) DEFAULT NULL,
   `carne_de_salud` varchar(30) DEFAULT NULL,
   `numero_de_telefono` varchar(12) DEFAULT NULL,
   `direccion` varchar(70) DEFAULT NULL
@@ -126,10 +121,8 @@ CREATE TABLE `persona` (
 -- Volcado de datos para la tabla `persona`
 --
 
-INSERT INTO `persona` (`cedula`, `carne_de_salud`, `numero_de_telefono`, `direccion`) VALUES
-('1234', '1234', '1234', 'Casa'),
-('1234567', '1234567', '1234567', 'Casa'),
-('54321', '1234', '1234', 'Casa');
+INSERT INTO `persona` (`cedula`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `carne_de_salud`, `numero_de_telefono`, `direccion`) VALUES
+('1234', NULL, NULL, NULL, NULL, '1234', '092171', 'casa');
 
 -- --------------------------------------------------------
 
@@ -203,7 +196,7 @@ CREATE TABLE `traslado` (
   `hora_de_salida` time DEFAULT NULL,
   `hora_de_llegada` time DEFAULT NULL,
   `hora_estimada_gps` varchar(20) DEFAULT NULL,
-  `cedula_funcionario` varchar(20) NOT NULL,
+  `cedula_funcionario` varchar(100) DEFAULT NULL,
   `acompanante` varchar(100) DEFAULT NULL,
   `matricula_ambulancia` varchar(20) NOT NULL,
   `destino` varchar(50) DEFAULT NULL,
@@ -218,7 +211,7 @@ CREATE TABLE `traslado` (
 --
 
 INSERT INTO `traslado` (`id_traslado`, `origen`, `hora_de_salida`, `hora_de_llegada`, `hora_estimada_gps`, `cedula_funcionario`, `acompanante`, `matricula_ambulancia`, `destino`, `lat_chofer`, `lng_chofer`, `transporte`, `estado`) VALUES
-(1, 'Hospital de Clinicas', '04:27:47', NULL, '04:01 hs', '1234', NULL, '1', 'Av. Italia 2870', -32.31892978, -58.05732318, 'drive', 'en_proceso');
+(1, 'Hospital de Clinicas', '18:11:38', NULL, '16:23 hs', '1234', 'Thomas', '1', 'Av. Italia 2870', -32.31949714, -58.08386121, 'drive', 'en_proceso');
 
 -- --------------------------------------------------------
 
@@ -523,8 +516,7 @@ ALTER TABLE `respuesta`
 -- Filtros para la tabla `traslado`
 --
 ALTER TABLE `traslado`
-  ADD CONSTRAINT `fk_traslado_ambulancia` FOREIGN KEY (`matricula_ambulancia`) REFERENCES `ambulancia` (`numero_de_serie`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_traslado_funcionario` FOREIGN KEY (`cedula_funcionario`) REFERENCES `funcionario` (`id_tipo`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_traslado_ambulancia` FOREIGN KEY (`matricula_ambulancia`) REFERENCES `ambulancia` (`numero_de_serie`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `traslado_biologico`

@@ -1,86 +1,74 @@
 <?php require_once __DIR__ . '/../php/checksesion.php'; ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital de traslados</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <title>Registrar insumo</title>
+        <link rel="stylesheet" href="../css/elementosC.css">
+    <link rel="stylesheet" href="../css/registroambu.css">
 </head>
 <body>
-    <header id="Headerguia">
-        <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
-        <h1>Hospital de Clínicas "Dr. Manuel Quintela"</h1>
-        <h2>Sistema de traslados y trazabilidad</h2>
-        <nav class="nav-botonesguia">
-            <button class="btng"><a href="../pages/guia.php">Inicio</a></button>
-            <button class="btng"><a href="../pages/tratamientos.php">Pacientes</a></button>
-            <button class="btng"><a href="../pages/traslados.php">Ambulancias</a></button>
-            <button class="btng"><a href="../pages/ajustes.php">Ajustes</a></button>
+    <header class="Headerguia">
+       <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
+        <h2>Guía de Tratamientos, Servicios y Experiencias de los Pacientes</h2>
+        <nav class="navguia">
+            <a href="../pages/guia.php">Inicio</a>
+            <a href="../pages/tratamientos.php">Pacientes</a>
+            <a href="../pages/traslados.php">Ambulancias</a>
+            <a href="../pages/ajustes.php">Ajustes</a>
         </nav>
     </header>
-<main>
-    <section id="traslado1"> 
-      
-        <form action="../php/buscar_paciente.php" method="GET">
-            <p>Buscar paciente:</p>
-            <input type="text" name="busqueda_paciente" placeholder="Ingrese nombre o ID" required>
-            <button type="submit">Buscar</button>
-        </form>
-    </section>
-    
-    <section id="traslado2">
-        <h1>Datos del paciente</h1>
-        <label>Nombre:</label> <input type="text" readonly><br><br>
-        <label>ID:</label> <input type="text" readonly><br><br>
-        <label>Edad:</label> <input type="text" readonly><br><br>
-        <label>Habitación:</label> <input type="text" readonly><br><br>
-        <label>Estado:</label> <input type="text" readonly><br><br>
-    </section>
+    <main class="mainregistroambu>
+        <section>
+            <h3>Datos del insumo</h3>
+                <p>
+                    <label for="id_equipo_medico">Identificacion</label>
+                    <input type="number" id="id_equipo_medico" name="id_equipo_medico" required>
+                </p>
+                <p>
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre">
+                </p>
+                <p>
+                    <label for="insumos">Tipo de insumo</label>
+                    <input type="text" id="insumos" name="insumos">
+                </p>
+        </section>
 
-    <section id="traslado3">
-        <h3>Registrar traslado</h3>
-     
-        <form action="../php/registrar_traslado.php" method="POST">
-            <label>Origen:</label>
-            <select name="origen">
-                <option value="Urgencias">Urgencias</option>
-                <option value="Habitacion">Habitación</option>
-                <option value="Rayos X">Rayos X</option>
-                <option value="Laboratorio">Laboratorio</option>
-                <option value="Quirofano">Quirófano</option>
-            </select>
-            <br><br>
-
-            <label>Destino:</label>
-            <select name="destino">
-                <option value="Urgencias">Urgencias</option>
-                <option value="Habitacion">Habitación</option>
-                <option value="Rayos X">Rayos X</option>
-                <option value="Laboratorio">Laboratorio</option>
-                <option value="Quirofano">Quirófano</option>
-            </select>
-            <br><br>
-
-            <label>Fecha:</label>
-            <input type="date" name="fecha" required>
-            <br><br>
-
-            <label>Hora:</label>
-            <input type="time" name="hora" required>
-            <br><br>
-
-            <label>Responsable:</label>
-            <input type="text" name="responsable" required>
-            <br><br>
-
-            <label>Motivo:</label>
-            <input type="text" name="motivo" required>
-            <br><br>
-            
-            <button type="submit">Registrar traslado</button>
-        </form>
-    </section>
-</main>
+        <section> 
+            <h3>Movimientos y logistica<h3>
+                <p>
+                    <label for="insumo_t">traslado de insumos</label>
+                    <input type="number" id="insumo_t" name="insumo_t" required>
+                </p>
+                <p>
+                    <label for="origen">origen</label>
+                    <input type="text" id="origen" name="origen">
+                </p>
+                <p>
+                    <label for="destino">destino</label>
+                    <input type="text" id="destino" name="destino">
+                </p>
+        </section>
+        <section> 
+            <h3>Control de lotes y vencimientos<h3>
+                <p>
+                    <label for="numero">Numero de lotes</label>
+                    <input type="number" id="number" name="number" required>
+                </p>
+                <p>
+                    <label for="fecha">fecha de caducidad</label>
+                    <input type="text" id="fecha" name="fecha">
+                </p>
+                <p>
+                    <label for="registro">registro sanitario</label>
+                    <input type="text" id="registro" name="registro">
+                </p>
+        </section>
 </body>
+        <footer class="footerguia">
+        <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
+        <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
+    </footer>
 </html>

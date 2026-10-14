@@ -64,7 +64,7 @@
                 </p>
             </section>
         -->
-            <section id="sectionregistroambu">
+            <section class="sectionregistroambu">
                 <h3>Detalles del vehículo</h3>
                 <p>
                     <label for="numero_de_serie">Número de identificación</label>

@@ -9,10 +9,8 @@ $base_datos = "hospital_de_clinicas";
 $conexion = new mysqli($servidor, $usuario, $password, $base_datos);
 $conexion->set_charset("utf8mb4");
 
-$fecha_hoy = date('Y-m-d');
-
-// Obtener lista completa de pacientes (personas)
-$sql = "SELECT * FROM persona ORDER BY ci DESC";
+// Obtener lista completa de la tabla persona
+$sql = "SELECT * FROM persona ORDER BY cedula DESC";
 $resultado = $conexion->query($sql);
 ?>
 <!DOCTYPE html>
@@ -25,14 +23,14 @@ $resultado = $conexion->query($sql);
     <link rel="stylesheet" href="../css/style.css">
     <style>
         .contenedor-admin {
-            max-width: 1000px;
+            max-width: 1100px;
             margin: 20px auto;
             padding: 20px;
         }
 
         .grid-form {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 12px;
             margin-bottom: 15px;
         }
@@ -48,7 +46,7 @@ $resultado = $conexion->query($sql);
             margin-bottom: 4px;
         }
 
-        .form-group input, .form-group select {
+        .form-group input {
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -80,6 +78,7 @@ $resultado = $conexion->query($sql);
             border-collapse: collapse;
             margin-top: 15px;
             background-color: white;
+            font-size: 0.92em;
         }
 
         .tabla-pacientes th, .tabla-pacientes td {
@@ -152,13 +151,14 @@ $resultado = $conexion->query($sql);
     </header>
 
     <main class="contenedor-admin">
+        <a href="../pages/guia.php" class="btn-inicio">← Volver al Inicio</a>
 
         <?php if (isset($_GET['msg'])): ?>
             <div class="alerta alerta-exito">
                 <?php 
                     if ($_GET['msg'] === 'agregado') echo "¡Paciente registrado exitosamente!";
-                    if ($_GET['msg'] === 'editado') echo "¡Datos del paciente actualizados correctamente!";
-                    if ($_GET['msg'] === 'eliminado') echo "¡Paciente eliminado del sistema!";
+                    if ($_GET['msg'] === 'editado') echo "¡Datos actualizados correctamente!";
+                    if ($_GET['msg'] === 'eliminado') echo "¡Registro eliminado correctamente!";
                 ?>
             </div>
         <?php endif; ?>
@@ -173,33 +173,40 @@ $resultado = $conexion->query($sql);
             <h2 id="tituloForm">Agregar Nuevo Paciente</h2>
             <form action="../php/crud_paciente.php" method="POST" id="formPaciente">
                 <input type="hidden" name="accion" id="accion" value="agregar">
-                <input type="hidden" name="ci_original" id="ci_original" value="">
+                <input type="hidden" name="cedula_original" id="cedula_original" value="">
 
                 <div class="grid-form">
                     <div class="form-group">
-                        <label for="ci">Cédula de Identidad:</label>
-                        <input type="number" id="ci" name="ci" required placeholder="Ej: 12345678">
+                        <label for="cedula">Cédula de Identidad (*):</label>
+                        <input type="text" id="cedula" name="cedula" required placeholder="Ej: 12345678">
                     </div>
                     <div class="form-group">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" id="nombre" name="nombre" required placeholder="Ej: Juan">
+                        <label for="primer_nombre">Primer Nombre (*):</label>
+                        <input type="text" id="primer_nombre" name="primer_nombre" required placeholder="Ej: Juan">
                     </div>
                     <div class="form-group">
-                        <label for="apellido">Apellido:</label>
-                        <input type="text" id="apellido" name="apellido" required placeholder="Ej: Pérez">
+                        <label for="segundo_nombre">Segundo Nombre:</label>
+                        <input type="text" id="segundo_nombre" name="segundo_nombre" placeholder="Ej: Carlos">
                     </div>
                     <div class="form-group">
-                        <label for="fecha_nac">Fecha Nacimiento:</label>
-                        <!-- Restricción de fecha máxima al día de hoy -->
-                        <input type="date" id="fecha_nac" name="fecha_nac" max="<?php echo $fecha_hoy; ?>" required>
+                        <label for="primer_apellido">Primer Apellido (*):</label>
+                        <input type="text" id="primer_apellido" name="primer_apellido" required placeholder="Ej: Pérez">
                     </div>
                     <div class="form-group">
-                        <label for="sexo">Sexo:</label>
-                        <select id="sexo" name="sexo" required>
-                            <option value="M">Masculino (M)</option>
-                            <option value="F">Femenino (F)</option>
-                            <option value="O">Otro</option>
-                        </select>
+                        <label for="segundo_apellido">Segundo Apellido:</label>
+                        <input type="text" id="segundo_apellido" name="segundo_apellido" placeholder="Ej: Rodríguez">
+                    </div>
+                    <div class="form-group">
+                        <label for="carne_de_salud">Carné de Salud:</label>
+                        <input type="text" id="carne_de_salud" name="carne_de_salud" placeholder="Ej: 1234">
+                    </div>
+                    <div class="form-group">
+                        <label for="numero_de_telefono">Teléfono / Celular:</label>
+                        <input type="text" id="numero_de_telefono" name="numero_de_telefono" placeholder="Ej: 099123456">
+                    </div>
+                    <div class="form-group">
+                        <label for="direccion">Dirección:</label>
+                        <input type="text" id="direccion" name="direccion" placeholder="Ej: Av. Italia 2870">
                     </div>
                 </div>
 
@@ -213,26 +220,30 @@ $resultado = $conexion->query($sql);
             <table class="tabla-pacientes">
                 <thead>
                     <tr>
-                        <th>Cédula (CI)</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Fecha Nac.</th>
-                        <th>Sexo</th>
+                        <th>Cédula</th>
+                        <th>Nombre Completo</th>
+                        <th>Carné de Salud</th>
+                        <th>Teléfono</th>
+                        <th>Dirección</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ($resultado && $resultado->num_rows > 0): ?>
                         <?php while ($row = $resultado->fetch_assoc()): ?>
+                            <?php 
+                                $nombre_completo = trim(($row['primer_nombre'] ?? '') . ' ' . ($row['segundo_nombre'] ?? '') . ' ' . ($row['primer_apellido'] ?? '') . ' ' . ($row['segundo_apellido'] ?? ''));
+                                if (empty($nombre_completo)) $nombre_completo = 'Sin nombre registrado';
+                            ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($row['ci']); ?></td>
-                                <td><?php echo htmlspecialchars($row['nombre']); ?></td>
-                                <td><?php echo htmlspecialchars($row['apellido']); ?></td>
-                                <td><?php echo htmlspecialchars($row['fecha_nac']); ?></td>
-                                <td><?php echo htmlspecialchars($row['sexo']); ?></td>
+                                <td><?php echo htmlspecialchars($row['cedula']); ?></td>
+                                <td><strong><?php echo htmlspecialchars($nombre_completo); ?></strong></td>
+                                <td><?php echo htmlspecialchars($row['carne_de_salud'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($row['numero_de_telefono'] ?? ''); ?></td>
+                                <td><?php echo htmlspecialchars($row['direccion'] ?? ''); ?></td>
                                 <td>
-                                    <button class="btn-editar" onclick="editarPaciente(<?php echo htmlspecialchars(json_encode($row)); ?>)">Editar</button>
-                                    <a href="../php/crud_paciente.php?accion=eliminar&ci=<?php echo $row['ci']; ?>" class="btn-eliminar" onclick="return confirm('¿Está seguro de que desea eliminar este paciente?');">Eliminar</a>
+                                    <button class="btn-editar" onclick='editarPaciente(<?php echo json_encode($row); ?>)'>Editar</button>
+                                    <a href="../php/crud_paciente.php?accion=eliminar&cedula=<?php echo urlencode($row['cedula']); ?>" class="btn-eliminar" onclick="return confirm('¿Está seguro de que desea eliminar este paciente?');">Eliminar</a>
                                 </td>
                             </tr>
                         <?php endwhile; ?>
@@ -252,17 +263,20 @@ $resultado = $conexion->query($sql);
     </footer>
 
     <script>
-        function editarPaciente(paciente) {
+        function editarPaciente(p) {
             document.getElementById('tituloForm').textContent = "Editar Datos del Paciente";
             document.getElementById('accion').value = "editar";
-            document.getElementById('ci_original').value = paciente.ci;
+            document.getElementById('cedula_original').value = p.cedula;
             
-            document.getElementById('ci').value = paciente.ci;
-            document.getElementById('ci').readOnly = true;
-            document.getElementById('nombre').value = paciente.nombre;
-            document.getElementById('apellido').value = paciente.apellido;
-            document.getElementById('fecha_nac').value = paciente.fecha_nac;
-            document.getElementById('sexo').value = paciente.sexo;
+            document.getElementById('cedula').value = p.cedula;
+            document.getElementById('cedula').readOnly = true;
+            document.getElementById('primer_nombre').value = p.primer_nombre || '';
+            document.getElementById('segundo_nombre').value = p.segundo_nombre || '';
+            document.getElementById('primer_apellido').value = p.primer_apellido || '';
+            document.getElementById('segundo_apellido').value = p.segundo_apellido || '';
+            document.getElementById('carne_de_salud').value = p.carne_de_salud || '';
+            document.getElementById('numero_de_telefono').value = p.numero_de_telefono || '';
+            document.getElementById('direccion').value = p.direccion || '';
 
             document.getElementById('btnSubmit').textContent = "Actualizar Paciente";
             document.getElementById('btnCancelar').style.display = "inline-block";
@@ -272,7 +286,7 @@ $resultado = $conexion->query($sql);
             document.getElementById('tituloForm').textContent = "Agregar Nuevo Paciente";
             document.getElementById('accion').value = "agregar";
             document.getElementById('formPaciente').reset();
-            document.getElementById('ci').readOnly = false;
+            document.getElementById('cedula').readOnly = false;
             document.getElementById('btnSubmit').textContent = "Guardar Paciente";
             document.getElementById('btnCancelar').style.display = "none";
         });
