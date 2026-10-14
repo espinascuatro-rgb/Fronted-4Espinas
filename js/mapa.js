@@ -1,17 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const API_KEY = '85d1d62262044361831644c6f04d5152';
     const ID_TRASLADO = 1; 
-    const DISTANCIA_LLEGADA_METROS = 50; 
 
     let trasladoActivo = false;
-    let yaAlertoLlegada = false;
     let intervaloPolling = null;
+    let capaRuta = null;
 
     // Inicializar el mapa
     const mapa = L.map('visualizar', {
         fullscreenControl: true,
         fullscreenControlOptions: { position: 'topleft' }
-    }).setView([-34.9011, -56.1645], 15);
+    }).setView([-34.9011, -56.1645], 14);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap'
@@ -32,10 +31,12 @@ document.addEventListener('DOMContentLoaded', () => {
         popupAnchor: [0, -40]
     });
 
-    const marcadorChofer = L.marker([-34.9011, -56.1645], { icon: ImagenMarcador }).addTo(mapa);
+    // Marcadores Arrastrables (Origen y Destino)
+    const marcadorChofer = L.marker([-34.9011, -56.1645], { draggable: true, icon: ImagenMarcador }).addTo(mapa);
     const marcadorDestino = L.marker([-34.900362, -56.163353], { draggable: true, icon: ImagenDestino }).addTo(mapa);
 
-    let capaRuta = null;
+    marcadorChofer.bindPopup("<b>Origen / Chofer</b><br>(Arrastrable)");
+    marcadorDestino.bindPopup("<b>Destino</b><br>(Arrastrable)");
 
     // Elementos del DOM
     const ingresaro = document.getElementById('ingresar0');
@@ -52,23 +53,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnIniciar = document.getElementById('btnIniciar');
     const btnFinalizar = document.getElementById('btnFinalizar');
 
-    // Calcular distancia en metros entre dos puntos
-    function calcularDistanciaMetros(lat1, lon1, lat2, lon2) {
-        const R = 6371e3;
-        const φ1 = lat1 * Math.PI / 180;
-        const φ2 = lat2 * Math.PI / 180;
-        const Δφ = (lat2 - lat1) * Math.PI / 180;
-        const Δλ = (lon2 - lon1) * Math.PI / 180;
-
-        const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-                  Math.cos(φ1) * Math.cos(φ2) *
-                  Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    // Limpiar capa de la ruta previa
+    function limpiarRuta() {
+        if (capaRuta) {
+            mapa.removeLayer(capaRuta);
+            capaRuta = null;
+        }
     }
 
-    // Trazar ruta y enviar tiempo estimado a la Base de Datos
-    async function actualizarRutaYCuentaRegresiva(posChofer, posDestino) {
-        const modo = selectTransporte.value;
+    // Trazar ruta entre Origen y Destino y calcular horas de llegada
+    async function actualizarRutaYCalculos() {
+        const posChofer = marcadorChofer.getLatLng();
+        const posDestino = marcadorDestino.getLatLng();
+        const modo = selectTransporte ? selectTransporte.value : 'drive';
+
         const url = `https://api.geoapify.com/v1/routing?waypoints=${posChofer.lat},${posChofer.lng}|${posDestino.lat},${posDestino.lng}&mode=${modo}&apiKey=${API_KEY}`;
 
         try {
@@ -88,24 +86,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     const minutos = Math.floor(segundos / 60);
                     const segRestantes = Math.floor(segundos % 60);
 
-                    if (inputTiempo) inputTiempo.value = `${minutos}m ${segRestantes}s restantes`;
+                    if (inputTiempo) inputTiempo.value = `${minutos} min ${segRestantes} seg`;
 
-                    if (inputHoraLlegada) {
-                        const ahora = new Date();
-                        ahora.setSeconds(ahora.getSeconds() + segundos);
-                        const horas = String(ahora.getHours()).padStart(2, '0');
-                        const mins = String(ahora.getMinutes()).padStart(2, '0');
-                        const horaCalculada = `${horas}:${mins} hs`;
-                        
-                        inputHoraLlegada.value = horaCalculada;
+                    const ahora = new Date();
+                    ahora.setSeconds(ahora.getSeconds() + segundos);
+                    const horas = String(ahora.getHours()).padStart(2, '0');
+                    const mins = String(ahora.getMinutes()).padStart(2, '0');
+                    const horaCalculada = `${horas}:${mins} hs`;
+                    
+                    if (inputHoraLlegada) inputHoraLlegada.value = horaCalculada;
 
-                        // Guardar la hora estimada de llegada en la BD para Trazabilidad
-                        const formData = new FormData();
-                        formData.append('accion', 'actualizar_tiempo_gps');
-                        formData.append('id_traslado', ID_TRASLADO);
-                        formData.append('hora_estimada', horaCalculada);
-                        fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
-                    }
+                    // Enviar hora estimada por GPS a la BD
+                    const formData = new FormData();
+                    formData.append('accion', 'actualizar_tiempo_gps');
+                    formData.append('id_traslado', ID_TRASLADO);
+                    formData.append('hora_estimada', horaCalculada);
+                    fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
                 }
             }
         } catch (e) {
@@ -113,147 +109,140 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function limpiarRuta() {
-        if (capaRuta) {
-            mapa.removeLayer(capaRuta);
-            capaRuta = null;
-        }
-    }
-
+    // Consultar periódicamente la posición del chofer transmitida por el celular
     async function monitorearTraslado() {
         if (!trasladoActivo) return;
 
         try {
-            const res = await fetch(`../php/actualizar_posicion.php?accion=obtener_estado&id_traslado=${ID_TRASLADO}&_=${new Date().getTime()}`);
+            const res = await fetch(`../php/actualizar_posicion.php?accion=obtener_estado&id_traslado=${ID_TRASLADO}&t=${new Date().getTime()}`);
             const respuesta = await res.json();
-
-            let posChofer = null;
 
             if (respuesta.status === 'ok' && respuesta.data) {
                 if (respuesta.data.lat_chofer && respuesta.data.lng_chofer) {
-                    posChofer = { 
-                        lat: parseFloat(respuesta.data.lat_chofer), 
-                        lng: parseFloat(respuesta.data.lng_chofer) 
-                    };
+                    const lat = parseFloat(respuesta.data.lat_chofer);
+                    const lng = parseFloat(respuesta.data.lng_chofer);
+
+                    if (lat !== 0 && lng !== 0) {
+                        marcadorChofer.setLatLng([lat, lng]);
+                    }
                 }
             }
 
-            if (!posChofer) {
-                posChofer = marcadorChofer.getLatLng();
-            }
-
-            const posDestino = marcadorDestino.getLatLng();
-
-            marcadorChofer.setLatLng([posChofer.lat, posChofer.lng]);
-            await actualizarRutaYCuentaRegresiva(posChofer, posDestino);
-
-            const distancia = calcularDistanciaMetros(posChofer.lat, posChofer.lng, posDestino.lat, posDestino.lng);
-
-            if (distancia <= DISTANCIA_LLEGADA_METROS && !yaAlertoLlegada) {
-                yaAlertoLlegada = true;
-                alert("¡ATENCIÓN! El chofer ha llegado al lugar de destino.");
-            }
+            await actualizarRutaYCalculos();
         } catch (e) {
-            console.error("Error al consultar la ubicación:", e);
+            console.error("Error monitoreando posición:", e);
         }
     }
 
-    // Botón: Iniciar Traslado
-    btnIniciar.addEventListener('click', async () => {
-        trasladoActivo = true;
-        yaAlertoLlegada = false;
-
-        const formData = new FormData();
-        formData.append('accion', 'cambiar_estado');
-        formData.append('id_traslado', ID_TRASLADO);
-        formData.append('estado', 'en_proceso');
-        formData.append('transporte', selectTransporte.value);
-        
-        await fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
-
-        await monitorearTraslado();
-
-        if (intervaloPolling) clearInterval(intervaloPolling);
-        intervaloPolling = setInterval(monitorearTraslado, 4000);
-    });
-
-    // Botón: Finalizar Traslado
-    btnFinalizar.addEventListener('click', async () => {
-        trasladoActivo = false;
-        if (intervaloPolling) {
-            clearInterval(intervaloPolling);
-            intervaloPolling = null;
-        }
-
-        limpiarRuta();
-
-        const formData = new FormData();
-        formData.append('accion', 'cambiar_estado');
-        formData.append('id_traslado', ID_TRASLADO);
-        formData.append('estado', 'finalizado');
-        
-        await fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
-
-        if (inputTiempo) inputTiempo.value = 'Traslado finalizado';
-        if (inputHoraLlegada) inputHoraLlegada.value = 'Traslado finalizado';
-    });
-
-    selectTransporte.addEventListener('change', () => {
-        if (trasladoActivo) monitorearTraslado();
+    // Eventos de arrastrar marcadores manualmente
+    marcadorChofer.on('dragend', () => {
+        const pos = marcadorChofer.getLatLng();
+        if (insertlat) insertlat.value = pos.lat.toFixed(6);
+        if (insertlng) insertlng.value = pos.lng.toFixed(6);
+        actualizarRutaYCalculos();
     });
 
     marcadorDestino.on('dragend', () => {
-        if (trasladoActivo) monitorearTraslado();
+        actualizarRutaYCalculos();
     });
 
-    ingresaro.addEventListener('click', () => {
-        const posicion = marcadorChofer.getLatLng();
-        insertlat.value = posicion.lat.toFixed(6);
-        insertlng.value = posicion.lng.toFixed(6);
-    });
+    if (selectTransporte) {
+        selectTransporte.addEventListener('change', () => {
+            actualizarRutaYCalculos();
+        });
+    }
 
-    ubicar.addEventListener('click', async () => {
-        if (!direccion.value.trim()) {
-            alert('Por favor ingrese una dirección.');
-            return;
-        }
+    // Capturar coordenadas del origen
+    if (ingresaro) {
+        ingresaro.addEventListener('click', () => {
+            const pos = marcadorChofer.getLatLng();
+            if (insertlat) insertlat.value = pos.lat.toFixed(6);
+            if (insertlng) insertlng.value = pos.lng.toFixed(6);
+        });
+    }
 
-        const texto = `${direccion.value}, ${departamento.value}, Uruguay`;
-        const url = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(texto)}&filter=countrycode:uy&lang=es&limit=1&format=json&apiKey=${API_KEY}`;
-
-        try {
-            const respuesta = await fetch(url);
-            const dato = await respuesta.json();
-
-            if (dato.results && dato.results.length > 0) {
-                const resultado = dato.results[0];
-                const nuevaPos = [resultado.lat, resultado.lon];
-
-                marcadorDestino.setLatLng(nuevaPos);
-                marcadorDestino.bindPopup(`<b>Destino:</b><br>${resultado.formatted}`).openPopup();
-
-                const formData = new FormData();
-                formData.append('accion', 'actualizar_destino');
-                formData.append('id_traslado', ID_TRASLADO);
-                formData.append('direccion', resultado.formatted);
-                fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
-
-                const grupo = new L.featureGroup([marcadorChofer, marcadorDestino]);
-                mapa.fitBounds(grupo.getBounds().pad(0.2));
-
-                if (trasladoActivo) {
-                    await monitorearTraslado();
-                }
-            } else {
-                alert('No se encontraron resultados para la dirección introducida.');
+    // Buscador de direcciones de destino
+    if (ubicar) {
+        ubicar.addEventListener('click', async () => {
+            if (!direccion.value.trim()) {
+                alert('Por favor ingrese una dirección.');
+                return;
             }
-        } catch (error) {
-            console.error('Error al realizar la búsqueda:', error);
-            alert('Error al conectar con el servicio de mapas.');
-        }
-    });
+
+            const textoBusqueda = `${direccion.value}, ${departamento.value}, Uruguay`;
+            const url = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(textoBusqueda)}&filter=countrycode:uy&lang=es&limit=1&format=json&apiKey=${API_KEY}`;
+
+            try {
+                const respuesta = await fetch(url);
+                const dato = await respuesta.json();
+
+                if (dato.results && dato.results.length > 0) {
+                    const resultado = dato.results[0];
+                    const nuevaPos = [resultado.lat, resultado.lon];
+
+                    marcadorDestino.setLatLng(nuevaPos);
+                    marcadorDestino.bindPopup(`<b>Destino:</b><br>${resultado.formatted}`).openPopup();
+
+                    const grupo = new L.featureGroup([marcadorChofer, marcadorDestino]);
+                    mapa.fitBounds(grupo.getBounds().pad(0.2));
+
+                    await actualizarRutaYCalculos();
+                } else {
+                    alert('No se encontraron resultados para la dirección especificada.');
+                }
+            } catch (error) {
+                console.error('Error al buscar dirección:', error);
+            }
+        });
+    }
+
+    // Botón Iniciar Traslado
+    if (btnIniciar) {
+        btnIniciar.addEventListener('click', async () => {
+            trasladoActivo = true;
+
+            const formData = new FormData();
+            formData.append('accion', 'cambiar_estado');
+            formData.append('id_traslado', ID_TRASLADO);
+            formData.append('estado', 'en_proceso');
+            formData.append('transporte', selectTransporte ? selectTransporte.value : 'drive');
+
+            await fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
+
+            await actualizarRutaYCalculos();
+
+            if (intervaloPolling) clearInterval(intervaloPolling);
+            intervaloPolling = setInterval(monitorearTraslado, 3000);
+        });
+    }
+
+    // Botón Finalizar Traslado
+    if (btnFinalizar) {
+        btnFinalizar.addEventListener('click', async () => {
+            trasladoActivo = false;
+            if (intervaloPolling) {
+                clearInterval(intervaloPolling);
+                intervaloPolling = null;
+            }
+
+            limpiarRuta();
+
+            const formData = new FormData();
+            formData.append('accion', 'cambiar_estado');
+            formData.append('id_traslado', ID_TRASLADO);
+            formData.append('estado', 'finalizado');
+
+            await fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
+
+            if (inputTiempo) inputTiempo.value = 'Traslado finalizado';
+            if (inputHoraLlegada) inputHoraLlegada.value = 'Traslado finalizado';
+        });
+    }
+
+    // Renderizar ruta inicial al cargar
+    actualizarRutaYCalculos();
 
     setTimeout(() => {
         mapa.invalidateSize();
-    }, 300);
+    }, 400);
 });

@@ -53,6 +53,10 @@
             width: 100%;
         }
 
+        .btn-accion:hover {
+            background-color: #0056b3;
+        }
+
         .btn-iniciar {
             background-color: #28a745;
         }
@@ -91,7 +95,7 @@
         }
 
         #visualizar {
-            height: 500px;
+            height: 480px;
             width: 100%;
             border-radius: 8px;
             border: 1px solid #ccc;
@@ -111,31 +115,75 @@
 
     <main>
         <section id="traslado2" class="tarjeta">
-            <h1>Control del Traslado Activo</h1>
+            <h1>Detalles del traslado activo</h1>
             <div class="grid-formulario">
                 <div class="campo">
-                    <label>Estado del Monitoreo:</label>
-                    <input type="text" id="tiempoEstimado" value="Sin iniciar" readonly>
+                    <label for="transporte">Medio de Transporte:</label>
+                    <select id="transporte">
+                        <option value="drive" selected>Vehículo / Ambulancia</option>
+                        <option value="bicycle">Bicicleta</option>
+                        <option value="walk">A Pie / Caminando</option>
+                    </select>
                 </div>
                 <div class="campo">
-                    <label>Seguimiento GPS Chofer:</label>
-                    <input type="text" id="horaLlegada" value="Sin iniciar" readonly>
+                    <label>Tiempo Estimado:</label>
+                    <input type="text" id="tiempoEstimado" value="Sin iniciar" readonly style="font-weight: bold;">
+                </div>
+                <div class="campo">
+                    <label>Hora Estimada de Llegada:</label>
+                    <input type="text" id="horaLlegada" value="Sin iniciar" readonly style="font-weight: bold; color: #007bff;">
                 </div>
             </div>
         </section>
 
         <section class="tarjeta">
-            <h2 style="color: var(--azul-marino, #0a192f);">Ubicación del Chofer en Tiempo Real</h2>
+            <h2 style="color: var(--azul-marino, #0a192f);">Mapa GPS y Trazado de Ruta</h2>
 
             <div class="grid-formulario">
                 <div class="campo">
-                    <label for="lat">Latitud GPS:</label>
-                    <input type="text" id="lat" readonly placeholder="Esperando señal GPS...">
+                    <label for="departamento">Departamento Destino:</label>
+                    <select id="departamento">
+                        <option value="Artigas">Artigas</option>
+                        <option value="Canelones">Canelones</option>
+                        <option value="Cerro Largo">Cerro Largo</option>
+                        <option value="Colonia">Colonia</option>
+                        <option value="Durazno">Durazno</option>
+                        <option value="Flores">Flores</option>
+                        <option value="Florida">Florida</option>
+                        <option value="Lavalleja">Lavalleja</option>
+                        <option value="Maldonado">Maldonado</option>
+                        <option value="Montevideo" selected>Montevideo</option>
+                        <option value="Paysandú">Paysandú</option>
+                        <option value="Río Negro">Río Negro</option>
+                        <option value="Rivera">Rivera</option>
+                        <option value="Rocha">Rocha</option>
+                        <option value="Salto">Salto</option>
+                        <option value="San José">San José</option>
+                        <option value="Soriano">Soriano</option>
+                        <option value="Tacuarembó">Tacuarembó</option>
+                        <option value="Treinta y Tres">Treinta y Tres</option>
+                    </select>
                 </div>
 
                 <div class="campo">
-                    <label for="lng">Longitud GPS:</label>
-                    <input type="text" id="lng" readonly placeholder="Esperando señal GPS...">
+                    <label for="dir">Dirección de Destino:</label>
+                    <input type="text" id="dir" placeholder="Ej: Av. Italia 2870">
+                </div>
+
+                <div class="campo">
+                    <button type="button" id="ubicar" class="btn-accion">Ubicar Destino</button>
+                </div>
+            </div>
+
+            <div class="grid-formulario">
+                <div class="campo">
+                    <label for="lat">Latitud Origen/Chofer:</label>
+                    <input type="text" id="lat" readonly placeholder="Latitud capturada">
+                </div>
+
+                <div class="campo">
+                    <label for="lng">Longitud Origen/Chofer:</label>
+                    <input type="text" id="lng" readonly placeholder="Longitud capturada">
                 </div>
 
                 <div class="campo">
