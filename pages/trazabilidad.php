@@ -156,10 +156,8 @@
 
                         lblIdTraslado.textContent = d.id_traslado;
                         
-                        // Mostrar ambulancia
                         lblAmbulancia.textContent = (d.matricula_ambulancia && d.matricula_ambulancia.trim() !== '') ? `Móvil / Matrícula #${d.matricula_ambulancia}` : 'Sin asignar';
                         
-                        // Mostrar Chofer (Nombre de usuario si existe o Cédula)
                         if (d.nombre_usuario_chofer) {
                             lblChofer.textContent = `${d.nombre_usuario_chofer} (CI: ${d.cedula_funcionario})`;
                         } else if (d.cedula_funcionario && d.cedula_funcionario.trim() !== '') {
@@ -168,7 +166,6 @@
                             lblChofer.textContent = 'Sin asignar';
                         }
 
-                        // Mostrar Acompañante
                         lblAcompanante.textContent = (d.acompanante && d.acompanante.trim() !== '') ? d.acompanante : 'Sin acompañante';
 
                         const estado = d.estado || 'pendiente';
@@ -204,7 +201,6 @@
                 }
             }
 
-            // Consultar inmediatamente y refrescar cada 2 segundos
             consultarTrazabilidad();
             setInterval(consultarTrazabilidad, 2000);
 
