@@ -55,6 +55,22 @@
             background-color: #0056b3;
         }
 
+        .btn-iniciar {
+            background-color: #28a745;
+        }
+
+        .btn-iniciar:hover {
+            background-color: #218838;
+        }
+
+        .btn-finalizar {
+            background-color: #dc3545;
+        }
+
+        .btn-finalizar:hover {
+            background-color: #c82333;
+        }
+
         #visualizar {
             height: 480px;
             width: 100%;
@@ -87,7 +103,7 @@
                 </div>
                 <div class="campo">
                     <label>Tiempo Estimado:</label>
-                    <input type="text" id="tiempoEstimado" value="Calculando..." readonly>
+                    <input type="text" id="tiempoEstimado" value="Sin iniciar" readonly>
                 </div>
             </div>
         </section>
@@ -144,6 +160,16 @@
 
                 <div class="campo">
                     <button type="button" id="ingresar0" class="btn-accion">Capturar Coordenadas</button>
+                </div>
+            </div>
+
+            <!-- Botones de control del traslado -->
+            <div class="grid-formulario">
+                <div class="campo">
+                    <button type="button" id="btnIniciar" class="btn-accion btn-iniciar">Iniciar Traslado</button>
+                </div>
+                <div class="campo">
+                    <button type="button" id="btnFinalizar" class="btn-accion btn-finalizar">Finalizar Traslado</button>
                 </div>
             </div>
 

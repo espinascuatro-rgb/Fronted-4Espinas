@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     const API_KEY = '85d1d62262044361831644c6f04d5152';
 
+    // Estado del traslado
+    let trasladoActivo = false;
+
     // Inicializar el mapa
     const mapa = L.map('visualizar').setView([-34.9011, -56.1645], 15);
 
@@ -47,8 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const insertlng = document.getElementById('lng');
     const inputTiempo = document.getElementById('tiempoEstimado');
 
+    const btnIniciar = document.getElementById('btnIniciar');
+    const btnFinalizar = document.getElementById('btnFinalizar');
+
     // Función para calcular y trazar la ruta en el mapa
     async function trazarRuta() {
+        if (!trasladoActivo) return; // Solo trazar si el traslado está activo
+
         const origen = marcador.getLatLng();
         const destino = marcadorDestino.getLatLng();
 
@@ -60,9 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (datos.features && datos.features.length > 0) {
                 // Eliminar la ruta anterior si existe
-                if (capaRuta) {
-                    mapa.removeLayer(capaRuta);
-                }
+                limpiarRuta();
 
                 // Dibujar la nueva ruta trazada por calles
                 capaRuta = L.geoJSON(datos.features[0], {
@@ -87,12 +93,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Trazar la ruta inicial al cargar
-    trazarRuta();
+    // Función para limpiar la ruta del mapa
+    function limpiarRuta() {
+        if (capaRuta) {
+            mapa.removeLayer(capaRuta);
+            capaRuta = null;
+        }
+    }
 
-    // Actualizar ruta cuando se arrastren los marcadores
-    marcador.on('dragend', trazarRuta);
-    marcadorDestino.on('dragend', trazarRuta);
+    // Evento: Iniciar Traslado
+    btnIniciar.addEventListener('click', () => {
+        trasladoActivo = true;
+        trazarRuta();
+    });
+
+    // Evento: Finalizar Traslado
+    btnFinalizar.addEventListener('click', () => {
+        trasladoActivo = false;
+        limpiarRuta();
+        if (inputTiempo) {
+            inputTiempo.value = 'Traslado finalizado';
+        }
+    });
+
+    // Actualizar ruta cuando se arrastren los marcadores (solo si está activo)
+    marcador.on('dragend', () => {
+        if (trasladoActivo) trazarRuta();
+    });
+    marcadorDestino.on('dragend', () => {
+        if (trasladoActivo) trazarRuta();
+    });
 
     // Botón para obtener lat/lng del marcador principal
     ingresaro.addEventListener('click', () => {
@@ -127,8 +157,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const grupo = new L.featureGroup([marcador, marcadorDestino]);
                 mapa.fitBounds(grupo.getBounds().pad(0.2));
 
-                // Trazar la ruta hacia el nuevo destino
-                await trazarRuta();
+                // Si el traslado ya está activo, recalculamos la ruta hacia la nueva dirección
+                if (trasladoActivo) {
+                    await trazarRuta();
+                }
             } else {
                 alert('No se encontraron resultados para la dirección introducida.');
             }
