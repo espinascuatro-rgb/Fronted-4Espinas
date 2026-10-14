@@ -1,0 +1,129 @@
+/* ==========================================================================
+   cuerpo especifico.
+   ========================================================================== */
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+}
+
+/* ==========================================================================
+   el main.
+   ========================================================================== */
+.mainadm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: stretch; 
+    gap: 25px;
+    padding: 30px;
+    flex: 1; 
+    background-color: #f4f6f9;
+    box-sizing: border-box;
+}
+/* ==========================================================================
+   Diseño de seccions.
+   ========================================================================== */
+.admdocumento1, .admdocumento2 {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.admdocumento1 {
+    flex: 0 0 35%; 
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.admdocumento1 p {
+    font-weight: bold;
+    color: #333333;
+    margin: 0;
+    font-size: 1.1rem;
+}
+/* ==========================================================================
+   diseño de funciones.
+   ========================================================================== */
+
+#archivo-subir {
+    border: 2px dashed #0056b3;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.9rem;
+}
+
+.admdocumento2 {
+    flex: 1; 
+}
+
+.admdocumento2 h2 {
+    color: #004080;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+.admdocumento2 table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.admdocumento2 th {
+    background-color: #f1f3f5;
+    color: #333333;
+    padding: 12px;
+    font-weight: bold;
+    border-bottom: 2px solid #dee2e6;
+}
+
+.admdocumento2 td {
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
+    color: #495057;
+    vertical-align: middle;
+}
+
+.admdocumento2 tr:hover {
+    background-color: #f8f9fa;
+}
+/* ==========================================================================
+   Los botones esclusivos para esta pagina.
+   ========================================================================== */
+.boton1, .boton2 {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.boton1 {
+    padding: 12px 24px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.boton1:hover, .boton2:hover {
+    background-color: #003d82;
+}
+
+.boton2 {
+    padding: 8px 20px;
+    display: inline-block;
+}
