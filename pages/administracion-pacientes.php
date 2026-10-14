@@ -9,7 +9,6 @@ $base_datos = "hospital_de_clinicas";
 $conexion = new mysqli($servidor, $usuario, $password, $base_datos);
 $conexion->set_charset("utf8mb4");
 
-// Obtener lista completa de la tabla persona
 $sql = "SELECT * FROM persona ORDER BY cedula DESC";
 $resultado = $conexion->query($sql);
 ?>
@@ -151,7 +150,6 @@ $resultado = $conexion->query($sql);
     </header>
 
     <main class="contenedor-admin">
-        <a href="../pages/guia.php" class="btn-inicio">← Volver al Inicio</a>
 
         <?php if (isset($_GET['msg'])): ?>
             <div class="alerta alerta-exito">
