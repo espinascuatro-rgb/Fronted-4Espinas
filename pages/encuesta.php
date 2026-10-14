@@ -5,23 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Encuesta de Satisfacción - Hospital de Clínicas</title>
-
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/elementosC.css">
+    <link rel="stylesheet" href="../css/encuesta.css">
 </head>
 
 <body>
-    <header id="Headerguia">
-        <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
-        <h1>Hospital de Clínicas "Dr. Manuel Quintela" - Encuesta de Satisfacción</h1>
-        <nav class="nav-botonesguia">
-            <button class="btng"><a href="../pages/guia.php">Inicio</a></button>
-            <button class="btng"><a href="../pages/tratamientos.php">Pacientes</a></button>
-            <button class="btng"><a href="../pages/traslados.php">Ambulancias</a></button>
+    <header class="Headerguia">
+       <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
+        <h1>Encuesta de Satisfacción</h1>
+        <nav class="navguia">
+            <a href="../pages/guia.php">Inicio</a>
+            <a href="../pages/tratamientos.php">Pacientes</a>
+            <a href="../pages/traslados.php">Ambulancias</a>
+            <a href="../pages/ajustes.php">Ajustes</a>
         </nav>
     </header>
 
-    <main>
-        <section class="sectionsesion" style="max-width: 800px; margin: 0 auto;">
+    <main class="mainencuesta">
+        <section class="sectionencuesta">
             <h2>Tu opinión nos ayuda mejorar</h2>
             <p>Responde libremente y de forma critica</p>
             <br>
@@ -30,7 +31,7 @@
                 
                 <p>
                     <label for="nombre_paciente">Nombre (opcional):</label>
-                    <input type="text" id="nombre_paciente" name="nombre_paciente" placeholder="Mateo Aura">
+                    <input type="text" id="nombre_paciente" name="nombre_paciente" placeholder="Mateo laura">
                 </p>
 
                 <p>
@@ -79,10 +80,9 @@
         </section>
     </main>
 
-    <footer>
-        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
-        <p>Hospital de Clínicas</p>
-        <p>Todos los derechos reservados por el Equipo 4 Espinas</p>
+        <footer class="footerguia">
+        <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
+        <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 </body>
 </html>
