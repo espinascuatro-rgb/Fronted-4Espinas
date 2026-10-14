@@ -1,5 +1,4 @@
 <?php
-// Desactivar limitación de caché en el navegador
 header('Cache-Control: no-cache, must-revalidate');
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 header('Content-Type: application/json; charset=utf-8');
@@ -12,7 +11,7 @@ $base_datos = "hospital_de_clinicas";
 $conexion = new mysqli($servidor, $usuario, $password, $base_datos);
 
 if ($conexion->connect_error) {
-    echo json_encode(['status' => 'error', 'msg' => 'Error BD: ' . $conexion->connect_error]);
+    echo json_encode(['status' => 'error', 'msg' => 'Error de conexión: ' . $conexion->connect_error]);
     exit;
 }
 
@@ -20,17 +19,14 @@ $conexion->set_charset("utf8mb4");
 $accion = $_REQUEST['accion'] ?? '';
 $id_traslado = isset($_REQUEST['id_traslado']) ? intval($_REQUEST['id_traslado']) : 1;
 
-// Asegurar que el registro #1 exista en la base de datos
-$conexion->query("INSERT IGNORE INTO traslado (id_traslado, origen, estado) VALUES ($id_traslado, 'Hospital de Clínicas', 'pendiente')");
-
-// 1. Guardar Chofer, Acompañante y Ambulancia desde el móvil
+// 1. Guardar Chofer (Cédula), Acompañante y Ambulancia (Matrícula)
 if ($accion === 'guardar_datos_chofer') {
     $chofer = $conexion->real_escape_string($_POST['chofer'] ?? '');
     $acompanante = $conexion->real_escape_string($_POST['acompanante'] ?? '');
     $ambulancia = $conexion->real_escape_string($_POST['ambulancia'] ?? '');
 
     $sql = "UPDATE traslado SET cedula_funcionario = '$chofer', acompanante = '$acompanante', matricula_ambulancia = '$ambulancia' WHERE id_traslado = $id_traslado";
-    
+
     if ($conexion->query($sql)) {
         echo json_encode(['status' => 'ok']);
     } else {
@@ -66,10 +62,15 @@ if ($accion === 'guardar_datos_chofer') {
     $conexion->query($sql);
     echo json_encode(['status' => 'ok']);
 
-// 5. Consultar todo el estado en tiempo real (Usado por Trazabilidad y Mapa)
+// 5. Consultar todo el estado cruzando la cédula con la tabla funcionario
 } elseif ($accion === 'obtener_estado') {
-    $res = $conexion->query("SELECT * FROM traslado WHERE id_traslado = $id_traslado");
-    $datos = $res->fetch_assoc();
+    $sql = "SELECT t.*, f.usuario AS nombre_usuario_chofer 
+            FROM traslado t 
+            LEFT JOIN funcionario f ON t.cedula_funcionario = f.id_tipo 
+            WHERE t.id_traslado = $id_traslado";
+
+    $res = $conexion->query($sql);
+    $datos = $res ? $res->fetch_assoc() : null;
 
     if ($datos) {
         echo json_encode(['status' => 'ok', 'data' => $datos]);

@@ -90,7 +90,7 @@
             <p><strong>Buscar código de traslado:</strong></p>
             <div style="display: flex; gap: 10px; max-width: 400px;">
                 <input type="number" id="inputBuscarId" placeholder="Ingrese ID (Ej: 1)" value="1" style="flex: 1; padding: 8px;">
-                <button id="btnRastrear" class="btn-primary" style="padding: 8px 15px;">Rastrear</button>
+                <button type="button" id="btnRastrear" class="btn-primary" style="padding: 8px 15px;">Rastrear</button>
             </div>
         </section>
         
@@ -103,15 +103,15 @@
             <div class="info-grid">
                 <div class="info-card">
                     <strong>Ambulancia / Unidad:</strong>
-                    <div id="lblAmbulancia" style="font-weight: bold;">Cargando...</div>
+                    <div id="lblAmbulancia" style="font-weight: bold; color: #007bff;">Sin asignar</div>
                 </div>
                 <div class="info-card">
                     <strong>Chofer Asignado:</strong>
-                    <div id="lblChofer" style="font-weight: bold;">Cargando...</div>
+                    <div id="lblChofer" style="font-weight: bold; color: #007bff;">Sin asignar</div>
                 </div>
                 <div class="info-card">
                     <strong>Acompañante:</strong>
-                    <div id="lblAcompanante" style="font-weight: bold;">Sin acompañante</div>
+                    <div id="lblAcompanante" style="font-weight: bold; color: #007bff;">Sin acompañante</div>
                 </div>
                 <div class="info-card">
                     <strong>Origen:</strong>
@@ -170,9 +170,7 @@
 
             async function consultarTrazabilidad() {
                 try {
-                    // Forzar petición sin caché
-                    const timestamp = new Date().getTime();
-                    const res = await fetch(`../php/actualizar_posicion.php?accion=obtener_estado&id_traslado=${idActual}&t=${timestamp}`);
+                    const res = await fetch(`../php/actualizar_posicion.php?accion=obtener_estado&id_traslado=${idActual}&t=${new Date().getTime()}`);
                     const json = await res.json();
 
                     if (json.status === 'ok' && json.data) {
@@ -182,8 +180,19 @@
                         lblOrigen.textContent = d.origen ? d.origen : 'Hospital de Clínicas';
                         lblDestino.textContent = (d.destino && d.destino.trim() !== '') ? d.destino : 'Sin especificar';
                         
-                        lblAmbulancia.textContent = (d.matricula_ambulancia && d.matricula_ambulancia.trim() !== '') ? d.matricula_ambulancia : 'Sin asignar';
-                        lblChofer.textContent = (d.cedula_funcionario && d.cedula_funcionario.trim() !== '') ? d.cedula_funcionario : 'Sin asignar';
+                        // Mostrar ambulancia
+                        lblAmbulancia.textContent = (d.matricula_ambulancia && d.matricula_ambulancia.trim() !== '') ? `Móvil / Matrícula #${d.matricula_ambulancia}` : 'Sin asignar';
+                        
+                        // Mostrar Chofer (Nombre de usuario si existe o Cédula)
+                        if (d.nombre_usuario_chofer) {
+                            lblChofer.textContent = `${d.nombre_usuario_chofer} (CI: ${d.cedula_funcionario})`;
+                        } else if (d.cedula_funcionario && d.cedula_funcionario.trim() !== '') {
+                            lblChofer.textContent = `CI: ${d.cedula_funcionario}`;
+                        } else {
+                            lblChofer.textContent = 'Sin asignar';
+                        }
+
+                        // Mostrar Acompañante
                         lblAcompanante.textContent = (d.acompanante && d.acompanante.trim() !== '') ? d.acompanante : 'Sin acompañante';
 
                         const estado = d.estado || 'pendiente';
@@ -224,17 +233,25 @@
                             step2.classList.add('inactivo');
                             step3.classList.add('inactivo');
                         }
+                    } else {
+                        badgeEstado.className = 'badge badge-pendiente';
+                        badgeEstado.textContent = 'No Encontrado';
+                        lblChofer.textContent = 'ID Inexistente';
+                        lblAmbulancia.textContent = '-';
+                        lblAcompanante.textContent = '-';
+                        lblDestino.textContent = '-';
                     }
                 } catch (e) {
                     console.error('Error actualizando trazabilidad:', e);
                 }
             }
 
-            // Petición inicial y refresco continuo cada 2 segundos
+            // Refresco constante cada 2 segundos
             consultarTrazabilidad();
             setInterval(consultarTrazabilidad, 2000);
 
-            btnRastrear.addEventListener('click', () => {
+            btnRastrear.addEventListener('click', (e) => {
+                e.preventDefault();
                 const nuevoId = parseInt(inputBuscarId.value);
                 if (nuevoId > 0) {
                     idActual = nuevoId;

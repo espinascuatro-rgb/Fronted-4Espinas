@@ -19,8 +19,8 @@
     <h2>Modo Chofer - Enviar Ubicación GPS</h2>
 
     <div class="campo">
-        <label for="txtChofer">Nombre del Chofer:</label>
-        <input type="text" id="txtChofer" placeholder="Ej: Mateo">
+        <label for="txtChofer">Cédula o ID del Funcionario/Chofer:</label>
+        <input type="text" id="txtChofer" placeholder="Ej: 1234">
     </div>
 
     <div class="campo">
@@ -29,8 +29,8 @@
     </div>
 
     <div class="campo">
-        <label for="txtAmbulancia">Unidad / Ambulancia:</label>
-        <input type="text" id="txtAmbulancia" placeholder="Ej: Móvil 3">
+        <label for="txtAmbulancia">Nº de Serie / Matrícula de Ambulancia:</label>
+        <input type="text" id="txtAmbulancia" placeholder="Ej: 1">
     </div>
 
     <button id="btnActivar" class="btn btn-activar">Compartir Ubicación en Tiempo Real</button>
@@ -50,24 +50,37 @@
         const txtAcompanante = document.getElementById('txtAcompanante');
         const txtAmbulancia = document.getElementById('txtAmbulancia');
 
-        async function guardarDatosIniciales() {
-            const formData = new FormData();
-            formData.append('accion', 'guardar_datos_chofer');
-            formData.append('id_traslado', ID_TRASLADO);
-            formData.append('chofer', txtChofer.value.trim());
-            formData.append('acompanante', txtAcompanante.value.trim());
-            formData.append('ambulancia', txtAmbulancia.value.trim());
-
-            await fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
-        }
-
         btnActivar.addEventListener('click', async () => {
-            if (!txtChofer.value.trim() || !txtAmbulancia.value.trim()) {
-                alert("Por favor, ingrese el nombre del chofer y la unidad de ambulancia.");
+            const choferVal = txtChofer.value.trim();
+            const ambVal = txtAmbulancia.value.trim();
+            const acompVal = txtAcompanante.value.trim();
+
+            if (!choferVal || !ambVal) {
+                alert("Por favor, ingrese la cédula del chofer y la unidad de ambulancia.");
                 return;
             }
 
-            await guardarDatosIniciales();
+            estado.innerText = "Guardando datos del traslado...";
+
+            try {
+                const formData = new FormData();
+                formData.append('accion', 'guardar_datos_chofer');
+                formData.append('id_traslado', ID_TRASLADO);
+                formData.append('chofer', choferVal);
+                formData.append('acompanante', acompVal);
+                formData.append('ambulancia', ambVal);
+
+                const resGuardar = await fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
+                const jsonGuardar = await resGuardar.json();
+
+                if (jsonGuardar.status !== 'ok') {
+                    alert("Error al guardar datos: " + (jsonGuardar.msg || 'Asegúrese de que la cédula y ambulancia existan en la base de datos'));
+                    return;
+                }
+            } catch (e) {
+                alert("Error de conexión al guardar los datos del chofer.");
+                return;
+            }
 
             if ("geolocation" in navigator) {
                 watchId = navigator.geolocation.watchPosition(
@@ -90,7 +103,7 @@
                         btnDesactivar.style.display = 'block';
                     },
                     (err) => {
-                        alert("Error al obtener la ubicación: " + err.message);
+                        alert("Error al obtener la ubicación GPS: " + err.message);
                     },
                     { enableHighAccuracy: true, timeout: 5000, maximumAge: 1000 }
                 );
