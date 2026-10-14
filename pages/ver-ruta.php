@@ -73,7 +73,6 @@
             background-color: #c82333;
         }
 
-        /* Estilos para los botones del menú superior */
         .nav-app {
             display: flex;
             gap: 10px;
@@ -118,14 +117,6 @@
         <section id="traslado2" class="tarjeta">
             <h1>Detalles del traslado activo</h1>
             <div class="grid-formulario">
-                <div class="campo">
-                    <label>Unidad:</label>
-                    <input type="text" value="Móvil 3" readonly>
-                </div>
-                <div class="campo">
-                    <label>Chofer:</label>
-                    <input type="text" value="Mateo" readonly>
-                </div>
                 <div class="campo">
                     <label for="transporte">Medio de Transporte:</label>
                     <select id="transporte">
@@ -200,7 +191,6 @@
                 </div>
             </div>
 
-            <!-- Botones de control del traslado -->
             <div class="grid-formulario">
                 <div class="campo">
                     <button type="button" id="btnIniciar" class="btn-accion btn-iniciar">Iniciar Traslado</button>

@@ -56,7 +56,7 @@
 
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 12px;
             margin-bottom: 15px;
         }
@@ -103,19 +103,23 @@
             <div class="info-grid">
                 <div class="info-card">
                     <strong>Ambulancia / Unidad:</strong>
-                    <div id="lblAmbulancia">Cargando...</div>
+                    <div id="lblAmbulancia" style="font-weight: bold;">Cargando...</div>
                 </div>
                 <div class="info-card">
                     <strong>Chofer Asignado:</strong>
-                    <div id="lblChofer">Cargando...</div>
+                    <div id="lblChofer" style="font-weight: bold;">Cargando...</div>
+                </div>
+                <div class="info-card">
+                    <strong>Acompañante:</strong>
+                    <div id="lblAcompanante" style="font-weight: bold;">Sin acompañante</div>
                 </div>
                 <div class="info-card">
                     <strong>Origen:</strong>
-                    <div id="lblOrigen">Cargando...</div>
+                    <div id="lblOrigen">Hospital de Clínicas</div>
                 </div>
                 <div class="info-card">
                     <strong>Destino:</strong>
-                    <div id="lblDestino">Cargando...</div>
+                    <div id="lblDestino" style="font-weight: bold;">Sin especificar</div>
                 </div>
             </div>
 
@@ -152,6 +156,7 @@
             const badgeEstado = document.getElementById('badgeEstado');
             const lblAmbulancia = document.getElementById('lblAmbulancia');
             const lblChofer = document.getElementById('lblChofer');
+            const lblAcompanante = document.getElementById('lblAcompanante');
             const lblOrigen = document.getElementById('lblOrigen');
             const lblDestino = document.getElementById('lblDestino');
 
@@ -165,18 +170,21 @@
 
             async function consultarTrazabilidad() {
                 try {
-                    // Evitar la caché del navegador añadiendo un timestamp aleatorio
-                    const res = await fetch(`../php/actualizar_posicion.php?accion=obtener_estado&id_traslado=${idActual}&_=${new Date().getTime()}`);
+                    // Forzar petición sin caché
+                    const timestamp = new Date().getTime();
+                    const res = await fetch(`../php/actualizar_posicion.php?accion=obtener_estado&id_traslado=${idActual}&t=${timestamp}`);
                     const json = await res.json();
 
                     if (json.status === 'ok' && json.data) {
                         const d = json.data;
 
                         lblIdTraslado.textContent = d.id_traslado;
-                        lblOrigen.textContent = d.origen || 'Hospital de Clínicas';
-                        lblDestino.textContent = d.destino || 'No especificado';
-                        lblAmbulancia.textContent = d.matricula_ambulancia ? `Móvil #${d.matricula_ambulancia}` : 'Móvil 3';
-                        lblChofer.textContent = d.cedula_funcionario || 'Mateo';
+                        lblOrigen.textContent = d.origen ? d.origen : 'Hospital de Clínicas';
+                        lblDestino.textContent = (d.destino && d.destino.trim() !== '') ? d.destino : 'Sin especificar';
+                        
+                        lblAmbulancia.textContent = (d.matricula_ambulancia && d.matricula_ambulancia.trim() !== '') ? d.matricula_ambulancia : 'Sin asignar';
+                        lblChofer.textContent = (d.cedula_funcionario && d.cedula_funcionario.trim() !== '') ? d.cedula_funcionario : 'Sin asignar';
+                        lblAcompanante.textContent = (d.acompanante && d.acompanante.trim() !== '') ? d.acompanante : 'Sin acompañante';
 
                         const estado = d.estado || 'pendiente';
 
@@ -222,7 +230,7 @@
                 }
             }
 
-            // Consultar inmediatamente y repetir la actualización cada 2 segundos en tiempo real
+            // Petición inicial y refresco continuo cada 2 segundos
             consultarTrazabilidad();
             setInterval(consultarTrazabilidad, 2000);
 
