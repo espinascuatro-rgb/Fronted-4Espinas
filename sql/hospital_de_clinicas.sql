@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-09-2026 a las 21:52:39
+-- Tiempo de generación: 14-10-2026 a las 03:38:50
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -204,7 +204,11 @@ CREATE TABLE `traslado` (
   `hora_de_llegada` time DEFAULT NULL,
   `cedula_funcionario` varchar(20) NOT NULL,
   `matricula_ambulancia` varchar(20) NOT NULL,
-  `destino` varchar(50) DEFAULT NULL
+  `destino` varchar(50) DEFAULT NULL,
+  `lat_chofer` decimal(10,8) DEFAULT NULL,
+  `lng_chofer` decimal(11,8) DEFAULT NULL,
+  `transporte` varchar(20) DEFAULT 'drive',
+  `estado` enum('pendiente','en_proceso','finalizado') DEFAULT 'pendiente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

@@ -73,6 +73,28 @@
             background-color: #c82333;
         }
 
+        /* Estilos para los botones del menú superior */
+        .nav-app {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-nav {
+            padding: 8px 15px;
+            background-color: #17a2b8;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-nav:hover {
+            background-color: #138496;
+        }
+
         #visualizar {
             height: 480px;
             width: 100%;
@@ -87,7 +109,8 @@
     <header class="encabezado-app">
         <h1>Visualización en GPS</h1>
         <nav class="nav-app">
-            <a href="../pages/trazabilidad.php">Volver a Trazabilidad</a>
+            <a href="chofer-gps.php" class="btn-nav">Modo Chofer (GPS)</a>
+            <a href="../pages/trazabilidad.php" class="btn-nav">Volver a Trazabilidad</a>
         </nav>
     </header>
 
