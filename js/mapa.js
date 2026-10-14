@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Estado del traslado
     let trasladoActivo = false;
 
-    // Inicializar el mapa con la opción de Pantalla Completa activada
+    // Inicializar el mapa con opción de Pantalla Completa
     const mapa = L.map('visualizar', {
         fullscreenControl: true,
         fullscreenControlOptions: {
@@ -53,10 +53,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const direccion = document.getElementById('dir');
     const insertlat = document.getElementById('lat');
     const insertlng = document.getElementById('lng');
+
     const inputTiempo = document.getElementById('tiempoEstimado');
+    const inputHoraLlegada = document.getElementById('horaLlegada');
+    const selectTransporte = document.getElementById('transporte');
 
     const btnIniciar = document.getElementById('btnIniciar');
     const btnFinalizar = document.getElementById('btnFinalizar');
+
+    // Función para calcular la hora estimada de llegada
+    function calcularHoraLlegada(segundosTotales) {
+        const ahora = new Date();
+        ahora.setSeconds(ahora.getSeconds() + segundosTotales);
+
+        const horas = String(ahora.getHours()).padStart(2, '0');
+        const minutos = String(ahora.getMinutes()).padStart(2, '0');
+
+        return `${horas}:${minutos} hs`;
+    }
 
     // Función para calcular y trazar la ruta en el mapa
     async function trazarRuta() {
@@ -64,8 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const origen = marcador.getLatLng();
         const destino = marcadorDestino.getLatLng();
+        const modoTransporte = selectTransporte.value; // drive, bicycle, walk
 
-        const urlRouting = `https://api.geoapify.com/v1/routing?waypoints=${origen.lat},${origen.lng}|${destino.lat},${destino.lng}&mode=drive&apiKey=${API_KEY}`;
+        const urlRouting = `https://api.geoapify.com/v1/routing?waypoints=${origen.lat},${origen.lng}|${destino.lat},${destino.lng}&mode=${modoTransporte}&apiKey=${API_KEY}`;
 
         try {
             const respuesta = await fetch(urlRouting);
@@ -84,9 +99,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const propiedades = datos.features[0].properties;
                 if (propiedades && propiedades.time) {
-                    const minutos = Math.ceil(propiedades.time / 60);
+                    const segundos = propiedades.time;
+                    const minutos = Math.ceil(segundos / 60);
+
                     if (inputTiempo) {
                         inputTiempo.value = `${minutos} Minutos`;
+                    }
+
+                    if (inputHoraLlegada) {
+                        inputHoraLlegada.value = calcularHoraLlegada(segundos);
                     }
                 }
             }
@@ -103,6 +124,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Evento: Cambiar medio de transporte
+    selectTransporte.addEventListener('change', () => {
+        if (trasladoActivo) {
+            trazarRuta();
+        }
+    });
+
     // Evento: Iniciar Traslado
     btnIniciar.addEventListener('click', () => {
         trasladoActivo = true;
@@ -113,9 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
     btnFinalizar.addEventListener('click', () => {
         trasladoActivo = false;
         limpiarRuta();
-        if (inputTiempo) {
-            inputTiempo.value = 'Traslado finalizado';
-        }
+        if (inputTiempo) inputTiempo.value = 'Traslado finalizado';
+        if (inputHoraLlegada) inputHoraLlegada.value = 'Traslado finalizado';
     });
 
     // Actualizar ruta cuando se arrastren los marcadores

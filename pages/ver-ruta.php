@@ -104,8 +104,20 @@
                     <input type="text" value="Mateo" readonly>
                 </div>
                 <div class="campo">
+                    <label for="transporte">Medio de Transporte:</label>
+                    <select id="transporte">
+                        <option value="drive" selected>Vehículo / Auto</option>
+                        <option value="bicycle">Bicicleta</option>
+                        <option value="walk">A Pie / Caminando</option>
+                    </select>
+                </div>
+                <div class="campo">
                     <label>Tiempo Estimado:</label>
                     <input type="text" id="tiempoEstimado" value="Sin iniciar" readonly>
+                </div>
+                <div class="campo">
+                    <label>Hora Estimada de Llegada:</label>
+                    <input type="text" id="horaLlegada" value="Sin iniciar" readonly>
                 </div>
             </div>
         </section>
