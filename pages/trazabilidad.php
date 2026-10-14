@@ -67,6 +67,6 @@
         <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
-    <script src="../Fronted-4Espinas/js/trazabilidad.js"></script>
+    <script src="../js/trazabilidad.js"></script>
 </body>
 </html>
