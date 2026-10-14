@@ -4,8 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Estado del traslado
     let trasladoActivo = false;
 
-    // Inicializar el mapa
-    const mapa = L.map('visualizar').setView([-34.9011, -56.1645], 15);
+    // Inicializar el mapa con la opción de Pantalla Completa activada
+    const mapa = L.map('visualizar', {
+        fullscreenControl: true,
+        fullscreenControlOptions: {
+            position: 'topleft'
+        }
+    }).setView([-34.9011, -56.1645], 15);
 
     // Cargar mapa desde OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -55,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Función para calcular y trazar la ruta en el mapa
     async function trazarRuta() {
-        if (!trasladoActivo) return; // Solo trazar si el traslado está activo
+        if (!trasladoActivo) return;
 
         const origen = marcador.getLatLng();
         const destino = marcadorDestino.getLatLng();
@@ -67,10 +72,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const datos = await respuesta.json();
 
             if (datos.features && datos.features.length > 0) {
-                // Eliminar la ruta anterior si existe
                 limpiarRuta();
 
-                // Dibujar la nueva ruta trazada por calles
                 capaRuta = L.geoJSON(datos.features[0], {
                     style: {
                         color: '#007bff',
@@ -79,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }).addTo(mapa);
 
-                // Calcular el tiempo estimado
                 const propiedades = datos.features[0].properties;
                 if (propiedades && propiedades.time) {
                     const minutos = Math.ceil(propiedades.time / 60);
@@ -116,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Actualizar ruta cuando se arrastren los marcadores (solo si está activo)
+    // Actualizar ruta cuando se arrastren los marcadores
     marcador.on('dragend', () => {
         if (trasladoActivo) trazarRuta();
     });
@@ -149,15 +151,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resultado = dato.results[0];
                 const nuevaPos = [resultado.lat, resultado.lon];
 
-                // Mover marcador de destino a la nueva ubicación
                 marcadorDestino.setLatLng(nuevaPos);
                 marcadorDestino.bindPopup(`<b>Destino:</b><br>${resultado.formatted}`).openPopup();
 
-                // Ajustar vista para abarcar origen y destino
                 const grupo = new L.featureGroup([marcador, marcadorDestino]);
                 mapa.fitBounds(grupo.getBounds().pad(0.2));
 
-                // Si el traslado ya está activo, recalculamos la ruta hacia la nueva dirección
                 if (trasladoActivo) {
                     await trazarRuta();
                 }
