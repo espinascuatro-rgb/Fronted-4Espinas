@@ -5,23 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guía de Tratamientos y Testimonios - Hospital de Clínicas</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/elementosC.css">
+    <link rel="stylesheet" href="../css/tratamientos.css">
 </head>
 <body>
-    <header id="Headerguia" class="encabezado-app">
-        <img src="../fotos-videos/Logo-Hospital.png" alt="Logo del hospital" class="logo">
-        <h1>Hospital de Clínicas "Dr. Manuel Quintela"</h1>
+    <header class="Headerguia">
+       <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
         <h2>Guía de Tratamientos, Servicios y Experiencias de los Pacientes</h2>
-        <nav class="nav-app">
+        <nav class="navguia">
             <a href="../pages/guia.php">Inicio</a>
-            <a href="../pages/tratamientos.php" class="activo">Pacientes</a>
+            <a href="../pages/tratamientos.php">Pacientes</a>
             <a href="../pages/traslados.php">Ambulancias</a>
             <a href="../pages/ajustes.php">Ajustes</a>
         </nav>
     </header>
 
-    <div class="container">
-        <section>
+    <main class="maintrata">
+        <section id="sectiontrata">
             <h2>1. Guía de los Tratamientos y Especialidades</h2>
             <p>El Hospital de Clínicas es el hospital universitario de la Universidad de la República (Udelar) y centro de referencia nacional en procedimientos de alta complejidad en Montevideo, Uruguay.</p>
             
@@ -50,32 +50,35 @@
 
         <hr>
 
-        <section>
+        <section id="sectiontrata2">
             <h2>2. Testimonios y Experiencias de Pacientes (Vídeos de Guía)</h2>
             <p>Conoce las vivencias en primera persona de pacientes que han realizado sus tratamientos e internaciones en el Hospital de Clínicas:</p>
 
-            <div class="video-grid">
+            <div id="videos">
 
-                <div class="video-card">
+                <div class="video-muestra">
                     <h3>La voz del paciente: Testimonios de Superación</h3>
                     <p>Pacientes que realizaron tratamientos oncológicos (quimioterapia e inmunoterapia) comparten su vivencia y la atención humana recibida por los médicos y el personal.</p>
                     <iframe src="https://www.youtube.com/embed/DmsZCjl8xDM" title="Testimonio de paciente - Hospital de Clínicas" allowfullscreen></iframe>
                 </div>
 
-                <div class="video-card">
+                <div class="video-muestra">
                     <h3>Instalaciones del Hotel de Pacientes</h3>
                     <p>Recorrido y experiencia en el espacio acondicionado para alojar de forma digna a pacientes en tratamientos ambulatorios prolongados.</p>
                     <iframe src="https://www.youtube.com/embed/sN9w-Bqx7vc" title="Hotel de Pacientes - Hospital de Clínicas" allowfullscreen></iframe>
                 </div>
 
-                <div class="video-card">
+                <div class="video-muestra">
                     <h3>Historias del Piso 10: Renovación e Internación</h3>
                     <p>Vídeo conmemorativo que refleja las historias de lucha, recuperación y memoria viva de las salas de internación remodeladas.</p>
                     <iframe src="https://www.youtube.com/embed/gqISiMsyLuQ" title="Las paredes del piso 10 - Historias de pacientes" allowfullscreen></iframe>
                 </div>
             </div>
         </section>
-    </div>
-
+    </main>
+        <footer class="footerguia">
+        <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
+        <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
+    </footer>
 </body>
 </html>
