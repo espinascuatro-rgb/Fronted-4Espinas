@@ -6,6 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trazabilidad - Hospital de Clínicas</title>
     <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .badge-pendiente { background-color: #ffc107; color: #212529; }
+        .badge-proceso { background-color: #28a745; color: #ffffff; }
+        .badge-finalizado { background-color: #6c757d; color: #ffffff; }
+
+        .timeline-list {
+            list-style: none;
+            padding-left: 0;
+            position: relative;
+            margin-top: 15px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            border-left: 3px solid #007bff;
+            transition: all 0.3s;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 4px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #007bff;
+        }
+
+        .timeline-item.inactivo {
+            border-left-color: #ccc;
+            color: #888;
+        }
+
+        .timeline-item.inactivo::before {
+            background-color: #ccc;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .info-card {
+            background-color: #f8f9fa;
+            padding: 10px 14px;
+            border-radius: 6px;
+            border-left: 4px solid #0a192f;
+        }
+    </style>
 </head>
 <body>
     <header class="encabezado-app">
@@ -18,35 +80,160 @@
             <a href="../pages/guia.php">Inicio</a>
             <a href="../pages/tratamientos.php">Pacientes</a>
             <a href="../pages/traslados.php">Ambulancias</a>
+            <a href="../pages/ver-ruta.php">GPS Ver Ruta</a>
             <a href="../pages/ajustes.php">Ajustes</a>
         </nav>
     </header>
+
     <main>
-        <section id="traslado1"> 
-            <p>Buscar código de traslado:</p>
-            <input type="text" placeholder="Ingrese ID de traslado">
-            <button class="btn-primary">Rastrear</button>
+        <section id="traslado1" class="tarjeta"> 
+            <p><strong>Buscar código de traslado:</strong></p>
+            <div style="display: flex; gap: 10px; max-width: 400px;">
+                <input type="number" id="inputBuscarId" placeholder="Ingrese ID (Ej: 1)" value="1" style="flex: 1; padding: 8px;">
+                <button id="btnRastrear" class="btn-primary" style="padding: 8px 15px;">Rastrear</button>
+            </div>
         </section>
         
         <section class="tarjeta">
-            <h2 style="color: var(--azul-marino);">Estado Actual del Traslado</h2>
-            <p><strong>Paciente:</strong> Ejemplo</p>
-            <p><strong>Vehículo:</strong> Mateo</p>
-            <p><strong>Origen:</strong> Aura</p>
-            <p><strong>Destino:</strong> Laura</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                <h2 style="color: var(--azul-marino);">Estado Actual del Traslado #<span id="lblIdTraslado">1</span></h2>
+                <span id="badgeEstado" class="badge badge-pendiente">Cargando...</span>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <strong>Ambulancia / Unidad:</strong>
+                    <div id="lblAmbulancia">Cargando...</div>
+                </div>
+                <div class="info-card">
+                    <strong>Chofer Asignado:</strong>
+                    <div id="lblChofer">Cargando...</div>
+                </div>
+                <div class="info-card">
+                    <strong>Origen:</strong>
+                    <div id="lblOrigen">Cargando...</div>
+                </div>
+                <div class="info-card">
+                    <strong>Destino:</strong>
+                    <div id="lblDestino">Cargando...</div>
+                </div>
+            </div>
+
             <hr>
-            <h3 style="color: var(--azul-medio);">Línea de tiempo:</h3>
-            <ul>
-                <li><strong>10:00</strong> Solicitud generada.</li>
-                <li><strong>13:00</strong> Ambulancia desplegada.</li>
-                <li><strong>15:00</strong> Paciente a bordo. (En tránsito)</li>
-                <li style="color: gray;">Llegada estimada: 22:00</li>
+            
+            <h3 style="color: var(--azul-medio);">Línea de Tiempo en Tiempo Real</h3>
+            <ul class="timeline-list">
+                <li id="step1" class="timeline-item">
+                    <strong>Hora de Salida:</strong> <span id="lblHoraSalida">Pendiente</span>
+                </li>
+                <li id="step2" class="timeline-item">
+                    <strong>Estado del Trayecto:</strong> <span id="lblEstadoTexto">Esperando inicio...</span>
+                </li>
+                <li id="step3" class="timeline-item">
+                    <strong>Hora Estimada de Llegada (GPS):</strong> <span id="lblHoraLlegada" style="font-weight: bold; color: #007bff;">Calculando...</span>
+                </li>
             </ul>
         </section>
     </main>
+
     <footer class="pie-app">
         <p>Equipo 4 Espinas</p>
-        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
+        <button><a href="../php/logout.php" style="color: white; text-decoration: none;">Cerrar Sesión</a></button>
     </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            let idActual = 1;
+
+            const inputBuscarId = document.getElementById('inputBuscarId');
+            const btnRastrear = document.getElementById('btnRastrear');
+
+            const lblIdTraslado = document.getElementById('lblIdTraslado');
+            const badgeEstado = document.getElementById('badgeEstado');
+            const lblAmbulancia = document.getElementById('lblAmbulancia');
+            const lblChofer = document.getElementById('lblChofer');
+            const lblOrigen = document.getElementById('lblOrigen');
+            const lblDestino = document.getElementById('lblDestino');
+
+            const lblHoraSalida = document.getElementById('lblHoraSalida');
+            const lblEstadoTexto = document.getElementById('lblEstadoTexto');
+            const lblHoraLlegada = document.getElementById('lblHoraLlegada');
+
+            const step1 = document.getElementById('step1');
+            const step2 = document.getElementById('step2');
+            const step3 = document.getElementById('step3');
+
+            async function consultarTrazabilidad() {
+                try {
+                    // Evitar la caché del navegador añadiendo un timestamp aleatorio
+                    const res = await fetch(`../php/actualizar_posicion.php?accion=obtener_estado&id_traslado=${idActual}&_=${new Date().getTime()}`);
+                    const json = await res.json();
+
+                    if (json.status === 'ok' && json.data) {
+                        const d = json.data;
+
+                        lblIdTraslado.textContent = d.id_traslado;
+                        lblOrigen.textContent = d.origen || 'Hospital de Clínicas';
+                        lblDestino.textContent = d.destino || 'No especificado';
+                        lblAmbulancia.textContent = d.matricula_ambulancia ? `Móvil #${d.matricula_ambulancia}` : 'Móvil 3';
+                        lblChofer.textContent = d.cedula_funcionario || 'Mateo';
+
+                        const estado = d.estado || 'pendiente';
+
+                        if (estado === 'en_proceso') {
+                            badgeEstado.className = 'badge badge-proceso';
+                            badgeEstado.textContent = 'En Proceso / En Tránsito';
+
+                            lblHoraSalida.textContent = d.hora_de_salida ? `${d.hora_de_salida} hs` : 'Iniciado';
+                            lblEstadoTexto.textContent = 'Unidad en trayecto activo monitoreada por GPS';
+                            lblHoraLlegada.textContent = d.hora_estimada_gps ? d.hora_estimada_gps : 'Calculando por GPS...';
+
+                            step1.classList.remove('inactivo');
+                            step2.classList.remove('inactivo');
+                            step3.classList.remove('inactivo');
+
+                        } else if (estado === 'finalizado') {
+                            badgeEstado.className = 'badge badge-finalizado';
+                            badgeEstado.textContent = 'Finalizado / Completado';
+
+                            lblHoraSalida.textContent = d.hora_de_salida ? `${d.hora_de_salida} hs` : 'Completado';
+                            lblEstadoTexto.textContent = 'El móvil ha llegado al destino final';
+                            lblHoraLlegada.textContent = d.hora_de_llegada ? `Llegó a las ${d.hora_de_llegada} hs` : 'Finalizado';
+
+                            step1.classList.remove('inactivo');
+                            step2.classList.remove('inactivo');
+                            step3.classList.remove('inactivo');
+
+                        } else {
+                            badgeEstado.className = 'badge badge-pendiente';
+                            badgeEstado.textContent = 'Pendiente / En Espera';
+
+                            lblHoraSalida.textContent = 'Sin iniciar';
+                            lblEstadoTexto.textContent = 'Esperando inicio del traslado en el mapa';
+                            lblHoraLlegada.textContent = 'Sin iniciar';
+
+                            step1.classList.add('inactivo');
+                            step2.classList.add('inactivo');
+                            step3.classList.add('inactivo');
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error actualizando trazabilidad:', e);
+                }
+            }
+
+            // Consultar inmediatamente y repetir la actualización cada 2 segundos en tiempo real
+            consultarTrazabilidad();
+            setInterval(consultarTrazabilidad, 2000);
+
+            btnRastrear.addEventListener('click', () => {
+                const nuevoId = parseInt(inputBuscarId.value);
+                if (nuevoId > 0) {
+                    idActual = nuevoId;
+                    consultarTrazabilidad();
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let yaAlertoLlegada = false;
     let intervaloPolling = null;
 
+    // Inicializar el mapa
     const mapa = L.map('visualizar', {
         fullscreenControl: true,
         fullscreenControlOptions: { position: 'topleft' }
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; OpenStreetMap'
     }).addTo(mapa);
 
+    // Iconos personalizados
     const ImagenMarcador = L.icon({
         iconUrl: '../mape/mapo1.png',
         iconSize: [38, 45],
@@ -35,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let capaRuta = null;
 
+    // Elementos del DOM
     const ingresaro = document.getElementById('ingresar0');
     const ubicar = document.getElementById('ubicar');
     const departamento = document.getElementById('departamento');
@@ -49,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnIniciar = document.getElementById('btnIniciar');
     const btnFinalizar = document.getElementById('btnFinalizar');
 
+    // Calcular distancia en metros entre dos puntos
     function calcularDistanciaMetros(lat1, lon1, lat2, lon2) {
         const R = 6371e3;
         const φ1 = lat1 * Math.PI / 180;
@@ -62,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     }
 
+    // Trazar ruta y enviar tiempo estimado a la Base de Datos
     async function actualizarRutaYCuentaRegresiva(posChofer, posDestino) {
         const modo = selectTransporte.value;
         const url = `https://api.geoapify.com/v1/routing?waypoints=${posChofer.lat},${posChofer.lng}|${posDestino.lat},${posDestino.lng}&mode=${modo}&apiKey=${API_KEY}`;
@@ -90,7 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         ahora.setSeconds(ahora.getSeconds() + segundos);
                         const horas = String(ahora.getHours()).padStart(2, '0');
                         const mins = String(ahora.getMinutes()).padStart(2, '0');
-                        inputHoraLlegada.value = `${horas}:${mins} hs`;
+                        const horaCalculada = `${horas}:${mins} hs`;
+                        
+                        inputHoraLlegada.value = horaCalculada;
+
+                        // Guardar la hora estimada de llegada en la BD para Trazabilidad
+                        const formData = new FormData();
+                        formData.append('accion', 'actualizar_tiempo_gps');
+                        formData.append('id_traslado', ID_TRASLADO);
+                        formData.append('hora_estimada', horaCalculada);
+                        fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
                     }
                 }
             }
@@ -110,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!trasladoActivo) return;
 
         try {
-            const res = await fetch(`../php/actualizar_posicion.php?accion=obtener_estado&id_traslado=${ID_TRASLADO}`);
+            const res = await fetch(`../php/actualizar_posicion.php?accion=obtener_estado&id_traslado=${ID_TRASLADO}&_=${new Date().getTime()}`);
             const respuesta = await res.json();
 
             let posChofer = null;
@@ -163,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         intervaloPolling = setInterval(monitorearTraslado, 4000);
     });
 
-    // Botón: Finalizar Traslado (Permite iniciar otro traslado inmediatamente después)
+    // Botón: Finalizar Traslado
     btnFinalizar.addEventListener('click', async () => {
         trasladoActivo = false;
         if (intervaloPolling) {
@@ -188,7 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (trasladoActivo) monitorearTraslado();
     });
 
-    // Permitir arrastrar el marcador de destino libremente
     marcadorDestino.on('dragend', () => {
         if (trasladoActivo) monitorearTraslado();
     });
@@ -199,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
         insertlng.value = posicion.lng.toFixed(6);
     });
 
-    // Botón para geolocalizar cualquier nueva dirección y cambiar el destino
     ubicar.addEventListener('click', async () => {
         if (!direccion.value.trim()) {
             alert('Por favor ingrese una dirección.');
@@ -217,11 +229,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const resultado = dato.results[0];
                 const nuevaPos = [resultado.lat, resultado.lon];
 
-                // Mover el marcador de destino libremente
                 marcadorDestino.setLatLng(nuevaPos);
                 marcadorDestino.bindPopup(`<b>Destino:</b><br>${resultado.formatted}`).openPopup();
 
-                // Actualizar la dirección en la base de datos
                 const formData = new FormData();
                 formData.append('accion', 'actualizar_destino');
                 formData.append('id_traslado', ID_TRASLADO);

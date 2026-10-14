@@ -35,17 +35,14 @@ if ($accion === 'actualizar_chofer') {
         echo json_encode(['status' => 'error', 'msg' => 'Coordenadas nulas']);
     }
 
-// 2. Guardar o actualizar la dirección/coordenadas de destino
-} elseif ($accion === 'actualizar_destino') {
+// 2. Guardar hora estimada calculada por el GPS de Geoapify
+} elseif ($accion === 'actualizar_tiempo_gps') {
     $id_traslado = isset($_POST['id_traslado']) ? intval($_POST['id_traslado']) : 1;
-    $direccion = $_POST['direccion'] ?? '';
-    $lat_dest = isset($_POST['lat_dest']) ? floatval($_POST['lat_dest']) : null;
-    $lng_dest = isset($_POST['lng_dest']) ? floatval($_POST['lng_dest']) : null;
+    $hora_estimada = $_POST['hora_estimada'] ?? '';
 
-    $stmt = $conexion->prepare("UPDATE traslado SET destino = ? WHERE id_traslado = ?");
-    $stmt->bind_param("si", $direccion, $id_traslado);
+    $stmt = $conexion->prepare("UPDATE traslado SET hora_estimada_gps = ? WHERE id_traslado = ?");
+    $stmt->bind_param("si", $hora_estimada, $id_traslado);
     $stmt->execute();
-
     echo json_encode(['status' => 'ok']);
 
 // 3. Obtener el estado del traslado en tiempo real

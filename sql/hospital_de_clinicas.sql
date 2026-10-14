@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-10-2026 a las 04:02:22
+-- Tiempo de generación: 14-10-2026 a las 04:26:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -202,6 +202,7 @@ CREATE TABLE `traslado` (
   `origen` varchar(50) DEFAULT NULL,
   `hora_de_salida` time DEFAULT NULL,
   `hora_de_llegada` time DEFAULT NULL,
+  `hora_estimada_gps` varchar(20) DEFAULT NULL,
   `cedula_funcionario` varchar(20) NOT NULL,
   `matricula_ambulancia` varchar(20) NOT NULL,
   `destino` varchar(50) DEFAULT NULL,
@@ -215,8 +216,8 @@ CREATE TABLE `traslado` (
 -- Volcado de datos para la tabla `traslado`
 --
 
-INSERT INTO `traslado` (`id_traslado`, `origen`, `hora_de_salida`, `hora_de_llegada`, `cedula_funcionario`, `matricula_ambulancia`, `destino`, `lat_chofer`, `lng_chofer`, `transporte`, `estado`) VALUES
-(1, 'Hospital de Clinicas', NULL, NULL, '1234', '1', 'Av. Italia 2870', -34.90110000, -56.16450000, 'drive', 'pendiente');
+INSERT INTO `traslado` (`id_traslado`, `origen`, `hora_de_salida`, `hora_de_llegada`, `hora_estimada_gps`, `cedula_funcionario`, `matricula_ambulancia`, `destino`, `lat_chofer`, `lng_chofer`, `transporte`, `estado`) VALUES
+(1, 'Hospital de Clinicas', '04:21:36', NULL, NULL, '1234', '1', 'Av. Italia 2870', -32.31880179, -58.05748294, 'drive', 'en_proceso');
 
 -- --------------------------------------------------------
 
