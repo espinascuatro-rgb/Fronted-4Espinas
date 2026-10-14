@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-10-2026 a las 03:38:50
+-- Tiempo de generación: 14-10-2026 a las 04:02:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -210,6 +210,13 @@ CREATE TABLE `traslado` (
   `transporte` varchar(20) DEFAULT 'drive',
   `estado` enum('pendiente','en_proceso','finalizado') DEFAULT 'pendiente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `traslado`
+--
+
+INSERT INTO `traslado` (`id_traslado`, `origen`, `hora_de_salida`, `hora_de_llegada`, `cedula_funcionario`, `matricula_ambulancia`, `destino`, `lat_chofer`, `lng_chofer`, `transporte`, `estado`) VALUES
+(1, 'Hospital de Clinicas', NULL, NULL, '1234', '1', 'Av. Italia 2870', -34.90110000, -56.16450000, 'drive', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -466,7 +473,7 @@ ALTER TABLE `tipo_u`
 -- AUTO_INCREMENT de la tabla `traslado`
 --
 ALTER TABLE `traslado`
-  MODIFY `id_traslado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_traslado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
