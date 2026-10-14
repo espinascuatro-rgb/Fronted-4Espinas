@@ -1,0 +1,196 @@
+/* ==========================================================================
+   Body, main, diseño de tarjetas.
+   ========================================================================== */
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+    background-color: #f4f6f9; 
+}
+
+/* Todos son pasajeros, menos el chofer */
+.maintrazabilidad {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 40px 20px;
+    flex: 1;
+    box-sizing: border-box;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.tarjeta {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+.tarjeta-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+/* ==========================================================================
+   Diseño de titulos, parrafos y texto en general.
+   ========================================================================== */
+.tarjeta h2 {
+    color: #004080;
+    font-size: 1.4rem;
+    margin: 0;
+}
+
+.tarjeta h3 {
+    color: #004080;
+    font-size: 1.15rem;
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+.tarjeta p {
+    color: #333333;
+    margin-top: 0;
+    margin-bottom: 12px;
+}
+/* ==========================================================================
+   input de busqueda, botones y etiquetas varias.
+   ========================================================================== */
+.search-container {
+    display: flex;
+    gap: 12px;
+    max-width: 400px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background-color: #f8f9fa;
+    color: #495057;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-input:focus {
+    border-color: #0056b3;
+    background-color: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
+}
+
+.btn-primary {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 22px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #003d82;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.info-card {
+    background-color: #f8f9fa;
+    padding: 15px 18px;
+    border-radius: 8px;
+    border-left: 4px solid #0056b3;
+}
+
+.info-card strong {
+    color: #333333;
+    font-size: 0.9rem;
+}
+
+.info-value {
+    font-weight: bold;
+    color: #0056b3;
+    font-size: 1.05rem;
+    margin-top: 6px;
+}
+
+.separator {
+    border: none;
+    border-top: 1px solid #e9ecef;
+    margin: 20px 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.badge-pendiente {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.badge-proceso {
+    background-color: #28a745;
+    color: #ffffff;
+}
+
+.badge-finalizado {
+    background-color: #6c757d;
+    color: #ffffff;
+}
+
+.timeline-list {
+    list-style: none;
+    padding-left: 0;
+    position: relative;
+    margin: 0;
+}
+
+.timeline-item {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    border-left: 3px solid #0056b3;
+    transition: all 0.3s;
+    color: #495057;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -6.5px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #0056b3;
+}
+
+.timeline-item.inactivo {
+    border-left-color: #ced4da;
+    color: #6c757d;
+}
+
+.timeline-item.inactivo::before {
+    background-color: #ced4da;
+}
