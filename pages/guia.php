@@ -37,7 +37,7 @@
         </section>
         <section id="sectionguia2">
             <h2>Visualización en el mapa</h2>
-            <img src="" height="300" width="400" alt="Espacio para el mapa">
+            <img src="../fotos-videos/hospital-de-clinicas.jpg" alt="Imagen del Hospital de Clínicas" height="300" width="400" style="object-fit: cover; border-radius: 8px;">
             <button class="btnguia4"><a href="../pages/registro-ambulancia.php">Registro Ambulancia</a></button>
             <button class="btnguia5"><a href="../pages/trazabilidad.php">Trazabilidad</a></button>
             <button class="btnguia6"><a href="../pages/ver-ruta.php">Ver Mapa/Rutas</a></button>
