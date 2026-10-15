@@ -2,16 +2,15 @@ document.addEventListener('DOMContentLoaded', () => {
     let coordsOrigen = [-34.8883, -56.1561];
     let coordsDestino = [-34.8812, -56.1420];
 
-    // Iconos Personalizados (mapo1.png y mapo2.png)
     const iconoMapo1 = L.icon({
-        iconUrl: '../fotos-videos/mapo1.png',
+        iconUrl: '../mape/mapo2.png',
         iconSize: [38, 38],
         iconAnchor: [19, 38],
         popupAnchor: [0, -38]
     });
 
     const iconoMapo2 = L.icon({
-        iconUrl: '../fotos-videos/mapo2.png',
+        iconUrl: '../mape/mapo1.png',
         iconSize: [38, 38],
         iconAnchor: [19, 38],
         popupAnchor: [0, -38]
@@ -24,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    // Botón de Pantalla Completa debajo de las herramientas de Zoom
     const zoomContainer = document.querySelector('.leaflet-control-zoom');
     if (zoomContainer) {
         const btnFS = document.createElement('a');

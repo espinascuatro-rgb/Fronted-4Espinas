@@ -18,7 +18,6 @@ $res_traslados = $con->query($sql_traslados);
     <link rel="stylesheet" href="../css/elementosC.css">
     <link rel="stylesheet" href="../css/guia.css">
     <link rel="stylesheet" href="../css/ver-ruta.css">
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 
@@ -38,9 +37,6 @@ $res_traslados = $con->query($sql_traslados);
     <main class="mainguia">
         <section class="sectionguia contenedor-ruta-main">
             <div class="header-acciones-ruta">
-                <button class="btnguia1 btn-volver">
-                    <a href="../pages/guia.php">← Volver al Inicio</a>
-                </button>
                 <div class="grupo-botones-nav">
                     <button class="btnguia4 btn-chofer-nav">
                         <a href="../pages/chofer-gps.php">Modo Chofer</a>
@@ -51,16 +47,15 @@ $res_traslados = $con->query($sql_traslados);
                 </div>
             </div>
 
-            <h2 class="titulo-seccion">Seguimiento y Visualización de Rutas en Tiempo Real</h2>
+            <h2 class="titulo-seccion">Seguimiento y Visualización de Rutas</h2>
 
             <div class="panel-ruta-grid">
-                <!-- Panel Lateral -->
                 <div class="tarjeta-controles-ruta">
                     <h3>Selección de Traslado</h3>
                     <div class="form-group-ruta">
-                        <label for="selectTraslado"><strong>Seleccionar Traslado Activo:</strong></label>
+                        <label for="selectTraslado"><strong>Selecciona un traslado Activo:</strong></label>
                         <select id="selectTraslado" class="input-select-ruta">
-                            <option value="">-- Seleccione un traslado --</option>
+                            <option value=""> Selecciona un traslado </option>
                             <?php if ($res_traslados && $res_traslados->num_rows > 0): ?>
                                 <?php while ($t = $res_traslados->fetch_assoc()): ?>
                                     <option value="<?php echo $t['id_traslado']; ?>" 
@@ -80,22 +75,17 @@ $res_traslados = $con->query($sql_traslados);
                     </div>
 
                     <div id="infoTraslado" class="info-traslado-card">
-                        <p><strong>Nº Traslado:</strong> <span id="txtId">--</span></p>
+                        <p><strong>Nº Traslado:</strong> <span id="txtId"></span></p>
                         <p><strong>Origen:</strong> <span id="txtOrigen">Hospital de Clínicas</span></p>
-                        <p><strong>Destino:</strong> <span id="txtDestino">--</span></p>
+                        <p><strong>Destino:</strong> <span id="txtDestino"></span></p>
                         <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado">Sin Selección</span></p>
-                        <p><strong>Distancia estimada:</strong> <span id="txtDistancia">-- km</span></p>
-                        <p><strong>Hora Salida:</strong> <span id="txtSalida">--</span></p>
-                        <p><strong>Llegada Estimada:</strong> <span id="txtEstimada">--</span></p>
-                        <p><strong>Unidad Ambulancia:</strong> <span id="txtAmbulancia">--</span></p>
+                        <p><strong>Distancia estimada:</strong> <span id="txtDistancia">km</span></p>
+                        <p><strong>Hora Salida:</strong> <span id="txtSalida"></span></p>
+                        <p><strong>Llegada Estimada:</strong> <span id="txtEstimada"></span></p>
+                        <p><strong>Unidad Ambulancia:</strong> <span id="txtAmbulancia"></span></p>
                     </div>
-
-                    <button class="btn-ir-chofer">
-                        <a href="../pages/modo-chofer.php" style="color: white; font-weight: bold;">Acceder a Modo Chofer (GPS)</a>
-                    </button>
                 </div>
 
-                <!-- Contenedor del Mapa -->
                 <div class="tarjeta-mapa-box" id="mapaBox">
                     <div id="mapaRuta" class="mapa-contenedor"></div>
                 </div>
@@ -108,7 +98,6 @@ $res_traslados = $con->query($sql_traslados);
         <button><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
-    <!-- Leaflet JS y Script de Control -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../js/ver-ruta.js"></script>
 </body>
