@@ -100,14 +100,13 @@ $res_ambulancias = $con->query($sql_ambulancias);
         </nav>
     </header>
     <main class="mainregistroambu" style="max-width: 900px; margin: 20px auto; padding: 20px;">
-        <a href="../pages/guia.php" class="btn-inicio">← Volver al Inicio</a>
 
         <?php if (isset($_GET['msg'])): ?>
             <div class="alerta alerta-exito">
                 <?php 
-                    if ($_GET['msg'] === 'guardado') echo "¡Ambulancia registrada correctamente!";
-                    if ($_GET['msg'] === 'editado') echo "¡Datos de la ambulancia actualizados!";
-                    if ($_GET['msg'] === 'eliminado') echo "¡Ambulancia eliminada correctamente!";
+                    if ($_GET['msg'] === 'guardado') echo "La mbulancia ha sido registrada de la forma ideal";
+                    if ($_GET['msg'] === 'editado') echo "Datos de la ambulancia actualizados de forma clara";
+                    if ($_GET['msg'] === 'eliminado') echo "Ambulancia eliminada correctamente";
                 ?>
             </div>
         <?php endif; ?>
