@@ -50,7 +50,7 @@ if ($accion === 'guardar_insumos') {
     $hilos_quirurgicos = intval($_POST['hilos_quirurgicos'] ?? 0);
 
     if (empty($numero_de_serie)) {
-        header("Location: ../pages/traslados.php?err=" . urlencode("Debe seleccionar una ambulancia."));
+        header("Location: ../pages/traslados.php?err=" . urlencode("Debe seleccionar la ambulancia."));
         exit;
     }
 

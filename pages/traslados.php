@@ -177,7 +177,7 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label for="numero_de_serie_ambulancia">Seleccionar Ambulancia / Unidad:</label>
                     <select id="numero_de_serie_ambulancia" name="numero_de_serie_ambulancia" required onchange="cargarInsumosAmbulancia(this.value)">
-                        <option value="">-- Seleccione la Ambulancia --</option>
+                        <option value=""> Selecciona la Ambulancia </option>
                         <?php 
                         if ($res_ambulancias && $res_ambulancias->num_rows > 0) {$res_ambulancias->data_seek(0);
                             while ($amb =$res_ambulancias->fetch_assoc()) {
