@@ -8,7 +8,6 @@ $base_datos = "hospital_de_clinicas";
 
 $conexion = new mysqli($servidor, $usuario,$password, $base_datos);$conexion->set_charset("utf8mb4");
 
-// Obtener todas las ambulancias de la base de datos
 $sql_ambulancias = "SELECT a.*, i.vendas, i.jeringas, i.equipos_infusion, i.guantes, i.mascarillas, i.hisopos, i.desinfectantes, i.termometros, i.hilos_quirurgicos
                     FROM ambulancia a 
                     LEFT JOIN insumo_ambulancia i ON a.numero_de_serie = i.numero_de_serie_ambulancia 
@@ -132,12 +131,11 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
     </header>
 
     <main class="contenedor-main">
-        <a href="../pages/guia.php" class="btn-inicio">← Volver al Inicio</a>
 
         <?php if (isset($_GET['msg'])): ?>
             <div class="alerta alerta-exito">
                 <?php 
-                    if ($_GET['msg'] === 'insumos_guardados') echo "¡Insumos médicos registrados correctamente en la ambulancia!";
+                    if ($_GET['msg'] === 'insumos_guardados') echo "Los insumos médicos han sido registrados en la ambulancia";
                 ?>
             </div>
         <?php endif; ?>
@@ -148,7 +146,6 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
             </div>
         <?php endif; ?>
 
-        <!-- Sección de Control e Insumos Médicos -->
         <section class="tarjeta">
             <h2 style="color: #0a192f;">Registro de Insumos por Ambulancia</h2>
             <form action="../php/guardar_insumos_ambulancia.php" method="POST">
@@ -157,7 +154,7 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label for="numero_de_serie_ambulancia">Seleccionar Ambulancia / Unidad:</label>
                     <select id="numero_de_serie_ambulancia" name="numero_de_serie_ambulancia" required onchange="cargarInsumosAmbulancia(this.value)">
-                        <option value="">-- Seleccione una Ambulancia --</option>
+                        <option value=""> Seleccione la Ambulancia </option>
                         <?php 
                         if ($res_ambulancias && $res_ambulancias->num_rows > 0) {$res_ambulancias->data_seek(0);
                             while ($amb =$res_ambulancias->fetch_assoc()) {
@@ -195,7 +192,7 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
                         <input type="number" id="hisopos" name="hisopos" min="0" value="0">
                     </div>
                     <div class="form-group">
-                        <label for="desinfectantes">Desinfectantes (Frascos):</label>
+                        <label for="desinfectantes">Desinfectantes:</label>
                         <input type="number" id="desinfectantes" name="desinfectantes" min="0" value="0">
                     </div>
                     <div class="form-group">
@@ -212,7 +209,6 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
             </form>
         </section>
 
-        <!-- Tabla Informativa del Estado de Insumos por Unidad -->
         <section class="tarjeta" style="margin-top: 20px;">
             <h2>Inventario General de Unidades</h2>
             <table class="tabla-datos">

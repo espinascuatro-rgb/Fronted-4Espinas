@@ -16,7 +16,6 @@ $conexion->set_charset("utf8mb4");
 
 $accion = $_POST['accion'] ?? $_GET['accion'] ?? '';
 
-// 1. OBTENER INSUMOS DE UNA AMBULANCIA VÍA AJAX
 if ($accion === 'obtener_insumos') {
     $numero_de_serie = $conexion->real_escape_string($_GET['numero_de_serie'] ?? '');
 
@@ -26,7 +25,6 @@ if ($accion === 'obtener_insumos') {
     if ($res && $res->num_rows > 0) {
         echo json_encode(['status' => 'ok', 'data' => $res->fetch_assoc()]);
     } else {
-        // Si no tiene insumos registrados, retornar valores en 0
         echo json_encode([
             'status' => 'ok', 
             'data' => [
@@ -39,7 +37,6 @@ if ($accion === 'obtener_insumos') {
     exit;
 }
 
-// 2. GUARDAR / ACTUALIZAR INSUMOS
 if ($accion === 'guardar_insumos') {
     $numero_de_serie = $conexion->real_escape_string($_POST['numero_de_serie_ambulancia'] ?? '');
     $vendas = intval($_POST['vendas'] ?? 0);
