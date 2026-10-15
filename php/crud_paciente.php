@@ -68,7 +68,6 @@ if ($accion === 'agregar') {
         header("Location: ../pages/administracion-pacientes.php?err=" . urlencode("Error al actualizar: " . $conexion->error));
     }
 
-// 3. ELIMINAR PACIENTE (PERSONA)
 } elseif ($accion === 'eliminar') {
     $cedula = $conexion->real_escape_string(trim($_GET['cedula']));
 

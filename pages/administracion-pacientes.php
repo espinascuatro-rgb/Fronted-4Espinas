@@ -33,15 +33,14 @@ $resultado = $con->query($sql);
     <main class="mainguia">
         <section class="sectionguia contenedor-admin-pacientes">
             <button class="btnguia1 btn-volver">
-                <a href="../pages/guia.php">← Volver al Inicio</a>
             </button>
 
             <?php if (isset($_GET['msg'])): ?>
                 <div class="alerta alerta-exito">
                     <?php 
-                        if ($_GET['msg'] === 'agregado') echo "¡Paciente registrado exitosamente!";
-                        if ($_GET['msg'] === 'editado') echo "¡Datos actualizados correctamente!";
-                        if ($_GET['msg'] === 'eliminado') echo "¡Registro eliminado correctamente!";
+                        if ($_GET['msg'] === 'agregado') echo "Paciente registrado de forma correcta";
+                        if ($_GET['msg'] === 'editado') echo "Los datos se han actualizados ";
+                        if ($_GET['msg'] === 'eliminado') echo "El registro ha sido eliminado";
                     ?>
                 </div>
             <?php endif; ?>
