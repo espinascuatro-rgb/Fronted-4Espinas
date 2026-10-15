@@ -154,9 +154,9 @@ $resultado = $conexion->query($sql);
         <?php if (isset($_GET['msg'])): ?>
             <div class="alerta alerta-exito">
                 <?php 
-                    if ($_GET['msg'] === 'agregado') echo "¡Paciente registrado exitosamente!";
-                    if ($_GET['msg'] === 'editado') echo "¡Datos actualizados correctamente!";
-                    if ($_GET['msg'] === 'eliminado') echo "¡Registro eliminado correctamente!";
+                    if ($_GET['msg'] === 'agregado') echo "El paciente ha sido registrado";
+                    if ($_GET['msg'] === 'editado') echo "Datos actualizados de forma correctamente";
+                    if ($_GET['msg'] === 'eliminado') echo "Registro eliminado correctamente";
                 ?>
             </div>
         <?php endif; ?>
