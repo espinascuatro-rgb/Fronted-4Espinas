@@ -74,6 +74,17 @@ if ($accion === 'guardar_insumos') {
     } else {
         header("Location: ../pages/traslados.php?err=" . urlencode("Error al guardar insumos: " . $conexion->error));
     }
+
+} elseif ($accion === 'eliminar_insumos') {
+    $numero_de_serie = $conexion->real_escape_string($_GET['numero_de_serie'] ?? '');
+
+    $sql = "DELETE FROM insumo_ambulancia WHERE numero_de_serie_ambulancia = '$numero_de_serie'";
+
+    if ($conexion->query($sql)) {
+        header("Location: ../pages/traslados.php?msg=insumos_eliminados");
+    } else {
+        header("Location: ../pages/traslados.php?err=" . urlencode("Error al eliminar los insumos: " . $conexion->error));
+    }
 }
 
 $conexion->close();

@@ -95,6 +95,28 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
             color: white;
         }
 
+        .btn-editar {
+            background-color: #ffc107;
+            color: black;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-eliminar {
+            background-color: #dc3545;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
+        }
+
         .alerta {
             padding: 10px 15px;
             border-radius: 4px;
@@ -131,12 +153,12 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
     </header>
 
     <main class="contenedor-main">
-        <a href="../pages/guia.php" class="btn-inicio">← Volver al Inicio</a>
 
         <?php if (isset($_GET['msg'])): ?>
             <div class="alerta alerta-exito">
                 <?php 
-                    if ($_GET['msg'] === 'insumos_guardados') echo "Los insumos médicos han sido registrados en la ambulancia correctamente.";
+                    if ($_GET['msg'] === 'insumos_guardados') echo "Los insumos médicos han sido actualizados en la ambulancia correctamente.";
+                    if ($_GET['msg'] === 'insumos_eliminados') echo "Se han eliminado los insumos médicos de la ambulancia.";
                 ?>
             </div>
         <?php endif; ?>
@@ -148,7 +170,7 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
         <?php endif; ?>
 
         <section class="tarjeta">
-            <h2 style="color: #0a192f;">Registro de Insumos por Ambulancia</h2>
+            <h2 style="color: #0a192f;">Registro y Edición de Insumos por Ambulancia</h2>
             <form action="../php/guardar_insumos_ambulancia.php" method="POST">
                 <input type="hidden" name="accion" value="guardar_insumos">
 
@@ -206,7 +228,7 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
                     </div>
                 </div>
 
-                <button type="submit" class="btn-guardar">Guardar Insumos en la Ambulancia</button>
+                <button type="submit" class="btn-guardar">Guardar / Modificar Insumos</button>
             </form>
         </section>
 
@@ -219,6 +241,7 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
                         <th>Matrícula</th>
                         <th>Kilometraje</th>
                         <th>Insumos Registrados</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -240,10 +263,14 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
                             echo '<span class="badge-insumo">Termómetros: ' . intval($row['termometros'] ?? 0) . '</span> ';
                             echo '<span class="badge-insumo">Hilos Quir.: ' . intval($row['hilos_quirurgicos'] ?? 0) . '</span>';
                             echo '</td>';
+                            echo '<td>';
+                            echo '<button class="btn-editar" onclick="seleccionarYEditar(\'' . htmlspecialchars($row['numero_de_serie']) . '\')">Editar</button> ';
+                            echo '<a href="../php/guardar_insumos_ambulancia.php?accion=eliminar_insumos&numero_de_serie=' . urlencode($row['numero_de_serie']) . '" class="btn-eliminar" onclick="return confirm(\'¿Desea eliminar todos los insumos cargados en esta ambulancia?\');">Eliminar</a>';
+                            echo '</td>';
                             echo '</tr>';
                         }
                     } else {
-                        echo '<tr><td colspan="4" style="text-align: center;">No hay ambulancias registradas.</td></tr>';
+                        echo '<tr><td colspan="5" style="text-align: center;">No hay ambulancias registradas.</td></tr>';
                     }
                     ?>
                 </tbody>
@@ -278,6 +305,13 @@ $res_ambulancias = $conexion->query($sql_ambulancias);
             } catch (e) {
                 console.error("Error al obtener insumos:", e);
             }
+        }
+
+        function seleccionarYEditar(numSerie) {
+            const select = document.getElementById('numero_de_serie_ambulancia');
+            select.value = numSerie;
+            cargarInsumosAmbulancia(numSerie);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 </body>
