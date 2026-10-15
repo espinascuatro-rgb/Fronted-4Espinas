@@ -2,7 +2,6 @@
 require_once __DIR__ . '/../php/checksesion.php'; 
 require_once __DIR__ . '/../php/conexion.php';
 
-// Obtener lista de traslados para el panel y sincronizar con Trazabilidad y Modo Chofer
 $sql_traslados = "SELECT t.*, a.matricula 
                   FROM traslado t 
                   LEFT JOIN ambulancia a ON t.matricula_ambulancia = a.numero_de_serie 
@@ -84,14 +83,6 @@ $res_traslados = $con->query($sql_traslados);
                         <p><strong>Hora Salida:</strong> <span id="txtSalida">--</span></p>
                         <p><strong>Llegada Estimada:</strong> <span id="txtEstimada">--</span></p>
                         <p><strong>Unidad Ambulancia:</strong> <span id="txtAmbulancia">--</span></p>
-                    </div>
-
-                    <!-- Modo Chofer para transmitir ubicación GPS -->
-                    <div class="bloque-modo-chofer">
-                        <h3>Modo Chofer (GPS)</h3>
-                        <p class="desc-chofer">Transmite la ubicación actual de la ambulancia al servidor en tiempo real.</p>
-                        <button id="btnModoChofer" class="btn-chofer">Iniciar Transmisión GPS</button>
-                        <span id="sttChofer" class="stt-chofer-off">Desconectado</span>
                     </div>
                 </div>
 
