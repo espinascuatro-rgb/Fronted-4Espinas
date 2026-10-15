@@ -41,9 +41,14 @@ $res_traslados = $con->query($sql_traslados);
                 <button class="btnguia1 btn-volver">
                     <a href="../pages/guia.php">← Volver al Inicio</a>
                 </button>
-                <button class="btnguia5 btn-trazabilidad">
-                    <a href="../pages/trazabilidad.php">Ver Trazabilidad</a>
-                </button>
+                <div class="grupo-botones-nav">
+                    <button class="btnguia4 btn-chofer-nav">
+                        <a href="../pages/chofer-gps.php">Modo Chofer</a>
+                    </button>
+                    <button class="btnguia5 btn-trazabilidad">
+                        <a href="../pages/trazabilidad.php">Ver Trazabilidad</a>
+                    </button>
+                </div>
             </div>
 
             <h2 class="titulo-seccion">Seguimiento y Visualización de Rutas en Tiempo Real</h2>
@@ -84,6 +89,10 @@ $res_traslados = $con->query($sql_traslados);
                         <p><strong>Llegada Estimada:</strong> <span id="txtEstimada">--</span></p>
                         <p><strong>Unidad Ambulancia:</strong> <span id="txtAmbulancia">--</span></p>
                     </div>
+
+                    <button class="btn-ir-chofer">
+                        <a href="../pages/modo-chofer.php" style="color: white; font-weight: bold;">Acceder a Modo Chofer (GPS)</a>
+                    </button>
                 </div>
 
                 <!-- Contenedor del Mapa -->
