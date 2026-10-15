@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../php/checksesion.php'; 
 require_once __DIR__ . '/../php/conexion.php';
 
-// Consulta para obtener traslados con información de la ambulancia y coordenadas del chofer
+// Obtener lista de traslados para el panel y sincronizar con Trazabilidad y Modo Chofer
 $sql_traslados = "SELECT t.*, a.matricula 
                   FROM traslado t 
                   LEFT JOIN ambulancia a ON t.matricula_ambulancia = a.numero_de_serie 
@@ -19,7 +19,7 @@ $res_traslados = $con->query($sql_traslados);
     <link rel="stylesheet" href="../css/elementosC.css">
     <link rel="stylesheet" href="../css/guia.css">
     <link rel="stylesheet" href="../css/ver-ruta.css">
-    <!-- Leaflet CSS para mapas interactivos -->
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 
@@ -38,14 +38,19 @@ $res_traslados = $con->query($sql_traslados);
 
     <main class="mainguia">
         <section class="sectionguia contenedor-ruta-main">
-            <button class="btnguia1 btn-volver">
-                <a href="../pages/guia.php">← Volver al Inicio</a>
-            </button>
+            <div class="header-acciones-ruta">
+                <button class="btnguia1 btn-volver">
+                    <a href="../pages/guia.php">← Volver al Inicio</a>
+                </button>
+                <button class="btnguia5 btn-trazabilidad">
+                    <a href="../pages/trazabilidad.php">Ver Trazabilidad</a>
+                </button>
+            </div>
 
             <h2 class="titulo-seccion">Seguimiento y Visualización de Rutas en Tiempo Real</h2>
 
             <div class="panel-ruta-grid">
-                <!-- Panel Lateral de Selección de Traslado -->
+                <!-- Panel Lateral -->
                 <div class="tarjeta-controles-ruta">
                     <h3>Selección de Traslado</h3>
                     <div class="form-group-ruta">
@@ -56,10 +61,10 @@ $res_traslados = $con->query($sql_traslados);
                                 <?php while ($t = $res_traslados->fetch_assoc()): ?>
                                     <option value="<?php echo $t['id_traslado']; ?>" 
                                             data-origen="<?php echo htmlspecialchars($t['origen'] ?? 'Hospital de Clínicas'); ?>"
-                                            data-destino="<?php echo htmlspecialchars($t['destino'] ?? 'Sin destino'); ?>"
+                                            data-destino="<?php echo htmlspecialchars($t['destino'] ?? 'Av. Italia 2870'); ?>"
                                             data-estado="<?php echo htmlspecialchars($t['estado'] ?? 'pendiente'); ?>"
-                                            data-lat="<?php echo htmlspecialchars($t['lat_chofer'] ?? '-32.31892978'); ?>"
-                                            data-lng="<?php echo htmlspecialchars($t['lng_chofer'] ?? '-58.05732318'); ?>"
+                                            data-lat="<?php echo htmlspecialchars($t['lat_chofer'] ?? '-34.8883'); ?>"
+                                            data-lng="<?php echo htmlspecialchars($t['lng_chofer'] ?? '-56.1561'); ?>"
                                             data-salida="<?php echo htmlspecialchars($t['hora_de_salida'] ?? 'N/A'); ?>"
                                             data-estimada="<?php echo htmlspecialchars($t['hora_estimada_gps'] ?? 'N/A'); ?>"
                                             data-ambulancia="<?php echo htmlspecialchars($t['matricula_ambulancia'] ?? 'N/A'); ?>">
@@ -70,20 +75,28 @@ $res_traslados = $con->query($sql_traslados);
                         </select>
                     </div>
 
-                    <!-- Información Detallada del Traslado -->
                     <div id="infoTraslado" class="info-traslado-card">
                         <p><strong>Nº Traslado:</strong> <span id="txtId">--</span></p>
-                        <p><strong>Origen:</strong> <span id="txtOrigen">--</span></p>
+                        <p><strong>Origen:</strong> <span id="txtOrigen">Hospital de Clínicas</span></p>
                         <p><strong>Destino:</strong> <span id="txtDestino">--</span></p>
                         <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado">Sin Selección</span></p>
+                        <p><strong>Distancia estimada:</strong> <span id="txtDistancia">-- km</span></p>
                         <p><strong>Hora Salida:</strong> <span id="txtSalida">--</span></p>
-                        <p><strong>Llegada Estimada (GPS):</strong> <span id="txtEstimada">--</span></p>
+                        <p><strong>Llegada Estimada:</strong> <span id="txtEstimada">--</span></p>
                         <p><strong>Unidad Ambulancia:</strong> <span id="txtAmbulancia">--</span></p>
+                    </div>
+
+                    <!-- Modo Chofer para transmitir ubicación GPS -->
+                    <div class="bloque-modo-chofer">
+                        <h3>Modo Chofer (GPS)</h3>
+                        <p class="desc-chofer">Transmite la ubicación actual de la ambulancia al servidor en tiempo real.</p>
+                        <button id="btnModoChofer" class="btn-chofer">Iniciar Transmisión GPS</button>
+                        <span id="sttChofer" class="stt-chofer-off">Desconectado</span>
                     </div>
                 </div>
 
-                <!-- Mapa Interactivo -->
-                <div class="tarjeta-mapa-box">
+                <!-- Contenedor del Mapa -->
+                <div class="tarjeta-mapa-box" id="mapaBox">
                     <div id="mapaRuta" class="mapa-contenedor"></div>
                 </div>
             </div>
@@ -95,7 +108,7 @@ $res_traslados = $con->query($sql_traslados);
         <button><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
-    <!-- Dependencias de Leaflet JS -->
+    <!-- Leaflet JS y Script de Control -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../js/ver-ruta.js"></script>
 </body>

@@ -1,28 +1,96 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Coordenadas iniciales: Hospital de Clínicas, Montevideo (-34.8883, -56.1561)
-    const coordsHospital = [-34.8883, -56.1561];
-    
-    const map = L.map('mapaRuta').setView(coordsHospital, 13);
+    let coordsOrigen = [-34.8883, -56.1561];
+    let coordsDestino = [-34.8812, -56.1420];
+
+    // Iconos Personalizados con las imágenes mapo1.png y mapo2.png
+    const iconoMapo1 = L.icon({
+        iconUrl: '../fotos-videos/mapo1.png',
+        iconSize: [38, 38],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -38]
+    });
+
+    const iconoMapo2 = L.icon({
+        iconUrl: '../fotos-videos/mapo2.png',
+        iconSize: [38, 38],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -38]
+    });
+
+    // Inicializar Mapa
+    const map = L.map('mapaRuta').setView(coordsOrigen, 14);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '© OpenStreetMap'
     }).addTo(map);
 
-    let markerOrigen = L.marker(coordsHospital).addTo(map)
-        .bindPopup('<b>Hospital de Clínicas</b><br>Punto de Origen').openPopup();
+    // Integración del Botón de Pantalla Completa DEBAJO de las herramientas de Zoom (+ / -)
+    const zoomContainer = document.querySelector('.leaflet-control-zoom');
+    if (zoomContainer) {
+        const btnFS = document.createElement('a');
+        btnFS.className = 'leaflet-control-fullscreen-btn';
+        btnFS.href = '#';
+        btnFS.title = 'Pantalla Completa';
+        btnFS.innerHTML = '⛶';
 
-    let markerChofer = null;
-    let lineaRuta = null;
+        btnFS.addEventListener('click', (e) => {
+            e.preventDefault();
+            const mapaBox = document.getElementById('mapaBox');
+            if (!document.fullscreenElement) {
+                if (mapaBox.requestFullscreen) mapaBox.requestFullscreen();
+                else if (mapaBox.webkitRequestFullscreen) mapaBox.webkitRequestFullscreen();
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+        });
 
+        zoomContainer.appendChild(btnFS);
+    }
+
+    document.addEventListener('fullscreenchange', () => {
+        setTimeout(() => map.invalidateSize(), 200);
+    });
+
+    // Marcadores con Iconos Personalizados y Draggable (arrastrables)
+    const markerOrigen = L.marker(coordsOrigen, { icon: iconoMapo1, draggable: true }).addTo(map);
+    markerOrigen.bindPopup('<b>Punto de Origen</b><br>Hospital de Clínicas').openPopup();
+
+    const markerDestino = L.marker(coordsDestino, { icon: iconoMapo2, draggable: true }).addTo(map);
+    markerDestino.bindPopup('<b>Punto de Destino</b><br>Arrastra para mover');
+
+    // Trazado de línea de la Ruta
+    let lineaRuta = L.polyline([coordsOrigen, coordsDestino], {
+        color: '#1840dd',
+        weight: 6,
+        opacity: 0.8,
+        dashArray: '10, 10'
+    }).addTo(map);
+
+    function actualizarRuta() {
+        const posO = markerOrigen.getLatLng();
+        const posD = markerDestino.getLatLng();
+
+        lineaRuta.setLatLngs([posO, posD]);
+
+        const distM = posO.distanceTo(posD);
+        const distKm = (distM / 1000).toFixed(2);
+
+        const elemDist = document.getElementById('txtDistancia');
+        if (elemDist) elemDist.textContent = `${distKm} km`;
+    }
+
+    markerOrigen.on('drag', actualizarRuta);
+    markerDestino.on('drag', actualizarRuta);
+    actualizarRuta();
+
+    // Selección Dinámica de Traslado
     const selectTraslado = document.getElementById('selectTraslado');
-
     if (selectTraslado) {
         selectTraslado.addEventListener('change', (e) => {
             const op = e.target.options[e.target.selectedIndex];
             if (!op.value) return;
 
-            // Obtener atributos de datos de la opción seleccionada
             const id = op.value;
             const origen = op.getAttribute('data-origen');
             const destino = op.getAttribute('data-destino');
@@ -33,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const estimada = op.getAttribute('data-estimada');
             const ambulancia = op.getAttribute('data-ambulancia');
 
-            // Actualizar interfaz textual
             document.getElementById('txtId').textContent = '#' + id;
             document.getElementById('txtOrigen').textContent = origen;
             document.getElementById('txtDestino').textContent = destino;
@@ -45,26 +112,51 @@ document.addEventListener('DOMContentLoaded', () => {
             txtEstado.textContent = estado.replace('_', ' ').toUpperCase();
             txtEstado.className = 'badge-estado badge-' + estado;
 
-            // Limpiar capas previas si existen
-            if (markerChofer) map.removeLayer(markerChofer);
-            if (lineaRuta) map.removeLayer(lineaRuta);
-
             if (!isNaN(lat) && !isNaN(lng)) {
-                const coordsChofer = [lat, lng];
+                markerDestino.setLatLng([lat, lng]);
+                actualizarRuta();
+                map.fitBounds(lineaRuta.getBounds(), { padding: [50, 50] });
+            }
+        });
+    }
 
-                // Agregar marcador del chofer / ambulancia
-                markerChofer = L.marker(coordsChofer).addTo(map);
-                markerChofer.bindPopup(`<b>Ambulancia (Chofer)</b><br>Destino: ${destino}`).openPopup();
+    // Funcionalidad del Modo Chofer (Transmisión GPS)
+    const btnModoChofer = document.getElementById('btnModoChofer');
+    const sttChofer = document.getElementById('sttChofer');
+    let watchId = null;
 
-                // Trazar línea de ruta
-                lineaRuta = L.polyline([coordsHospital, coordsChofer], {
-                    color: '#006eff',
-                    weight: 5,
-                    dashArray: '8, 8'
-                }).addTo(map);
+    if (btnModoChofer) {
+        btnModoChofer.addEventListener('click', () => {
+            if (watchId === null) {
+                if ('geolocation' in navigator) {
+                    watchId = navigator.geolocation.watchPosition((pos) => {
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
 
-                // Ajustar vista para encuadrar la ruta
-                map.fitBounds(lineaRuta.getBounds(), { padding: [40, 40] });
+                        // Mover el punto del destino/chofer en tiempo real
+                        markerDestino.setLatLng([lat, lng]);
+                        actualizarRuta();
+
+                        btnModoChofer.textContent = 'Detener Transmisión GPS';
+                        btnModoChofer.classList.add('activo');
+                        sttChofer.textContent = `Transmitiendo GPS: (${lat.toFixed(4)}, ${lng.toFixed(4)})`;
+                        sttChofer.className = 'stt-chofer-on';
+                    }, (err) => {
+                        alert('Error al obtener la ubicación GPS: ' + err.message);
+                    }, {
+                        enableHighAccuracy: true,
+                        maximumAge: 0
+                    });
+                } else {
+                    alert('Navegador no soporta Geolocalización GPS.');
+                }
+            } else {
+                navigator.geolocation.clearWatch(watchId);
+                watchId = null;
+                btnModoChofer.textContent = 'Iniciar Transmisión GPS';
+                btnModoChofer.classList.remove('activo');
+                sttChofer.textContent = 'Desconectado';
+                sttChofer.className = 'stt-chofer-off';
             }
         });
     }
