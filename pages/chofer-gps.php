@@ -37,14 +37,6 @@ $res_traslados = $con->query($sql_traslados);
 
     <main class="mainguia">
         <section class="sectionguia contenedor-chofer-main">
-            <div class="header-acciones-chofer">
-                <button class="btnguia1 btn-volver">
-                    <a href="../pages/guia.php">← Volver al Inicio</a>
-                </button>
-                <button class="btnguia6 btn-mapa-nav">
-                    <a href="../pages/ver-ruta.php">Ver Mapa / Ruta</a>
-                </button>
-            </div>
 
             <h2 class="titulo-seccion">Panel del Chofer - Transmisión GPS</h2>
 
@@ -52,7 +44,7 @@ $res_traslados = $con->query($sql_traslados);
                 <div class="form-group-chofer">
                     <label for="selectTrasladoChofer"><strong>Seleccionar Traslado Asignado:</strong></label>
                     <select id="selectTrasladoChofer" class="input-select-chofer">
-                        <option value="">-- Seleccionar Traslado --</option>
+                        <option value="">Selecciona el Traslado </option>
                         <?php if ($res_traslados && $res_traslados->num_rows > 0): ?>
                             <?php while ($t = $res_traslados->fetch_assoc()): ?>
                                 <option value="<?php echo $t['id_traslado']; ?>">
@@ -70,15 +62,15 @@ $res_traslados = $con->query($sql_traslados);
                     </div>
                     <div class="fila-estado">
                         <strong>Latitud:</strong>
-                        <span id="txtLat">--</span>
+                        <span id="txtLat"></span>
                     </div>
                     <div class="fila-estado">
                         <strong>Longitud:</strong>
-                        <span id="txtLng">--</span>
+                        <span id="txtLng"></span>
                     </div>
                     <div class="fila-estado">
                         <strong>Última actualización:</strong>
-                        <span id="txtHoraGps">--</span>
+                        <span id="txtHoraGps"></span>
                     </div>
                 </div>
 

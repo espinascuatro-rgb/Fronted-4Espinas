@@ -45,7 +45,7 @@ $res_trazabilidad = $con->query($sql_trazabilidad);
                         <a href="../pages/ver-ruta.php">Ver Mapa / Rutas</a>
                     </button>
                     <button class="btnguia4 btn-chofer-nav">
-                        <a href="../pages/modo-chofer.php">Modo Chofer</a>
+                        <a href="../pages/chofer-gps.php">Modo Chofer</a>
                     </button>
                 </div>
             </div>
