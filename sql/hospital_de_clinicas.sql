@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-10-2026 a las 01:49:25
+-- Tiempo de generación: 15-10-2026 a las 02:41:04
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -98,6 +98,27 @@ CREATE TABLE `funcionario` (
 CREATE TABLE `funcionario_carga_documento` (
   `cedula_funcionario` varchar(20) NOT NULL,
   `id_documentos` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `insumo_ambulancia`
+--
+
+CREATE TABLE `insumo_ambulancia` (
+  `id_insumo` int(11) NOT NULL,
+  `numero_de_serie_ambulancia` varchar(20) NOT NULL,
+  `vendas` int(11) DEFAULT 0,
+  `jeringas` int(11) DEFAULT 0,
+  `equipos_infusion` int(11) DEFAULT 0,
+  `guantes` int(11) DEFAULT 0,
+  `mascarillas` int(11) DEFAULT 0,
+  `hisopos` int(11) DEFAULT 0,
+  `desinfectantes` int(11) DEFAULT 0,
+  `termometros` int(11) DEFAULT 0,
+  `hilos_quirurgicos` int(11) DEFAULT 0,
+  `fecha_actualizacion` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -326,6 +347,13 @@ ALTER TABLE `funcionario_carga_documento`
   ADD KEY `fk_f_carga_documento` (`id_documentos`);
 
 --
+-- Indices de la tabla `insumo_ambulancia`
+--
+ALTER TABLE `insumo_ambulancia`
+  ADD PRIMARY KEY (`id_insumo`),
+  ADD UNIQUE KEY `uk_ambulancia_insumo` (`numero_de_serie_ambulancia`);
+
+--
 -- Indices de la tabla `persona`
 --
 ALTER TABLE `persona`
@@ -435,6 +463,12 @@ ALTER TABLE `equipo_medico`
   MODIFY `id_equipo_medico` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `insumo_ambulancia`
+--
+ALTER TABLE `insumo_ambulancia`
+  MODIFY `id_insumo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
@@ -499,6 +533,12 @@ ALTER TABLE `funcionario`
 ALTER TABLE `funcionario_carga_documento`
   ADD CONSTRAINT `fk_f_carga_documento` FOREIGN KEY (`id_documentos`) REFERENCES `documento` (`id_documentos`) ON DELETE CASCADE,
   ADD CONSTRAINT `fk_f_carga_funcionario` FOREIGN KEY (`cedula_funcionario`) REFERENCES `funcionario` (`id_tipo`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `insumo_ambulancia`
+--
+ALTER TABLE `insumo_ambulancia`
+  ADD CONSTRAINT `fk_insumo_ambulancia` FOREIGN KEY (`numero_de_serie_ambulancia`) REFERENCES `ambulancia` (`numero_de_serie`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `preguntas`
