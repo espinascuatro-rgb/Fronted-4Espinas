@@ -1,212 +1,76 @@
-<?php require_once __DIR__ . '/../php/checksesion.php'; ?>
+<?php 
+require_once __DIR__ . '/../php/checksesion.php'; 
+require_once __DIR__ . '/../php/conexion.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoreo GPS - Ver Ruta</title>
-    
-    <link rel="stylesheet" href="../css/style.css">
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet-fullscreen.css" />
-
-    <style>
-        .grid-formulario {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .campo {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .campo label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 0.88em;
-        }
-
-        .campo input, 
-        .campo select, 
-        .campo button {
-            padding: 9px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .btn-accion {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-            height: 38px;
-            align-self: flex-end;
-            width: 100%;
-        }
-
-        .btn-accion:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-iniciar {
-            background-color: #28a745;
-        }
-
-        .btn-iniciar:hover {
-            background-color: #218838;
-        }
-
-        .btn-finalizar {
-            background-color: #dc3545;
-        }
-
-        .btn-finalizar:hover {
-            background-color: #c82333;
-        }
-
-        .nav-app {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn-nav {
-            padding: 8px 15px;
-            background-color: #17a2b8;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 14px;
-            transition: background 0.2s;
-        }
-
-        .btn-nav:hover {
-            background-color: #138496;
-        }
-
-        #visualizar {
-            height: 480px;
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            margin-top: 10px;
-            z-index: 1;
-        }
-    </style>
+    <title>Visualización de Rutas y Mapa - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="../css/elementosC.css">
+    <link rel="stylesheet" href="../css/guia.css">
+    <link rel="stylesheet" href="../css/ver-ruta.css">
+    <!-- Leaflet CSS para mapas interactivos -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
-<body>
-    <header class="encabezado-app">
-        <h1>Visualización en GPS</h1>
-        <nav class="nav-app">
-            <a href="chofer-gps.php" class="btn-nav">Modo Chofer (GPS)</a>
-            <a href="../pages/trazabilidad.php" class="btn-nav">Volver a Trazabilidad</a>
+
+<body class="bodyguia">
+    <header class="Headerguia">
+        <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
+        <h1>Hospital de Clínicas "Dr. Manuel Quintela"</h1>
+        <p>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></p>
+        <nav class="navguia">
+            <a href="../pages/guia.php">Inicio</a>
+            <a href="../pages/tratamientos.php">Pacientes</a>
+            <a href="../pages/traslados.php">Ambulancias</a>
+            <a href="../pages/ajustes.php">Ajustes</a>
         </nav>
     </header>
 
-    <main>
-        <section id="traslado2" class="tarjeta">
-            <h1>Detalles del traslado activo</h1>
-            <div class="grid-formulario">
-                <div class="campo">
-                    <label for="transporte">Medio de Transporte:</label>
-                    <select id="transporte">
-                        <option value="drive" selected>Vehículo / Ambulancia</option>
-                        <option value="bicycle">Bicicleta</option>
-                        <option value="walk">A Pie / Caminando</option>
-                    </select>
+    <main class="mainguia">
+        <section class="sectionguia contenedor-ruta-main">
+            <button class="btnguia1 btn-volver">
+                <a href="../pages/guia.php">← Volver al Inicio</a>
+            </button>
+
+            <h2 class="titulo-seccion">Seguimiento y Visualización de Rutas</h2>
+
+            <div class="panel-ruta-grid">
+                <div class="tarjeta-controles-ruta">
+                    <h3>Selección de Traslado</h3>
+                    <div class="form-group-ruta">
+                        <label for="selectTraslado"><strong>Traslado Activo:</strong></label>
+                        <select id="selectTraslado" class="input-select-ruta">
+                            <option value="">-- Cargar ruta en tiempo real --</option>
+                            <option value="1">Traslado #1 - Hospital de Clínicas -> Av. Italia 2870</option>
+                        </select>
+                    </div>
+
+                    <div id="infoTraslado" class="info-traslado-card">
+                        <p><strong>Origen:</strong> <span id="txtOrigen">Hospital de Clínicas</span></p>
+                        <p><strong>Destino:</strong> <span id="txtDestino">Av. Italia 2870</span></p>
+                        <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado">En Proceso</span></p>
+                        <p><strong>Tiempo Estimado:</strong> <span id="txtTiempo">-- hs</span></p>
+                    </div>
                 </div>
-                <div class="campo">
-                    <label>Tiempo Estimado:</label>
-                    <input type="text" id="tiempoEstimado" value="Sin iniciar" readonly style="font-weight: bold;">
-                </div>
-                <div class="campo">
-                    <label>Hora Estimada de Llegada:</label>
-                    <input type="text" id="horaLlegada" value="Sin iniciar" readonly style="font-weight: bold; color: #007bff;">
+
+                <div class="tarjeta-mapa-box">
+                    <div id="mapaRuta" class="mapa-contenedor"></div>
                 </div>
             </div>
-        </section>
-
-        <section class="tarjeta">
-            <h2 style="color: var(--azul-marino, #0a192f);">Mapa GPS y Trazado de Ruta</h2>
-
-            <div class="grid-formulario">
-                <div class="campo">
-                    <label for="departamento">Departamento Destino:</label>
-                    <select id="departamento">
-                        <option value="Artigas">Artigas</option>
-                        <option value="Canelones">Canelones</option>
-                        <option value="Cerro Largo">Cerro Largo</option>
-                        <option value="Colonia">Colonia</option>
-                        <option value="Durazno">Durazno</option>
-                        <option value="Flores">Flores</option>
-                        <option value="Florida">Florida</option>
-                        <option value="Lavalleja">Lavalleja</option>
-                        <option value="Maldonado">Maldonado</option>
-                        <option value="Montevideo" selected>Montevideo</option>
-                        <option value="Paysandú">Paysandú</option>
-                        <option value="Río Negro">Río Negro</option>
-                        <option value="Rivera">Rivera</option>
-                        <option value="Rocha">Rocha</option>
-                        <option value="Salto">Salto</option>
-                        <option value="San José">San José</option>
-                        <option value="Soriano">Soriano</option>
-                        <option value="Tacuarembó">Tacuarembó</option>
-                        <option value="Treinta y Tres">Treinta y Tres</option>
-                    </select>
-                </div>
-
-                <div class="campo">
-                    <label for="dir">Dirección de Destino:</label>
-                    <input type="text" id="dir" placeholder="Ej: Av. Italia 2870">
-                </div>
-
-                <div class="campo">
-                    <button type="button" id="ubicar" class="btn-accion">Ubicar Destino</button>
-                </div>
-            </div>
-
-            <div class="grid-formulario">
-                <div class="campo">
-                    <label for="lat">Latitud Origen/Chofer:</label>
-                    <input type="text" id="lat" readonly placeholder="Latitud capturada">
-                </div>
-
-                <div class="campo">
-                    <label for="lng">Longitud Origen/Chofer:</label>
-                    <input type="text" id="lng" readonly placeholder="Longitud capturada">
-                </div>
-
-                <div class="campo">
-                    <button type="button" id="ingresar0" class="btn-accion">Capturar Coordenadas</button>
-                </div>
-            </div>
-
-            <div class="grid-formulario">
-                <div class="campo">
-                    <button type="button" id="btnIniciar" class="btn-accion btn-iniciar">Iniciar Traslado</button>
-                </div>
-                <div class="campo">
-                    <button type="button" id="btnFinalizar" class="btn-accion btn-finalizar">Finalizar Traslado</button>
-                </div>
-            </div>
-
-            <div id="visualizar"></div>
         </section>
     </main>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <footer class="footerguia">
+        <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
+        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
+    </footer>
 
-    <script src="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js"></script>
-
-    <script src="../js/mapa.js"></script>
+    <!-- Leaflet JS y Script de Ruta -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../js/ver-ruta.js"></script>
 </body>
+
 </html>
