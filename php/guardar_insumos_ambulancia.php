@@ -50,7 +50,7 @@ if ($accion === 'guardar_insumos') {
     $hilos_quirurgicos = intval($_POST['hilos_quirurgicos'] ?? 0);
 
     if (empty($numero_de_serie)) {
-        header("Location: ../pages/registro-ambulancia.php?err=" . urlencode("Debe seleccionar una ambulancia."));
+        header("Location: ../pages/traslados.php?err=" . urlencode("Debe seleccionar una ambulancia."));
         exit;
     }
 
@@ -70,9 +70,9 @@ if ($accion === 'guardar_insumos') {
             hilos_quirurgicos = $hilos_quirurgicos";
 
     if ($conexion->query($sql)) {
-        header("Location: ../pages/registro-ambulancia.php?msg=insumos_guardados");
+        header("Location: ../pages/traslados.php?msg=insumos_guardados");
     } else {
-        header("Location: ../pages/registro-ambulancia.php?err=" . urlencode("Error al guardar insumos: " . $conexion->error));
+        header("Location: ../pages/traslados.php?err=" . urlencode("Error al guardar insumos: " . $conexion->error));
     }
 }
 
