@@ -105,15 +105,15 @@ $res_ambulancias = $con->query($sql_ambulancias);
                     <h3>Detalles del vehículo</h3>
                     <div class="grid-form-ambulancia">
                         <div>
-                            <label for="numero_de_serie"><strong>Número de identificación (*):</strong></label>
+                            <label for="numero_de_serie"><strong>Número de identificación:</strong></label>
                             <input type="text" id="numero_de_serie" name="numero_de_serie" required class="input-form">
                         </div>
                         <div>
-                            <label for="kilometraje"><strong>Kilometraje (*):</strong></label>
+                            <label for="kilometraje"><strong>Kilometraje:</strong></label>
                             <input type="text" id="kilometraje" name="kilometraje" required class="input-form">
                         </div>
                         <div>
-                            <label for="matricula"><strong>Matrícula (*):</strong></label>
+                            <label for="matricula"><strong>Matrícula:</strong></label>
                             <input type="text" id="matricula" name="matricula" required class="input-form">
                         </div>
                     </div>

@@ -75,14 +75,14 @@ $res_traslados = $con->query($sql_traslados);
                     </div>
 
                     <div id="infoTraslado" class="info-traslado-card">
-                        <p><strong>Nº Traslado:</strong> <span id="txtId"></span></p>
-                        <p><strong>Origen:</strong> <span id="txtOrigen">Hospital de Clínicas</span></p>
-                        <p><strong>Destino:</strong> <span id="txtDestino"></span></p>
-                        <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado">Sin Selección</span></p>
-                        <p><strong>Distancia estimada:</strong> <span id="txtDistancia">km</span></p>
-                        <p><strong>Hora Salida:</strong> <span id="txtSalida"></span></p>
-                        <p><strong>Llegada Estimada:</strong> <span id="txtEstimada"></span></p>
-                        <p><strong>Unidad Ambulancia:</strong> <span id="txtAmbulancia"></span></p>
+                        <p><strong>Número de Traslado: </strong> <span id="txtId"> </span></p>
+                        <p><strong>Origen: </strong> <span id="txtOrigen"> Hospital de Clínicas</span></p>
+                        <p><strong>Destino: </strong> <span id="txtDestino"> </span></p>
+                        <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado"> Sin Selección</span></p>
+                        <p><strong>Distancia estimada: </strong> <span id="txtDistancia"> km</span></p>
+                        <p><strong>Hora Salida: </strong> <span id="txtSalida"> </span></p>
+                        <p><strong>Llegada Estimada: </strong> <span id="txtEstimada"> </span></p>
+                        <p><strong>Unidad Ambulancia: </strong> <span id="txtAmbulancia"> </span></p>
                     </div>
                 </div>
 
