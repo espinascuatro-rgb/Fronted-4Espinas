@@ -19,129 +19,15 @@ $resultado = $conexion->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración de Pacientes - Hospital de Clínicas</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <style>
-        .contenedor-admin {
-            max-width: 1100px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-
-        .grid-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-weight: bold;
-            font-size: 0.9em;
-            margin-bottom: 4px;
-        }
-
-        .form-group input {
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        .btn-guardar {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-cancelar {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            display: none;
-        }
-
-        .tabla-pacientes {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            background-color: white;
-            font-size: 0.92em;
-        }
-
-        .tabla-pacientes th, .tabla-pacientes td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: left;
-        }
-
-        .tabla-pacientes th {
-            background-color: #0a192f;
-            color: white;
-        }
-
-        .btn-editar {
-            background-color: #ffc107;
-            color: black;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .btn-eliminar {
-            background-color: #dc3545;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        .btn-inicio {
-            display: inline-block;
-            background-color: #007bff;
-            color: white;
-            padding: 8px 15px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .alerta {
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-        .alerta-exito { background-color: #d4edda; color: #155724; }
-        .alerta-error { background-color: #f8d7da; color: #721c24; }
-    </style>
+    <link rel="stylesheet" href="../css/elementosC.css">
+    <link rel="stylesheet" href="../css/admin_pacientes.css">
 </head>
 
 <body>
-    <header class="encabezado-app">
-        <img src="../fotos-videos/Logo-Hospital.png" alt="Logo del hospital" class="logo">
-        <div>
-            <h1>Hospital de Clínicas</h1>
-            <h2>Gestión y Administración de Pacientes</h2>
-        </div>
-        <nav class="nav-app">
+    <header class="Headerguia">
+        <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
+        <h2>Gestión y Administración de Pacientes</h2>
+        <nav class="navguia">
             <a href="../pages/guia.php">Inicio</a>
             <a href="../pages/tratamientos.php">Pacientes</a>
             <a href="../pages/traslados.php">Ambulancias</a>
@@ -149,7 +35,7 @@ $resultado = $conexion->query($sql);
         </nav>
     </header>
 
-    <main class="contenedor-admin">
+    <main class="mainadminpacientes">
 
         <?php if (isset($_GET['msg'])): ?>
             <div class="alerta alerta-exito">
@@ -213,7 +99,7 @@ $resultado = $conexion->query($sql);
             </form>
         </section>
 
-        <section class="tarjeta" style="margin-top: 20px;">
+        <section class="tarjeta tarjeta-listado">
             <h2>Listado de Pacientes Registrados</h2>
             <table class="tabla-pacientes">
                 <thead>
@@ -247,7 +133,7 @@ $resultado = $conexion->query($sql);
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="6" style="text-align: center;">No hay pacientes registrados.</td>
+                            <td colspan="6" class="tabla-vacia">No hay pacientes registrados.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
@@ -255,40 +141,12 @@ $resultado = $conexion->query($sql);
         </section>
     </main>
 
-    <footer class="pie-app">
-        <p>Equipo 4 Espinas - Hospital de Clínicas</p>
-        <button><a href="../php/logout.php" style="color: white; text-decoration: none;">Cerrar Sesión</a></button>
+    <footer class="footerguia">
+        <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
+        <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
-    <script>
-        function editarPaciente(p) {
-            document.getElementById('tituloForm').textContent = "Editar Datos del Paciente";
-            document.getElementById('accion').value = "editar";
-            document.getElementById('cedula_original').value = p.cedula;
-            
-            document.getElementById('cedula').value = p.cedula;
-            document.getElementById('cedula').readOnly = true;
-            document.getElementById('primer_nombre').value = p.primer_nombre || '';
-            document.getElementById('segundo_nombre').value = p.segundo_nombre || '';
-            document.getElementById('primer_apellido').value = p.primer_apellido || '';
-            document.getElementById('segundo_apellido').value = p.segundo_apellido || '';
-            document.getElementById('carne_de_salud').value = p.carne_de_salud || '';
-            document.getElementById('numero_de_telefono').value = p.numero_de_telefono || '';
-            document.getElementById('direccion').value = p.direccion || '';
-
-            document.getElementById('btnSubmit').textContent = "Actualizar Paciente";
-            document.getElementById('btnCancelar').style.display = "inline-block";
-        }
-
-        document.getElementById('btnCancelar').addEventListener('click', () => {
-            document.getElementById('tituloForm').textContent = "Agregar Nuevo Paciente";
-            document.getElementById('accion').value = "agregar";
-            document.getElementById('formPaciente').reset();
-            document.getElementById('cedula').readOnly = false;
-            document.getElementById('btnSubmit').textContent = "Guardar Paciente";
-            document.getElementById('btnCancelar').style.display = "none";
-        });
-    </script>
+    <script src="../js/admin_pacientes.js"></script>
 </body>
 
 </html>
