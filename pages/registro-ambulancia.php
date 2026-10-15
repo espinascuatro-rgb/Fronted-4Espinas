@@ -32,15 +32,14 @@ $res_ambulancias = $con->query($sql_ambulancias);
     <main class="mainguia">
         <section class="sectionguia contenedor-ambulancia-main">
             <button class="btnguia1 btn-volver">
-                <a href="../pages/guia.php">← Volver al Inicio</a>
             </button>
 
             <?php if (isset($_GET['msg'])): ?>
                 <div class="alerta alerta-exito">
                     <?php 
-                        if ($_GET['msg'] === 'guardado') echo "¡Registro de ambulancia guardado correctamente!";
-                        if ($_GET['msg'] === 'editado') echo "¡Datos de la ambulancia actualizados!";
-                        if ($_GET['msg'] === 'eliminado') echo "¡Ambulancia eliminada correctamente!";
+                        if ($_GET['msg'] === 'guardado') echo "El registro de ambulancia guardado de la forma correcta";
+                        if ($_GET['msg'] === 'editado') echo "Datos de la ambulancia actualizado";
+                        if ($_GET['msg'] === 'eliminado') echo "La ambulancia se ha eliminada";
                     ?>
                 </div>
             <?php endif; ?>
@@ -56,7 +55,6 @@ $res_ambulancias = $con->query($sql_ambulancias);
                 <input type="hidden" name="accion" id="accion" value="guardar">
                 <input type="hidden" name="serie_original" id="serie_original" value="">
 
-                <!-- 1. Datos del Solicitante -->
                 <div class="seccion-form-bloque">
                     <h3>Datos del solicitante</h3>
                     <div class="grid-form-ambulancia">
@@ -71,7 +69,6 @@ $res_ambulancias = $con->query($sql_ambulancias);
                     </div>
                 </div>
 
-                <!-- 2. Datos del Paciente -->
                 <div class="seccion-form-bloque">
                     <h3>Datos del paciente</h3>
                     <div class="grid-form-ambulancia">
@@ -90,7 +87,6 @@ $res_ambulancias = $con->query($sql_ambulancias);
                     </div>
                 </div>
 
-                <!-- 3. Detalles del Traslado -->
                 <div class="seccion-form-bloque">
                     <h3>Detalles del traslado</h3>
                     <div class="grid-form-ambulancia">
@@ -105,7 +101,6 @@ $res_ambulancias = $con->query($sql_ambulancias);
                     </div>
                 </div>
 
-                <!-- 4. Detalles del Vehículo -->
                 <div class="seccion-form-bloque">
                     <h3>Detalles del vehículo</h3>
                     <div class="grid-form-ambulancia">
