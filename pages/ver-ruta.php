@@ -1,6 +1,13 @@
 <?php 
 require_once __DIR__ . '/../php/checksesion.php'; 
 require_once __DIR__ . '/../php/conexion.php';
+
+// Consulta para obtener traslados con información de la ambulancia y coordenadas del chofer
+$sql_traslados = "SELECT t.*, a.matricula 
+                  FROM traslado t 
+                  LEFT JOIN ambulancia a ON t.matricula_ambulancia = a.numero_de_serie 
+                  ORDER BY t.id_traslado DESC";
+$res_traslados = $con->query($sql_traslados);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -35,27 +42,47 @@ require_once __DIR__ . '/../php/conexion.php';
                 <a href="../pages/guia.php">← Volver al Inicio</a>
             </button>
 
-            <h2 class="titulo-seccion">Seguimiento y Visualización de Rutas</h2>
+            <h2 class="titulo-seccion">Seguimiento y Visualización de Rutas en Tiempo Real</h2>
 
             <div class="panel-ruta-grid">
+                <!-- Panel Lateral de Selección de Traslado -->
                 <div class="tarjeta-controles-ruta">
                     <h3>Selección de Traslado</h3>
                     <div class="form-group-ruta">
-                        <label for="selectTraslado"><strong>Traslado Activo:</strong></label>
+                        <label for="selectTraslado"><strong>Seleccionar Traslado Activo:</strong></label>
                         <select id="selectTraslado" class="input-select-ruta">
-                            <option value="">-- Cargar ruta en tiempo real --</option>
-                            <option value="1">Traslado #1 - Hospital de Clínicas -> Av. Italia 2870</option>
+                            <option value="">-- Seleccione un traslado --</option>
+                            <?php if ($res_traslados && $res_traslados->num_rows > 0): ?>
+                                <?php while ($t = $res_traslados->fetch_assoc()): ?>
+                                    <option value="<?php echo $t['id_traslado']; ?>" 
+                                            data-origen="<?php echo htmlspecialchars($t['origen'] ?? 'Hospital de Clínicas'); ?>"
+                                            data-destino="<?php echo htmlspecialchars($t['destino'] ?? 'Sin destino'); ?>"
+                                            data-estado="<?php echo htmlspecialchars($t['estado'] ?? 'pendiente'); ?>"
+                                            data-lat="<?php echo htmlspecialchars($t['lat_chofer'] ?? '-32.31892978'); ?>"
+                                            data-lng="<?php echo htmlspecialchars($t['lng_chofer'] ?? '-58.05732318'); ?>"
+                                            data-salida="<?php echo htmlspecialchars($t['hora_de_salida'] ?? 'N/A'); ?>"
+                                            data-estimada="<?php echo htmlspecialchars($t['hora_estimada_gps'] ?? 'N/A'); ?>"
+                                            data-ambulancia="<?php echo htmlspecialchars($t['matricula_ambulancia'] ?? 'N/A'); ?>">
+                                        Traslado #<?php echo $t['id_traslado']; ?> - <?php echo htmlspecialchars($t['destino'] ?? 'Destino'); ?>
+                                    </option>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
                         </select>
                     </div>
 
+                    <!-- Información Detallada del Traslado -->
                     <div id="infoTraslado" class="info-traslado-card">
-                        <p><strong>Origen:</strong> <span id="txtOrigen">Hospital de Clínicas</span></p>
-                        <p><strong>Destino:</strong> <span id="txtDestino">Av. Italia 2870</span></p>
-                        <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado">En Proceso</span></p>
-                        <p><strong>Tiempo Estimado:</strong> <span id="txtTiempo">-- hs</span></p>
+                        <p><strong>Nº Traslado:</strong> <span id="txtId">--</span></p>
+                        <p><strong>Origen:</strong> <span id="txtOrigen">--</span></p>
+                        <p><strong>Destino:</strong> <span id="txtDestino">--</span></p>
+                        <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado">Sin Selección</span></p>
+                        <p><strong>Hora Salida:</strong> <span id="txtSalida">--</span></p>
+                        <p><strong>Llegada Estimada (GPS):</strong> <span id="txtEstimada">--</span></p>
+                        <p><strong>Unidad Ambulancia:</strong> <span id="txtAmbulancia">--</span></p>
                     </div>
                 </div>
 
+                <!-- Mapa Interactivo -->
                 <div class="tarjeta-mapa-box">
                     <div id="mapaRuta" class="mapa-contenedor"></div>
                 </div>
@@ -68,7 +95,7 @@ require_once __DIR__ . '/../php/conexion.php';
         <button><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
-    <!-- Leaflet JS y Script de Ruta -->
+    <!-- Dependencias de Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../js/ver-ruta.js"></script>
 </body>
