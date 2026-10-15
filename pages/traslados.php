@@ -35,9 +35,6 @@ $res_ambulancias = $con->query($sql_ambulancias);
 
     <main class="mainguia">
         <section class="sectionguia contenedor-insumos-main">
-            <button class="btnguia1 btn-volver">
-                <a href="../pages/guia.php">← Volver al Inicio</a>
-            </button>
 
             <?php if (isset($_GET['msg'])): ?>
                 <div class="alerta alerta-exito">
@@ -61,7 +58,7 @@ $res_ambulancias = $con->query($sql_ambulancias);
                 <div class="form-select-ambulancia">
                     <label for="numero_de_serie_ambulancia"><strong>Seleccionar Ambulancia / Unidad:</strong></label>
                     <select id="numero_de_serie_ambulancia" name="numero_de_serie_ambulancia" required class="input-select">
-                        <option value="">-- Seleccione la Ambulancia --</option>
+                        <option value=""> Selecciona la Ambulancia </option>
                         <?php 
                         if ($res_ambulancias && $res_ambulancias->num_rows > 0) {
                             $res_ambulancias->data_seek(0);
@@ -76,11 +73,11 @@ $res_ambulancias = $con->query($sql_ambulancias);
                 <h3 class="subtitulo-seccion">Inventario de Insumos</h3>
                 <div class="grid-form-insumos">
                     <div>
-                        <label for="vendas"><strong>Vendas (Unidades):</strong></label>
+                        <label for="vendas"><strong>Vendas (Cantidad):</strong></label>
                         <input type="number" id="vendas" name="vendas" min="0" value="0" class="input-form">
                     </div>
                     <div>
-                        <label for="jeringas"><strong>Jeringas (Unidades):</strong></label>
+                        <label for="jeringas"><strong>Jeringas (Cantidad):</strong></label>
                         <input type="number" id="jeringas" name="jeringas" min="0" value="0" class="input-form">
                     </div>
                     <div>
@@ -92,11 +89,11 @@ $res_ambulancias = $con->query($sql_ambulancias);
                         <input type="number" id="guantes" name="guantes" min="0" value="0" class="input-form">
                     </div>
                     <div>
-                        <label for="mascarillas"><strong>Mascarillas (Unidades):</strong></label>
+                        <label for="mascarillas"><strong>Mascarillas (Cantidad):</strong></label>
                         <input type="number" id="mascarillas" name="mascarillas" min="0" value="0" class="input-form">
                     </div>
                     <div>
-                        <label for="hisopos"><strong>Hisopos (Cajas/Unid):</strong></label>
+                        <label for="hisopos"><strong>Hisopos (Cajas/Cantidad):</strong></label>
                         <input type="number" id="hisopos" name="hisopos" min="0" value="0" class="input-form">
                     </div>
                     <div>

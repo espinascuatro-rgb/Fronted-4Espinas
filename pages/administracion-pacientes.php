@@ -32,8 +32,6 @@ $resultado = $con->query($sql);
 
     <main class="mainguia">
         <section class="sectionguia contenedor-admin-pacientes">
-            <button class="btnguia1 btn-volver">
-            </button>
 
             <?php if (isset($_GET['msg'])): ?>
                 <div class="alerta alerta-exito">
