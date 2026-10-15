@@ -31,11 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (btnCancelar) {
         btnCancelar.addEventListener('click', () => {
-            tituloForm.textContent = "Registro de Ambulancias";
+            tituloForm.textContent = "Registro ambulancias";
             accion.value = "guardar";
             formAmbulancia.reset();
             inputSerie.readOnly = false;
-            btnSubmit.textContent = "Registrar ambulancia";
+            btnSubmit.textContent = "Registrar traslado de ambulancia";
             btnCancelar.style.display = "none";
         });
     }

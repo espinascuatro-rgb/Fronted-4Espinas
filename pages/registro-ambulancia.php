@@ -38,7 +38,7 @@ $res_ambulancias = $con->query($sql_ambulancias);
             <?php if (isset($_GET['msg'])): ?>
                 <div class="alerta alerta-exito">
                     <?php 
-                        if ($_GET['msg'] === 'guardado') echo "¡Ambulancia registrada correctamente!";
+                        if ($_GET['msg'] === 'guardado') echo "¡Registro de ambulancia guardado correctamente!";
                         if ($_GET['msg'] === 'editado') echo "¡Datos de la ambulancia actualizados!";
                         if ($_GET['msg'] === 'eliminado') echo "¡Ambulancia eliminada correctamente!";
                     ?>
@@ -51,33 +51,86 @@ $res_ambulancias = $con->query($sql_ambulancias);
                 </div>
             <?php endif; ?>
 
-            <h2 id="tituloForm" class="titulo-seccion">Registro de Ambulancias</h2>     
+            <h2 id="tituloForm" class="titulo-seccion">Registro ambulancias</h2>     
             <form action="../php/inyeccion2.php" method="POST" id="formAmbulancia">
                 <input type="hidden" name="accion" id="accion" value="guardar">
                 <input type="hidden" name="serie_original" id="serie_original" value="">
 
-                <div class="grid-form-ambulancia">
-                    <div>
-                        <label for="numero_de_serie"><strong>Número de identificación (Nº Serie):</strong></label>
-                        <input type="text" id="numero_de_serie" name="numero_de_serie" required class="input-form">
+                <!-- 1. Datos del Solicitante -->
+                <div class="seccion-form-bloque">
+                    <h3>Datos del solicitante</h3>
+                    <div class="grid-form-ambulancia">
+                        <div>
+                            <label for="nombre_solicitante"><strong>Nombre del solicitador:</strong></label>
+                            <input type="text" id="nombre_solicitante" name="nombre_solicitante" class="input-form">
+                        </div>
+                        <div>
+                            <label for="telefono_solicitante"><strong>Teléfono de contacto:</strong></label>
+                            <input type="text" id="telefono_solicitante" name="telefono_solicitante" class="input-form">
+                        </div>
                     </div>
-                    <div>
-                        <label for="kilometraje"><strong>Kilometraje:</strong></label>
-                        <input type="number" id="kilometraje" name="kilometraje" required class="input-form">
+                </div>
+
+                <!-- 2. Datos del Paciente -->
+                <div class="seccion-form-bloque">
+                    <h3>Datos del paciente</h3>
+                    <div class="grid-form-ambulancia">
+                        <div>
+                            <label for="nombre_paciente"><strong>Nombre del paciente:</strong></label>
+                            <input type="text" id="nombre_paciente" name="nombre_paciente" class="input-form">
+                        </div>
+                        <div>
+                            <label for="edad_paciente"><strong>Edad del paciente:</strong></label>
+                            <input type="number" id="edad_paciente" name="edad_paciente" class="input-form">
+                        </div>
+                        <div>
+                            <label for="condicion_paciente"><strong>Condición del paciente:</strong></label>
+                            <input type="text" id="condicion_paciente" name="condicion_paciente" class="input-form">
+                        </div>
                     </div>
-                    <div>
-                        <label for="matricula"><strong>Matrícula:</strong></label>
-                        <input type="text" id="matricula" name="matricula" required class="input-form">
+                </div>
+
+                <!-- 3. Detalles del Traslado -->
+                <div class="seccion-form-bloque">
+                    <h3>Detalles del traslado</h3>
+                    <div class="grid-form-ambulancia">
+                        <div>
+                            <label for="origen"><strong>Dirección de origen:</strong></label>
+                            <input type="text" id="origen" name="origen" class="input-form">
+                        </div>
+                        <div>
+                            <label for="destino"><strong>Destino del traslado:</strong></label>
+                            <input type="text" id="destino" name="destino" class="input-form">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Detalles del Vehículo -->
+                <div class="seccion-form-bloque">
+                    <h3>Detalles del vehículo</h3>
+                    <div class="grid-form-ambulancia">
+                        <div>
+                            <label for="numero_de_serie"><strong>Número de identificación (*):</strong></label>
+                            <input type="text" id="numero_de_serie" name="numero_de_serie" required class="input-form">
+                        </div>
+                        <div>
+                            <label for="kilometraje"><strong>Kilometraje (*):</strong></label>
+                            <input type="text" id="kilometraje" name="kilometraje" required class="input-form">
+                        </div>
+                        <div>
+                            <label for="matricula"><strong>Matrícula (*):</strong></label>
+                            <input type="text" id="matricula" name="matricula" required class="input-form">
+                        </div>
                     </div>
                 </div>
               
                 <div class="contenedor-botones">
-                    <button type="submit" id="btnSubmit">Registrar ambulancia</button>
+                    <button type="submit" id="btnSubmit">Registrar traslado de ambulancia</button>
                     <button type="button" id="btnCancelar" class="btn-cancelar">Cancelar Edición</button>
                 </div>
             </form>
 
-            <h2 class="titulo-seccion">Ambulancias Registradas</h2>
+            <h2 class="titulo-seccion" style="margin-top: 30px;">Ambulancias Registradas</h2>
             <div class="overflow-tabla">
                 <table class="tabla-ambulancias-admin">
                     <thead>

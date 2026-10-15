@@ -13,11 +13,22 @@
     margin-bottom: 15px;
 }
 
+.seccion-form-bloque {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #cbd5e1;
+}
+
+.seccion-form-bloque h3 {
+    color: #1840dd;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+}
+
 .grid-form-ambulancia {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 15px;
-    margin-bottom: 20px;
 }
 
 .input-form {
@@ -32,6 +43,7 @@
 .contenedor-botones {
     display: flex;
     gap: 10px;
+    margin-top: 15px;
     margin-bottom: 25px;
 }
 
