@@ -17,102 +17,11 @@ $res_traslados = $con->query($sql_traslados);
     <title>Monitoreo GPS - Ver Ruta</title>
     <link rel="stylesheet" href="../css/elementosC.css">
 
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/Ver_ruta.css">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet-fullscreen.css" />
-
-    <style>
-        .grid-formulario {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .campo {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .campo label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            font-size: 0.88em;
-        }
-
-        .campo input, 
-        .campo select, 
-        .campo button {
-            padding: 9px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .btn-accion {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-            height: 38px;
-            align-self: flex-end;
-            width: 100%;
-        }
-
-        .btn-accion:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-iniciar {
-            background-color: #28a745;
-        }
-
-        .btn-iniciar:hover {
-            background-color: #218838;
-        }
-
-        .btn-finalizar {
-            background-color: #dc3545;
-        }
-
-        .btn-finalizar:hover {
-            background-color: #c82333;
-        }
-
-        .nav-app {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .btn-nav {
-            padding: 8px 15px;
-            background-color: #17a2b8;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            font-size: 14px;
-            transition: background 0.2s;
-        }
-
-        .btn-nav:hover {
-            background-color: #138496;
-        }
-
-        #visualizar {
-            height: 480px;
-            width: 100%;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            margin-top: 10px;
-            z-index: 1;
-        }
-    </style>
 </head>
 <body>
     <header class="Headerguia">
@@ -182,15 +91,10 @@ $res_traslados = $con->query($sql_traslados);
                 </div>
             </div>
         </section>
+    </main>
             <footer class="footerguia">
         <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
         <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
-    </footer>
-    </main>
-
-    <footer class="footerguia">
-        <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
-        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
