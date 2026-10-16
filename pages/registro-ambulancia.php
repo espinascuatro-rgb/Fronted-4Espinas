@@ -14,7 +14,6 @@ $res_ambulancias = $con->query($sql_ambulancias);
     <title>Página de registro de ambulancias</title>
     <link rel="stylesheet" href="../css/elementosC.css">
     <link rel="stylesheet" href="../css/registroambu.css">
-    <link rel="stylesheet" href="../css/admin-ambulancia.css">
 </head>
 
 <body class="bodyguia">
@@ -31,8 +30,6 @@ $res_ambulancias = $con->query($sql_ambulancias);
 
     <main class="mainguia">
         <section class="sectionguia contenedor-ambulancia-main">
-            <button class="btnguia1 btn-volver">
-            </button>
 
             <?php if (isset($_GET['msg'])): ?>
                 <div class="alerta alerta-exito">

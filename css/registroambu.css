@@ -1,0 +1,189 @@
+.contenedor-ambulancia-main {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: block;
+}
+
+.btn-volver {
+    width: auto;
+    margin-bottom: 20px;
+    padding: 8px 15px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.titulo-seccion {
+    color: #0a1e6f;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+/* Dominicke estubo aqui, el que tiene mas aura */
+.seccion-form-bloque {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.seccion-form-bloque h3 {
+    color: #1840dd;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 8px;
+}
+
+.grid-form-ambulancia {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 15px;
+}
+
+.input-form {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    margin-top: 6px;
+    box-sizing: border-box;
+    font-size: 0.95rem;
+    background: #ffffff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-form:focus {
+    outline: none;
+    border-color: #1840dd;
+    box-shadow: 0 0 0 3px rgba(24, 64, 221, 0.15);
+}
+
+.contenedor-botones {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+#btnSubmit {
+    background: linear-gradient(135deg, #0a1e6f, #1840dd);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+#btnSubmit:hover {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+
+.btn-cancelar {
+    display: none;
+    background: #6c757d !important;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.overflow-tabla {
+    overflow-x: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.tabla-ambulancias-admin {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    text-align: left;
+}
+
+.tabla-ambulancias-admin th {
+    background: linear-gradient(100deg, #3257e8, #1491f8, #3257e8);
+    color: white;
+    padding: 12px 15px;
+    font-weight: 600;
+}
+
+.tabla-ambulancias-admin td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #e2e8f0;
+    color: #334155;
+}
+
+.tabla-ambulancias-admin tbody tr:hover {
+    background: #f8fafc;
+}
+
+.td-vacio {
+    text-align: center;
+    padding: 20px;
+    color: #64748b;
+}
+
+.btn-tabla-editar {
+    background: #ffc107;
+    color: #000;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.btn-tabla-editar:hover {
+    background: #e0a800;
+}
+
+.btn-tabla-eliminar {
+    background: #dc3545;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: background 0.2s;
+}
+
+.btn-tabla-eliminar:hover {
+    background: #c82333;
+}
+
+.alerta {
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.alerta-exito {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alerta-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
