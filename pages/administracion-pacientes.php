@@ -13,8 +13,7 @@ $resultado = $con->query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administración de Pacientes - Hospital de Clínicas</title>
     <link rel="stylesheet" href="../css/elementosC.css">
-    <link rel="stylesheet" href="../css/guia.css">
-    <link rel="stylesheet" href="../css/admin-pacientes.css">
+    <link rel="stylesheet" href="../css/admin_pacientes.css">
 </head>
 
 <body class="bodyguia">
@@ -30,7 +29,7 @@ $resultado = $con->query($sql);
         </nav>
     </header>
 
-    <main class="mainguia">
+    <main class="maingui">
         <section class="sectionguia contenedor-admin-pacientes">
 
             <?php if (isset($_GET['msg'])): ?>
@@ -138,9 +137,10 @@ $resultado = $con->query($sql);
         </section>
     </main>
 
-    <footer class="footerguia">
+
+        <footer class="footerguia">
         <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
-        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
+        <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
     <script src="../js/admin-pacientes.js"></script>
