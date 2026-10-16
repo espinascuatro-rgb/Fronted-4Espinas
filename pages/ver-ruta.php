@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoreo GPS - Ver Ruta</title>
-    
+    <link rel="stylesheet" href="../css/elementosC.css">
+
     <link rel="stylesheet" href="../css/style.css">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -104,11 +105,13 @@
     </style>
 </head>
 <body>
-    <header class="encabezado-app">
+    <header class="Headerguia">
+        <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
         <h1>Visualización en GPS</h1>
-        <nav class="nav-app">
-            <a href="chofer-gps.php" class="btn-nav">Modo Chofer (GPS)</a>
-            <a href="../pages/trazabilidad.php" class="btn-nav">Volver a Trazabilidad</a>
+        <nav class="navguia">
+            <a href="../pages/guia.php">Inicio</a>
+            <a href="chofer-gps.php">Modo Chofer (GPS)</a>
+            <a href="../pages/trazabilidad.php">Volver a Trazabilidad</a>
         </nav>
     </header>
 
@@ -201,6 +204,10 @@
 
             <div id="visualizar"></div>
         </section>
+            <footer class="footerguia">
+        <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
+        <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
+    </footer>
     </main>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
