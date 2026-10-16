@@ -2,7 +2,6 @@
 require_once __DIR__ . '/../php/checksesion.php'; 
 require_once __DIR__ . '/../php/conexion.php';
 
-// Consulta para obtener la trazabilidad completa de traslados
 $sql_trazabilidad = "SELECT t.*, a.kilometraje, a.matricula 
                       FROM traslado t 
                       LEFT JOIN ambulancia a ON t.matricula_ambulancia = a.numero_de_serie 
@@ -17,7 +16,6 @@ $res_trazabilidad = $con->query($sql_trazabilidad);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trazabilidad de Traslados - Hospital de Clínicas</title>
     <link rel="stylesheet" href="../css/elementosC.css">
-    <link rel="stylesheet" href="../css/guia.css">
     <link rel="stylesheet" href="../css/trazabilidad.css">
 </head>
 
@@ -37,9 +35,6 @@ $res_trazabilidad = $con->query($sql_trazabilidad);
     <main class="mainguia">
         <section class="sectionguia contenedor-trazabilidad-main">
             <div class="header-acciones-trazabilidad">
-                <button class="btnguia1 btn-volver">
-                    <a href="../pages/guia.php">← Volver al Inicio</a>
-                </button>
                 <div class="grupo-botones-nav">
                     <button class="btnguia6 btn-ver-mapa">
                         <a href="../pages/ver-ruta.php">Ver Mapa / Rutas</a>
@@ -52,12 +47,10 @@ $res_trazabilidad = $con->query($sql_trazabilidad);
 
             <h2 class="titulo-seccion">Trazabilidad e Historial de Traslados</h2>
 
-            <!-- Filtro de Búsqueda -->
             <div class="panel-filtro-trazabilidad">
                 <input type="text" id="inputBuscarTrazabilidad" placeholder="Buscar por ID, destino o ambulancia..." class="input-buscar">
             </div>
 
-            <!-- Tabla de Historial -->
             <div class="overflow-tabla">
                 <table class="tabla-trazabilidad" id="tablaTrazabilidad">
                     <thead>
@@ -107,7 +100,7 @@ $res_trazabilidad = $con->query($sql_trazabilidad);
 
     <footer class="footerguia">
         <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
-        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
+        <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
     <script src="../js/trazabilidad.js"></script>
