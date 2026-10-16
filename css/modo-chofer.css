@@ -1,0 +1,126 @@
+.contenedor-chofer-main {
+    max-width: 650px;
+    margin: 0 auto;
+    display: block;
+}
+
+.header-acciones-chofer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.btn-volver, .btn-mapa-nav {
+    width: auto !important;
+}
+
+.titulo-seccion {
+    color: #0a1e6f;
+    margin-bottom: 20px;
+}
+
+.card-chofer-panel {
+    background: #ffffff;
+    border: 2px solid #1d4ed8;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.form-group-chofer {
+    margin-bottom: 20px;
+}
+
+.input-select-chofer {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    margin-top: 6px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+.estado-gps-box {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 18px;
+    margin-bottom: 20px;
+}
+
+.fila-estado {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.fila-estado:last-child {
+    border-bottom: none;
+}
+
+.badge-gps {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.badge-off {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.badge-on {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.acciones-chofer-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.btn-transmitir-gps {
+    width: 100%;
+    padding: 14px;
+    background: #16a34a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(22, 163, 74, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-transmitir-gps:hover {
+    background: #15803d;
+}
+
+.btn-transmitir-gps.activo {
+    background: #dc2626;
+    box-shadow: 0 3px 10px rgba(220, 38, 38, 0.3);
+}
+
+.btn-finalizar-traslado {
+    width: 100%;
+    padding: 12px;
+    background: #0284c7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-finalizar-traslado:hover {
+    background: #0369a1;
+}

@@ -1,226 +1,101 @@
-/* ==========================================
-   ADMINISTRACIÓN DE PACIENTES - HOSPITAL DE CLÍNICAS
-   ========================================== */
-
-.mainadminpacientes {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 30px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    flex: 1;
-    box-sizing: border-box;
+.contenedor-admin-pacientes {
+    grid-template-columns: 1fr;
+    display: block;
 }
 
-/* Estilo de tarjeta unificado */
-.tarjeta {
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    padding: 30px;
-    box-sizing: border-box;
+.titulo-seccion {
+    color: #0a1e6f;
+    margin-bottom: 15px;
 }
 
-/* Títulos principales de las tarjetas */
-.tarjeta h2 {
-    color: #004080;
-    font-size: 1.4rem;
-    margin-top: 0;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 10px;
-}
-
-/* Cuadrícula adaptable para el formulario */
-.grid-form {
+.grid-form-pacientes {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
     margin-bottom: 20px;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.form-group label {
-    font-weight: bold;
-    color: #333333;
-    font-size: 0.9rem;
-}
-
-.form-group input {
-    padding: 12px 15px;
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    background-color: #f8f9fa;
-    color: #495057;
+.input-form {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
     box-sizing: border-box;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
-.form-group input:focus {
-    border-color: #0056b3;
-    background-color: #ffffff;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
-}
-
-/* Botones de acción del formulario */
-.btn-guardar {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.95rem;
-    transition: background-color 0.3s ease;
-}
-
-.btn-guardar:hover {
-    background-color: #218838;
+.contenedor-botones {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
 }
 
 .btn-cancelar {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.95rem;
     display: none;
-    margin-left: 10px;
-    transition: background-color 0.3s ease;
+    background: #6c757d !important;
 }
 
-.btn-cancelar:hover {
-    background-color: #5a6268;
+.overflow-tabla {
+    overflow-x: auto;
 }
 
-/* Tabla de pacientes moderna y estilizada */
-.tabla-pacientes {
+.tabla-pacientes-admin {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
-    background-color: white;
-    font-size: 0.95rem;
-    border-radius: 8px;
-    overflow: hidden;
+    background: #ffffff;
 }
 
-.tabla-pacientes th, 
-.tabla-pacientes td {
-    padding: 14px 15px;
+.tabla-pacientes-admin th {
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    color: white;
+    padding: 10px;
+    border: 1px solid #ddd;
     text-align: left;
-    border-bottom: 1px solid #dee2e6;
 }
 
-.tabla-pacientes th {
-    background-color: #0a192f;
-    color: white;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
+.tabla-pacientes-admin td {
+    padding: 10px;
+    border: 1px solid #ddd;
 }
 
-.tabla-pacientes tbody tr {
-    transition: background-color 0.2s ease;
-}
-
-.tabla-pacientes tbody tr:hover {
-    background-color: #f8f9fa;
-}
-
-.tabla-vacia {
+.td-vacio {
     text-align: center;
-    color: #6c757d;
-    padding: 30px !important;
+    padding: 15px;
 }
 
-/* Botones dentro de la tabla (Editar / Eliminar) */
-.btn-editar {
-    background-color: #ffc107;
-    color: #212529;
-    padding: 6px 14px;
+.btn-tabla-editar {
+    background: #ffc107;
+    color: black;
     border: none;
-    border-radius: 20px;
+    padding: 5px 10px;
+    border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 0.85rem;
-    transition: background-color 0.3s ease;
-    margin-right: 5px;
 }
 
-.btn-editar:hover {
-    background-color: #e0a800;
-}
-
-.btn-eliminar {
-    background-color: #dc3545;
+.btn-tabla-eliminar {
+    background: #dc3545;
     color: white;
-    padding: 6px 14px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.85rem;
+    padding: 5px 10px;
+    border-radius: 4px;
     text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-}
-
-.btn-eliminar:hover {
-    background-color: #c82333;
-}
-
-.btn-inicio {
-    display: inline-block;
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 20px;
     font-weight: bold;
-    margin-bottom: 15px;
-    transition: background-color 0.3s ease;
+    display: inline-block;
 }
 
-.btn-inicio:hover {
-    background-color: #0056b3;
-}
-
-/* Alertas de éxito y error */
 .alerta {
-    padding: 14px 18px;
+    padding: 10px;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-weight: bold;
-    font-size: 0.95rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
-.alerta-exito { 
-    background-color: #d4edda; 
-    color: #155724; 
-    border-left: 5px solid #28a745;
+.alerta-exito {
+    background-color: #d4edda;
+    color: #155724;
 }
 
-.alerta-error { 
-    background-color: #f8d7da; 
-    color: #721c24; 
-    border-left: 5px solid #dc3545;
-}
-
-.link-logout {
-    color: white;
-    text-decoration: none;
+.alerta-error {
+    background-color: #f8d7da;
+    color: #721c24;
 }

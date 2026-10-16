@@ -1,0 +1,118 @@
+.contenedor-ambulancia-main {
+    grid-template-columns: 1fr;
+    display: block;
+}
+
+.btn-volver {
+    width: auto;
+    margin-bottom: 20px;
+}
+
+.titulo-seccion {
+    color: #0a1e6f;
+    margin-bottom: 15px;
+}
+
+.seccion-form-bloque {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #cbd5e1;
+}
+
+.seccion-form-bloque h3 {
+    color: #1840dd;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+}
+
+.grid-form-ambulancia {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.input-form {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+.contenedor-botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.btn-cancelar {
+    display: none;
+    background: #6c757d !important;
+}
+
+.overflow-tabla {
+    overflow-x: auto;
+}
+
+.tabla-ambulancias-admin {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+}
+
+.tabla-ambulancias-admin th {
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    color: white;
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.tabla-ambulancias-admin td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.td-vacio {
+    text-align: center;
+    padding: 15px;
+}
+
+.btn-tabla-editar {
+    background: #ffc107;
+    color: black;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-tabla-eliminar {
+    background: #dc3545;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.alerta {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.alerta-exito {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alerta-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}

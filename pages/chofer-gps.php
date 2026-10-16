@@ -1,127 +1,93 @@
+<?php 
+require_once __DIR__ . '/../php/checksesion.php'; 
+require_once __DIR__ . '/../php/conexion.php';
+
+// Obtener traslados en proceso o pendientes para que el chofer seleccione
+$sql_traslados = "SELECT t.*, a.matricula 
+                  FROM traslado t 
+                  LEFT JOIN ambulancia a ON t.matricula_ambulancia = a.numero_de_serie 
+                  WHERE t.estado IN ('en_proceso', 'pendiente') 
+                  ORDER BY t.id_traslado DESC";
+$res_traslados = $con->query($sql_traslados);
+?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPS Chofer - Traslado activo</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; padding: 20px; max-width: 500px; margin: 0 auto; }
-        .campo { text-align: left; margin-bottom: 15px; }
-        .campo label { display: block; font-weight: bold; margin-bottom: 5px; }
-        .campo input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        .btn { padding: 15px 25px; font-size: 18px; border: none; border-radius: 5px; color: white; cursor: pointer; width: 100%; margin-top: 10px; font-weight: bold; }
-        .btn-activar { background-color: #28a745; }
-        .btn-desactivar { background-color: #dc3545; }
-        #estado { font-weight: bold; margin-top: 15px; color: #555; }
-    </style>
+    <title>Modo Chofer GPS - Hospital de Clínicas</title>
+    <link rel="stylesheet" href="../css/elementosC.css">
+    <link rel="stylesheet" href="../css/guia.css">
+    <link rel="stylesheet" href="../css/modo-chofer.css">
 </head>
-<body>
-    <h2>Modo Chofer - Enviar Ubicación GPS</h2>
 
-    <div class="campo">
-        <label for="txtChofer">Cédula o ID del Funcionario/Chofer:</label>
-        <input type="text" id="txtChofer" placeholder="Ej: 1234">
-    </div>
+<body class="bodyguia">
+    <header class="Headerguia">
+        <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
+        <h1>Hospital de Clínicas "Dr. Manuel Quintela"</h1>
+        <p>Chofer: <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></p>
+        <nav class="navguia">
+            <a href="../pages/guia.php">Inicio</a>
+            <a href="../pages/ver-ruta.php">Ver Mapa</a>
+            <a href="../pages/trazabilidad.php">Trazabilidad</a>
+            <a href="../pages/ajustes.php">Ajustes</a>
+        </nav>
+    </header>
 
-    <div class="campo">
-        <label for="txtAcompanante">Nombre del Acompañante (Opcional):</label>
-        <input type="text" id="txtAcompanante" placeholder="Ej: Laura">
-    </div>
+    <main class="mainguia">
+        <section class="sectionguia contenedor-chofer-main">
 
-    <div class="campo">
-        <label for="txtAmbulancia">Nº de Serie / Matrícula de Ambulancia:</label>
-        <input type="text" id="txtAmbulancia" placeholder="Ej: 1">
-    </div>
+            <h2 class="titulo-seccion">Panel del Chofer - Transmisión GPS</h2>
 
-    <button id="btnActivar" class="btn btn-activar">Compartir Ubicación en Tiempo Real</button>
-    <button id="btnDesactivar" class="btn btn-desactivar" style="display:none;">Detener Compartir</button>
+            <div class="card-chofer-panel">
+                <div class="form-group-chofer">
+                    <label for="selectTrasladoChofer"><strong>Seleccionar Traslado Asignado:</strong></label>
+                    <select id="selectTrasladoChofer" class="input-select-chofer">
+                        <option value="">Selecciona el Traslado </option>
+                        <?php if ($res_traslados && $res_traslados->num_rows > 0): ?>
+                            <?php while ($t = $res_traslados->fetch_assoc()): ?>
+                                <option value="<?php echo $t['id_traslado']; ?>">
+                                    Traslado #<?php echo $t['id_traslado']; ?> - Destino: <?php echo htmlspecialchars($t['destino'] ?? 'Sin destino'); ?> (Móvil: <?php echo htmlspecialchars($t['matricula_ambulancia'] ?? 'N/A'); ?>)
+                                </option>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
+                    </select>
+                </div>
 
-    <p id="estado">Ubicación desactivada</p>
+                <div class="estado-gps-box">
+                    <div class="fila-estado">
+                        <strong>Estado GPS:</strong>
+                        <span id="sttGpsText" class="badge-gps badge-off">Inactivo</span>
+                    </div>
+                    <div class="fila-estado">
+                        <strong>Latitud:</strong>
+                        <span id="txtLat"></span>
+                    </div>
+                    <div class="fila-estado">
+                        <strong>Longitud:</strong>
+                        <span id="txtLng"></span>
+                    </div>
+                    <div class="fila-estado">
+                        <strong>Última actualización:</strong>
+                        <span id="txtHoraGps"></span>
+                    </div>
+                </div>
 
-    <script>
-        const ID_TRASLADO = 1;
-        let watchId = null;
+                <div class="acciones-chofer-grid">
+                    <button id="btnChoferGps" class="btn-transmitir-gps">Iniciar Transmisión GPS</button>
+                    <button id="btnFinalizarTraslado" class="btn-finalizar-traslado" style="display: none;">Finalizar Traslado</button>
+                </div>
+            </div>
+        </section>
+    </main>
 
-        const btnActivar = document.getElementById('btnActivar');
-        const btnDesactivar = document.getElementById('btnDesactivar');
-        const estado = document.getElementById('estado');
+    <footer class="footerguia">
+        <p>Equipo 4 Espinas - Hospital de Clínicas</p>
+        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
+    </footer>
 
-        const txtChofer = document.getElementById('txtChofer');
-        const txtAcompanante = document.getElementById('txtAcompanante');
-        const txtAmbulancia = document.getElementById('txtAmbulancia');
-
-        btnActivar.addEventListener('click', async () => {
-            const choferVal = txtChofer.value.trim();
-            const ambVal = txtAmbulancia.value.trim();
-            const acompVal = txtAcompanante.value.trim();
-
-            if (!choferVal || !ambVal) {
-                alert("Por favor, ingrese la cédula del chofer y la unidad de ambulancia.");
-                return;
-            }
-
-            estado.innerText = "Guardando datos del traslado...";
-
-            try {
-                const formData = new FormData();
-                formData.append('accion', 'guardar_datos_chofer');
-                formData.append('id_traslado', ID_TRASLADO);
-                formData.append('chofer', choferVal);
-                formData.append('acompanante', acompVal);
-                formData.append('ambulancia', ambVal);
-
-                const resGuardar = await fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
-                const jsonGuardar = await resGuardar.json();
-
-                if (jsonGuardar.status !== 'ok') {
-                    alert("Error al guardar datos: " + (jsonGuardar.msg || 'Asegúrese de que la cédula y ambulancia existan en la base de datos'));
-                    return;
-                }
-            } catch (e) {
-                alert("Error de conexión al guardar los datos del chofer.");
-                return;
-            }
-
-            if ("geolocation" in navigator) {
-                watchId = navigator.geolocation.watchPosition(
-                    async (posicion) => {
-                        const lat = posicion.coords.latitude;
-                        const lng = posicion.coords.longitude;
-
-                        const formData = new FormData();
-                        formData.append('accion', 'actualizar_chofer');
-                        formData.append('id_traslado', ID_TRASLADO);
-                        formData.append('lat', lat);
-                        formData.append('lng', lng);
-
-                        await fetch('../php/actualizar_posicion.php', { method: 'POST', body: formData });
-
-                        estado.innerText = `Transmitiendo GPS: Lat ${lat.toFixed(5)}, Lng ${lng.toFixed(5)}`;
-                        estado.style.color = '#28a745';
-
-                        btnActivar.style.display = 'none';
-                        btnDesactivar.style.display = 'block';
-                    },
-                    (err) => {
-                        alert("Error al obtener la ubicación GPS: " + err.message);
-                    },
-                    { enableHighAccuracy: true, timeout: 5000, maximumAge: 1000 }
-                );
-            } else {
-                alert("Tu dispositivo no soporta geolocalización.");
-            }
-        });
-
-        btnDesactivar.addEventListener('click', () => {
-            if (watchId !== null) {
-                navigator.geolocation.clearWatch(watchId);
-                watchId = null;
-                estado.innerText = "Ubicación desactivada";
-                estado.style.color = "#dc3545";
-                btnActivar.style.display = 'block';
-                btnDesactivar.style.display = 'none';
-            }
-        });
-    </script>
+    <script src="../js/modo-chofer.js"></script>
 </body>
+
 </html>

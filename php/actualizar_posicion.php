@@ -19,13 +19,11 @@ $conexion->set_charset("utf8mb4");
 $accion = $_REQUEST['accion'] ?? '';
 $id_traslado = isset($_REQUEST['id_traslado']) ? intval($_REQUEST['id_traslado']) : 1;
 
-// 1. Guardar Chofer (Cédula), Acompañante y Ambulancia (Matrícula)
 if ($accion === 'guardar_datos_chofer') {
     $chofer = $conexion->real_escape_string($_POST['chofer'] ?? '');
     $acompanante = $conexion->real_escape_string($_POST['acompanante'] ?? '');
     $ambulancia = $conexion->real_escape_string($_POST['ambulancia'] ?? '');
 
-    // Comprobar si el registro existe previamente
     $check = $conexion->query("SELECT id_traslado FROM traslado WHERE id_traslado = $id_traslado");
     if ($check && $check->num_rows === 0) {
         $sql = "INSERT INTO traslado (id_traslado, origen, cedula_funcionario, acompanante, matricula_ambulancia, estado) 
@@ -40,7 +38,6 @@ if ($accion === 'guardar_datos_chofer') {
         echo json_encode(['status' => 'error', 'msg' => $conexion->error]);
     }
 
-// 2. Guardar ubicación GPS enviada por el móvil del Chofer
 } elseif ($accion === 'actualizar_chofer') {
     $lat = floatval($_POST['lat'] ?? 0);
     $lng = floatval($_POST['lng'] ?? 0);
@@ -53,7 +50,6 @@ if ($accion === 'guardar_datos_chofer') {
         echo json_encode(['status' => 'error', 'msg' => 'Coordenadas inválidas']);
     }
 
-// 3. Guardar Hora Estimada de Llegada calculada por el GPS
 } elseif ($accion === 'actualizar_tiempo_gps') {
     $hora_estimada = $conexion->real_escape_string($_POST['hora_estimada'] ?? '');
 
@@ -61,7 +57,6 @@ if ($accion === 'guardar_datos_chofer') {
     $conexion->query($sql);
     echo json_encode(['status' => 'ok']);
 
-// 4. Guardar Dirección de Destino cambiada desde el Mapa
 } elseif ($accion === 'actualizar_destino') {
     $direccion = $conexion->real_escape_string($_POST['direccion'] ?? '');
 
@@ -76,7 +71,6 @@ if ($accion === 'guardar_datos_chofer') {
         echo json_encode(['status' => 'error', 'msg' => 'Dirección vacía']);
     }
 
-// 5. Consultar todo el estado en tiempo real para Trazabilidad
 } elseif ($accion === 'obtener_estado') {
     $sql = "SELECT t.*, f.usuario AS nombre_usuario_chofer 
             FROM traslado t 
@@ -92,7 +86,6 @@ if ($accion === 'guardar_datos_chofer') {
         echo json_encode(['status' => 'error', 'msg' => 'No encontrado']);
     }
 
-// 6. Cambiar Estado del Traslado (Iniciar / Finalizar)
 } elseif ($accion === 'cambiar_estado') {
     $estado = $conexion->real_escape_string($_POST['estado'] ?? 'en_proceso');
     $transporte = $conexion->real_escape_string($_POST['transporte'] ?? 'drive');
