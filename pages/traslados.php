@@ -16,15 +16,13 @@ $res_ambulancias = $con->query($sql_ambulancias);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Insumos - Hospital de Clínicas</title>
     <link rel="stylesheet" href="../css/elementosC.css">
-    <link rel="stylesheet" href="../css/guia.css">
-    <link rel="stylesheet" href="../css/insumos.css">
+    <link rel="stylesheet" href="../css/insumo.css">
 </head>
 
 <body class="bodyguia">
     <header class="Headerguia">
         <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
-        <h1>Hospital de Clínicas "Dr. Manuel Quintela"</h1>
-        <p>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></p>
+        <h1>Insumos Médicos</h1>
         <nav class="navguia">
             <a href="../pages/guia.php">Inicio</a>
             <a href="../pages/tratamientos.php">Pacientes</a>
@@ -165,7 +163,7 @@ $res_ambulancias = $con->query($sql_ambulancias);
 
     <footer class="footerguia">
         <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
-        <button><a href="../php/logout.php">Cerrar Sesión</a></button>
+        <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
     <script src="../js/insumos.js"></script>
