@@ -2,7 +2,6 @@
 require_once __DIR__ . '/../php/checksesion.php'; 
 require_once __DIR__ . '/../php/conexion.php';
 
-// Obtener traslados en proceso o pendientes para que el chofer seleccione
 $sql_traslados = "SELECT t.*, a.matricula 
                   FROM traslado t 
                   LEFT JOIN ambulancia a ON t.matricula_ambulancia = a.numero_de_serie 
