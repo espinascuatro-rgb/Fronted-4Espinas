@@ -5,41 +5,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajustes de Perfil</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/elementosC.css">
+    <link rel="stylesheet" href="../css/ajustes.css">
 </head>
 <body>
-    <header class="encabezado-app">
-        <h1>Panel de Ajustes</h1>
-        <nav class="nav-app">
+    <header class="Headerguia">
+        <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
+        <h1>Ajustes</h1>
+        <nav class="navguia">
             <a href="../pages/guia.php">Inicio</a>
-            <a href="../ajustes.php" class="activo">Ajustes</a>
+            <a href="../pages/tratamientos.php">Pacientes</a>
+            <a href="../pages/traslados.php">Ambulancias</a>
+            <a href="../pages/ajustes.php">Ajustes</a>
         </nav>
     </header>
+    
     <main>
-        <section class="tarjeta" style="max-width: 600px; margin: 0 auto; width: 100%;">
-            <h2 style="color: var(--azul-marino);">Mis Datos de Perfil</h2>
-            
-            <label for="ajuste-nombre">Nombre Completo:</label>
-            <input type="text" id="ajuste-nombre" value="Ejemplo Ejemplar" readonly>
+        <section class="ajustes1">
+            <h2 id="aj1">Ajustes de perfil</h2>
+<!--Se pide obligatoriamente cambiar todos los campos. Lo ideal seria que se pueda cambiar los que se deseen.-->
+<!-- sale un error donde si se deja vacio el cambio de contraseña se cambia igualmente. Ademas de que siendo la contraseña anterior incorrecta pero se deja vacio lo cuenta como valido. -->
+            <div id="datos-perfil" class="perfil-info">
+                <p><strong>Nombre:</strong> <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></p>
+                <p><strong>Teléfono:</strong> <?php echo htmlspecialchars($_SESSION['telefono']  ?? 'No disponible'); ?></p>
+                <p><strong>Dirección:</strong> <?php echo htmlspecialchars($_SESSION['direccion'] ?? 'No disponible'); ?></p>
+                <p><strong>Credencial:</strong> <?php echo htmlspecialchars($_SESSION['credencial'] ?? 'No disponible'); ?></p>
+                <p><strong>Cédula:</strong> <?php echo htmlspecialchars($_SESSION['usuario_id']); ?></p>
+                <p><strong>Contraseña:</strong> ********</p>
+                
+                <button type="button" id="btn-mostrar-editar" class="btn-editar">Modificar datos</button>
+            </div>
 
-            <label for="ajuste-correo">Correo Electrónico Institucional:</label>
-            <input type="email" id="ajuste-correo" value="ejemplo@xd">
+            <form id="form-editar-perfil" action="../php/ajustes-perfil.php" method="POST" class="perfil-form" style="display: none;">
+                <h3>Editar tus datos</h3>
+                
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($_SESSION['nombre'] ?? ''); ?>" required>
+                </div>
 
-            <label for="ajuste-pass">Nueva Contraseña:</label>
-            <input type="password" id="ajuste-pass" placeholder="No rellenes si no queres cambiar">
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" value="<?php echo htmlspecialchars($_SESSION['telefono'] ?? ''); ?>" required>
+                </div>
 
-            <hr>
-            <h3 style="color: var(--azul-medio);">Preferencias del Sistema</h3>
-            <label for="notificaciones">Notificaciones (ejemplo):</label>
-            <select id="notificaciones">
-                <option>Activar notificaciones</option>
-                <option>Mostrar algunas notificciones</option>
-                <option>No mostrar notificaciones</option>
-            </select>
+                <div class="form-group">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" id="direccion" name="direccion" value="<?php echo htmlspecialchars($_SESSION['direccion'] ?? ''); ?>" required>
+                </div>
 
-            <button class="btn-primary" style="margin-top: 20px;">Guardar Cambios</button>
-            <button class="btn-secondary" style="margin-top: 20px;"><a href="../index.html">Cerrar Sesión</a></button>
+                <div class="form-group">
+                    <label for="credencial">Credencial:</label>
+                    <input type="text" id="credencial" name="credencial" value="<?php echo htmlspecialchars($_SESSION['credencial'] ?? ''); ?>" required>
+                </div>
+
+                <hr style="margin: 20px 0;">
+                <h4>Cambiar Contraseña</h4>
+                
+                <div class="form-group">
+                    <label for="password_actual">Contraseña Anterior:</label>
+                    <input type="password" id="password_actual" name="password_actual" placeholder="Ingresa tu contraseña actual">
+                </div>
+
+                <div class="form-group">
+                    <label for="password_nueva">Nueva Contraseña:</label>
+                    <input type="password" id="password_nueva" name="password_nueva" placeholder="Ingresa la nueva contraseña" disabled>
+                </div>
+
+                <div class="form-actions" style="margin-top: 15px;">
+                    <button type="submit" class="btn-guardar">Guardar Cambios</button>
+                    <button type="button" id="btn-cancelar" class="btn-cancelar">Cancelar</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="section2">
+            <h2 id="aj2">Preferencias de sistemas.</h2>
         </section>
     </main>
+
+    <footer class="footerguia">
+        <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
+        <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
+    </footer>
+
+    <script src="../js/ajustes.js"></script>
 </body>
 </html>
