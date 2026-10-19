@@ -9,25 +9,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre        = $_POST['nombre'] ?? '';
     $insumos       = $_POST['insumos'] ?? '';
     $insumo_t      = $_POST['insumo_t'] ?? '';
-    $nombre        = $_POST['origen'] ?? '';
+    $origen        = $_POST['origen'] ?? '';
     $destino       = $_POST['destino'] ?? '';
 
     $con->begin_transaction();
 
     try {
-        $sqlequipo_medico = "INSERT INTO ambulancia (id_equipo_medico, insumos) VALUES (?, ?)";
+        $sqlequipo_medico = "INSERT INTO equipo_medico (id_equipo_medico, insumos) VALUES (?, ?)";
         $stmt = $con->prepare($sqlequipo_medico);
         $stmt->bind_param("sss", $id_equipo_medico, $insumos);
         $stmt->execute();
         $stmt->close();
 
-        $sqltraslado_nobiologico = "INSERT INTO ambulancia (insumo_t) VALUES (?)";
+        $sqltraslado_nobiologico = "INSERT INTO traslado_nobiologico (insumo_t) VALUES (?)";
         $stmt = $con->prepare($sqltraslado_nobiologico);
         $stmt->bind_param("sss", $insumo_t);
         $stmt->execute();
         $stmt->close();
 
-        $sqltraslado = "INSERT INTO ambulancia (origen, destino) VALUES (?, ?)";
+        $sqltraslado = "INSERT INTO traslado (origen, destino) VALUES (?, ?)";
         $stmt = $con->prepare($sqltraslado);
         $stmt->bind_param("sss", $origen, $destino);
         $stmt->execute();
