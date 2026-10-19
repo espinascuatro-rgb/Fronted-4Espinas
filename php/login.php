@@ -1,5 +1,5 @@
 <?php
-session_start(); // Inicia la sesión para poder almacenar informacion del usuario autenticado.
+session_start(); 
 require_once 'conexion.php';
 
 header('Content-Type: application/json');
@@ -11,8 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $contrasenia = $_POST['contrasenia'] ?? '';
     $cedula      = $_POST['cedula'] ?? '';
 
-    if (empty($usuario) || empty($contrasenia) || empty($cedula)) { // Verifica que los campos no esten vacios.
-        echo json_encode([ // Devuelve un json con el status y el mensaje para que el js lo procese y muestre en el frontend.
+    if (empty($usuario) || empty($contrasenia) || empty($cedula)) { 
+        echo json_encode([ 
             'status' => 'error',
             'message' => 'Por favor, completa todos los campos.'
         ]);
@@ -23,14 +23,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "SELECT f.usuario, f.contrasenia, p.cedula     
                 FROM funcionario f
                 INNER JOIN persona p ON f.id_tipo = p.cedula
-                WHERE f.usuario = ? AND p.cedula = ?"; //se establece una consulta para verificar datos del usuario.
+                WHERE f.usuario = ? AND p.cedula = ?"; 
                 
-        $stmt = $con->prepare($sql); //consulta preparada igual que en inserciont.
+        $stmt = $con->prepare($sql); 
         $stmt->bind_param("ss", $usuario, $cedula);
         $stmt->execute();
-        $resultado = $stmt->get_result(); //obtiene el resultado de la consulta.
+        $resultado = $stmt->get_result(); 
 
-        if ($row = $resultado->fetch_assoc()) { //si hay un resultado, se verifica la contraseña.
+        if ($row = $resultado->fetch_assoc()) { 
             if (password_verify($contrasenia, $row['contrasenia'])) { //comprueba si coincide la contra con la de BS
                 session_regenerate_id(true); //genera un nuevo id de sesion para evitar hackeos.
 

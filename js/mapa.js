@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let intervaloPolling = null;
     let capaRuta = null;
 
-    // Inicializar el mapa
     const mapa = L.map('visualizar', {
         fullscreenControl: true,
         fullscreenControlOptions: { position: 'topleft' }
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '&copy; OpenStreetMap'
     }).addTo(mapa);
 
-    // Iconos personalizados
     const ImagenMarcador = L.icon({
         iconUrl: '../mape/mapo1.png',
         iconSize: [38, 45],
@@ -31,14 +29,12 @@ document.addEventListener('DOMContentLoaded', () => {
         popupAnchor: [0, -40]
     });
 
-    // Marcadores Arrastrables (Origen y Destino)
     const marcadorChofer = L.marker([-34.9011, -56.1645], { draggable: true, icon: ImagenMarcador }).addTo(mapa);
     const marcadorDestino = L.marker([-34.900362, -56.163353], { draggable: true, icon: ImagenDestino }).addTo(mapa);
 
     marcadorChofer.bindPopup("<b>Origen / Chofer</b><br>(Arrastrable)");
     marcadorDestino.bindPopup("<b>Destino</b><br>(Arrastrable)");
 
-    // Elementos del DOM
     const ingresaro = document.getElementById('ingresar0');
     const ubicar = document.getElementById('ubicar');
     const departamento = document.getElementById('departamento');
@@ -53,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnIniciar = document.getElementById('btnIniciar');
     const btnFinalizar = document.getElementById('btnFinalizar');
 
-    // Limpiar capa de la ruta previa
     function limpiarRuta() {
         if (capaRuta) {
             mapa.removeLayer(capaRuta);
@@ -61,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Trazar ruta entre Origen y Destino y calcular horas de llegada
     async function actualizarRutaYCalculos() {
         const posChofer = marcadorChofer.getLatLng();
         const posDestino = marcadorDestino.getLatLng();
@@ -96,7 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     if (inputHoraLlegada) inputHoraLlegada.value = horaCalculada;
 
-                    // Enviar hora estimada por GPS a la BD
                     const formData = new FormData();
                     formData.append('accion', 'actualizar_tiempo_gps');
                     formData.append('id_traslado', ID_TRASLADO);
@@ -109,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Consultar periódicamente la posición del chofer transmitida por el celular
     async function monitorearTraslado() {
         if (!trasladoActivo) return;
 
@@ -134,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Eventos de arrastrar marcadores manualmente
     marcadorChofer.on('dragend', () => {
         const pos = marcadorChofer.getLatLng();
         if (insertlat) insertlat.value = pos.lat.toFixed(6);
@@ -152,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Capturar coordenadas del origen
     if (ingresaro) {
         ingresaro.addEventListener('click', () => {
             const pos = marcadorChofer.getLatLng();
@@ -161,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Buscador de direcciones de destino
     if (ubicar) {
         ubicar.addEventListener('click', async () => {
             if (!direccion.value.trim()) {
@@ -196,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Botón Iniciar Traslado
     if (btnIniciar) {
         btnIniciar.addEventListener('click', async () => {
             trasladoActivo = true;
@@ -216,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Botón Finalizar Traslado
     if (btnFinalizar) {
         btnFinalizar.addEventListener('click', async () => {
             trasladoActivo = false;
@@ -239,7 +226,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Renderizar ruta inicial al cargar
     actualizarRutaYCalculos();
 
     setTimeout(() => {

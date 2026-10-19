@@ -1,0 +1,230 @@
+/* ==========================================================================
+   diseño del main y sus cosas de adentro.
+   ========================================================================== */
+.maingui {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    box-sizing: border-box;
+}
+
+.sectionguia.contenedor-admin-pacientes {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    padding: 35px;
+    box-sizing: border-box; 
+    display: block;
+}
+/* Dominicke estubo aqui */
+.titulo-seccion {
+    color: #004080;
+    font-size: 1.35rem;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+.titulo-seccion:first-of-type {
+    margin-top: 0;
+}
+
+.grid-form-pacientes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.grid-form-pacientes > div {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.grid-form-pacientes label {
+    font-size: 0.9rem;
+    color: #333333;
+}
+
+.input-form {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa;
+    color: #495057;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.input-form:focus {
+    border-color: #0056b3;
+    background-color: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
+}
+/* ==========================================================================
+   Botones.
+   ========================================================================== */
+.contenedor-botones {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 35px;
+    align-items: center;
+}
+
+#btnSubmit {
+    background-color: #28a745 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 12px 24px !important;
+    border-radius: 20px !important;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95rem;
+    box-shadow: none !important;
+    background-image: none !important;
+    transition: background-color 0.3s ease;
+}
+
+#btnSubmit:hover {
+    background-color: #218838 !important;
+}
+
+.btn-cancelar {
+    display: none;
+    background-color: #6c757d !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 12px 24px !important;
+    border-radius: 20px !important;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95rem;
+    box-shadow: none !important;
+    background-image: none !important;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cancelar:hover {
+    background-color: #5a6268 !important;
+}
+/* ==========================================================================
+   la tabla
+   ========================================================================== */
+.overflow-tabla {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    margin-top: 15px;
+}
+
+.tabla-pacientes-admin {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    font-size: 0.95rem;
+}
+
+.tabla-pacientes-admin th {
+    background-color: #0f56c1 !important;
+    color: #ffffff !important;
+    padding: 14px 15px;
+    text-align: left;
+    font-weight: bold;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none !important;
+}
+
+.tabla-pacientes-admin td {
+    padding: 14px 15px;
+    border-bottom: 1px solid #dee2e6;
+    border-right: none;
+    border-left: none;
+    color: #495057;
+    vertical-align: middle;
+}
+
+.tabla-pacientes-admin tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.tabla-pacientes-admin tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.td-vacio {
+    text-align: center;
+    padding: 30px !important;
+    color: #6c757d;
+}
+
+.btn-tabla-editar {
+    background-color: #ffc107 !important;
+    color: #212529 !important;
+    border: none !important;
+    padding: 6px 14px !important;
+    border-radius: 20px !important;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.85rem;
+    box-shadow: none !important;
+    background-image: none !important;
+    margin-right: 6px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-tabla-editar:hover {
+    background-color: #e0a800 !important;
+}
+
+.btn-tabla-eliminar {
+    background-color: #dc3545 !important;
+    color: #ffffff !important;
+    padding: 6px 14px !important;
+    border: none !important;
+    border-radius: 20px !important;
+    text-decoration: none !important;
+    font-weight: bold;
+    font-size: 0.85rem;
+    display: inline-block;
+    box-shadow: none !important;
+    background-image: none !important;
+    transition: background-color 0.3s ease;
+}
+
+.btn-tabla-eliminar:hover {
+    background-color: #c82333 !important;
+}
+/* ==========================================================================
+   las alertas del js y demas.
+   ========================================================================== */
+.alerta {
+    padding: 14px 18px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.alerta-exito {
+    background-color: #d4edda;
+    color: #155724;
+    border-left: 5px solid #28a745;
+}
+
+.alerta-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-left: 5px solid #dc3545;
+}

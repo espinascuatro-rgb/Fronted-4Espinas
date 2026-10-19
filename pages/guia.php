@@ -24,7 +24,7 @@
     <main class="mainguia">
         <section class="sectionguia">
             <button class="btnguia1"><a href="../pages/tratamientos.php">Información del hospital</a></button>
-            <p>Aquí es la información del hospital.</p>
+            <p>Aquí esta la información del hospital.</p>
 
             <button class="btnguia1" style="background-color: #007bff;"><a href="../pages/administracion-pacientes.php" style="color: white;">Administración de pacientes</a></button>
             <p>Agregar, editar y eliminar pacientes del sistema.</p>

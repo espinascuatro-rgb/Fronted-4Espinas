@@ -1,196 +1,183 @@
-/* ==========================================================================
-   Body, main, diseño de tarjetas.
-   ========================================================================== */
-body {
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f9; 
+.mainguia {
+    padding: 30px 20px;
+    background-color: #f1f5f9; 
+    min-height: calc(100vh - 150px);
 }
 
-/* Todos son pasajeros, menos el chofer */
-.maintrazabilidad {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    padding: 40px 20px;
-    flex: 1;
-    box-sizing: border-box;
-    max-width: 800px;
-    width: 100%;
+.contenedor-trazabilidad-main {
+    max-width: 1200px;
     margin: 0 auto;
-}
-
-.tarjeta {
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    background: #ffffff;
     padding: 30px;
-    box-sizing: border-box;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    display: block;
 }
 
-.tarjeta-header {
+.header-acciones-trazabilidad {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 24px;
+    gap: 15px;
     flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-/* ==========================================================================
-   Diseño de titulos, parrafos y texto en general.
-   ========================================================================== */
-.tarjeta h2 {
-    color: #004080;
-    font-size: 1.4rem;
-    margin: 0;
 }
 
-.tarjeta h3 {
-    color: #004080;
-    font-size: 1.15rem;
-    margin-top: 25px;
-    margin-bottom: 15px;
-}
-
-.tarjeta p {
-    color: #333333;
-    margin-top: 0;
-    margin-bottom: 12px;
-}
-/* ==========================================================================
-   input de busqueda, botones y etiquetas varias.
-   ========================================================================== */
-.search-container {
+.grupo-botones-nav {
     display: flex;
-    gap: 12px;
-    max-width: 400px;
+    gap: 10px;
+    flex-wrap: wrap;
 }
-
-.search-input {
-    flex: 1;
-    padding: 12px 15px;
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    background-color: #f8f9fa;
-    color: #495057;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.search-input:focus {
-    border-color: #0056b3;
-    background-color: #ffffff;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
-}
-
-.btn-primary {
-    background-color: #0056b3;
-    color: white;
+/* Dominicke estubo aqui */
+.btnguia1, .btnguia6, .btnguia4 {
+    background: #0a1e6f;
     border: none;
-    border-radius: 25px;
-    padding: 10px 22px;
-    font-weight: bold;
-    font-size: 0.95rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-primary:hover {
-    background-color: #003d82;
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.info-card {
-    background-color: #f8f9fa;
-    padding: 15px 18px;
     border-radius: 8px;
-    border-left: 4px solid #0056b3;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    width: auto !important;
 }
 
-.info-card strong {
-    color: #333333;
+.btnguia1 a, .btnguia6 a, .btnguia4 a {
+    color: #ffffff;
+    text-decoration: none;
     font-size: 0.9rem;
 }
 
-.info-value {
-    font-weight: bold;
-    color: #0056b3;
-    font-size: 1.05rem;
-    margin-top: 6px;
+.btnguia1:hover, .btnguia6:hover {
+    background: #1491f8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(20, 145, 248, 0.3);
 }
 
-.separator {
+.btn-chofer-nav {
+    background: linear-gradient(135deg, #2289d7, #2263c5) !important;
+}
+
+.btn-chofer-nav:hover {
+    background: linear-gradient(135deg, #597ff0, #3d9bed) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(47, 162, 207, 0.3);
+}
+
+.titulo-seccion {
+    color: #0a1e6f;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 10px;
+}
+
+.panel-filtro-trazabilidad {
+    margin-bottom: 24px;
+}
+
+.input-buscar {
+    width: 100%;
+    max-width: 450px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 0.95rem;
+    background-color: #f8fafc;
+    transition: all 0.2s;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.input-buscar:focus {
+    outline: none;
+    border-color: #1491f8;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(20, 145, 248, 0.15);
+}
+
+.overflow-tabla {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.tabla-trazabilidad {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.tabla-trazabilidad th {
+    background: linear-gradient(100deg, #2c50e0, #1491f8, #2c50e0);
+    color: white;
+    padding: 14px 16px;
+    font-weight: 600;
     border: none;
-    border-top: 1px solid #e9ecef;
-    margin: 20px 0;
 }
 
-.badge {
-    display: inline-block;
-    padding: 6px 14px;
+.tabla-trazabilidad td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+.tabla-trazabilidad tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.td-vacio {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+    font-style: italic;
+}
+
+.badge-estado {
+    padding: 6px 12px;
     border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: bold;
-    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: inline-block;
+    letter-spacing: 0.5px;
+    text-align: center;
 }
 
 .badge-pendiente {
-    background-color: #ffc107;
-    color: #212529;
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
 }
 
-.badge-proceso {
-    background-color: #28a745;
-    color: #ffffff;
+.badge-en_proceso {
+    background-color: #fef08a;
+    color: #854d0e;
 }
 
 .badge-finalizado {
-    background-color: #6c757d;
-    color: #ffffff;
+    background-color: #dcfce7;
+    color: #166534;
 }
 
-.timeline-list {
-    list-style: none;
-    padding-left: 0;
-    position: relative;
-    margin: 0;
+.btn-ver-ruta-tabla {
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
 }
 
-.timeline-item {
-    position: relative;
-    padding-left: 25px;
-    margin-bottom: 10px;
-    border-left: 3px solid #0056b3;
-    transition: all 0.3s;
-    color: #495057;
+.btn-ver-ruta-tabla a {
+    color: white;
+    text-decoration: none;
 }
 
-.timeline-item::before {
-    content: '';
-    position: absolute;
-    left: -6.5px;
-    top: 4px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #0056b3;
-}
-
-.timeline-item.inactivo {
-    border-left-color: #ced4da;
-    color: #6c757d;
-}
-
-.timeline-item.inactivo::before {
-    background-color: #ced4da;
+.btn-ver-ruta-tabla:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(10, 30, 111, 0.25);
 }
