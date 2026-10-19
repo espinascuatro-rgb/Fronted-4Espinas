@@ -29,55 +29,35 @@
             
             <form action="../php/guardar_encuesta.php" method="POST">
                 
-                <p>
-                    <label for="nombre_paciente">Nombre (opcional):</label>
-                    <input type="text" id="nombre_paciente" name="nombre_paciente" placeholder="Mateo laura">
-                </p>
+        
+ <section class="row">
 
-                <p>
-                    <label for="servicio">¿Qué servicio utilizaste?</label>
-                    <select id="servicio" name="servicio" required>
-                        <option value="">Selecciona un servicio...</option>
-                        <option value="Urgencias">Urgencias</option>
-                        <option value="Hospitalizacion">Hospitalización</option>
-                        <option value="Ambulancia">Traslado en Ambulancia</option>
-                        <option value="Policlinica">Atención en Policlínica</option>
-                        <option value="Otro">Otro</option>
-                    </select>
-                </p>
+        <article class="col-md-4 mb-3">
+            <h4>Encuesta de traslados</h4>
+            <p>Evaluá el servicio de traslado en ambulancia.</p>
+            <a href="https://docs.google.com/forms/d/18iFXTlWnNweCAD6Q01t4260O_zkcA7aHbj_ufHkwkk0/edit" class="btn btn-primary">  Completar encuesta
+            </a>
+        </article>
+            
+        
 
-                <p>
-                    <label for="calificacion">¿Cómo calificarías la atención médica recibida?</label>
-                    <select id="calificacion" name="calificacion" required>
-                        <option value="">Selecciona una calificación...</option>
-                        <option value="5">Excelente (5/5)</option>
-                        <option value="4">Muy Buena (4/5)</option>
-                        <option value="3">Buena (3/5)</option>
-                        <option value="2">Regular (2/5)</option>
-                        <option value="1">Mala (1/5)</option>
-                    </select>
-                </p>
+          <article class="col-md-4 mb-3">
+            <h4>Encuesta del hospital</h4>
+            <p>Evaluá el estado de las instalaciones.</p>
+            <a href="https://docs.google.com/forms/d/13el__H0g7vz4br7v5IOwAgdHsVSYPr_7dy3zRLvy21M/edit?usp=forms_home&ouid=114919482076470136106&ths=true">
+                Completar encuesta
+            </a>
+        </article>
 
-                <p>
-                    <label for="instalaciones">¿Cómo calificarías las instalaciones (higiene, comodidad)?</label>
-                    <select id="instalaciones" name="instalaciones" required>
-                        <option value="">Selecciona una calificación...</option>
-                        <option value="5">Excelente (5/5)</option>
-                        <option value="4">Muy Buena (4/5)</option>
-                        <option value="3">Buena (3/5)</option>
-                        <option value="2">Regular (2/5)</option>
-                        <option value="1">Mala (1/5)</option>
-                    </select>
-                </p>
+        <article class="col-md-4 mb-3">
+            <h4>Encuesta de funcionarios</h4>
+            <a href="https://docs.google.com/forms/d/1jOph8sZjPPxW0phxF59Kb1n-klHsB2_wy8m9Ern5Fjw/edit" class="btn btn-primary">
+                Completar encuesta
+            </a>
+        </article>
 
-                <p>
-                    <label for="comentarios">Comentarios o sugerencias para mejorar (Opcional):</label>
-                    <input type="text" id="comentarios" name="comentarios" placeholder="Cuéntanos más sobre tu experiencia...">
-                </p>
-
-                <button type="submit">Enviar Encuesta</button>
-            </form>
-        </section>
+  </section> 
+            
     </main>
 
         <footer class="footerguia">
