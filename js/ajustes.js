@@ -1,62 +1,71 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const btnMostrarEditar = document.getElementById('btn-mostrar-editar');
-    const btnCancelar = document.getElementById('btn-cancelar');
-    const datosPerfil = document.getElementById('datos-perfil');
-    const formEditarPerfil = document.getElementById('form-editar-perfil');
-    
+    const botonesModificar = document.querySelectorAll('.btn-toggle-form');
+    const botonesCancelar = document.querySelectorAll('.btn-cancelar-form');
+
+    botonesModificar.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const targetForm = document.getElementById(targetId);
+//obviamente aqui estubo dominicke.
+            document.querySelectorAll('.perfil-form').forEach(form => {
+                if (form.id !== targetId) form.style.display = 'none';
+            });
+
+            if (targetForm) {
+                targetForm.style.display = targetForm.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+    });
+
+    botonesCancelar.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const targetForm = document.getElementById(targetId);
+            if (targetForm) {
+                targetForm.style.display = 'none';
+                targetForm.reset();
+
+                const pwdNueva = targetForm.querySelector('#password_nueva');
+                if (pwdNueva) {
+                    pwdNueva.disabled = true;
+                }
+            }
+        });
+    });
+
     const pwdActual = document.getElementById('password_actual');
     const pwdNueva = document.getElementById('password_nueva');
 
-    // 1. Mostrar formulario y ocultar vista estática
-    if (btnMostrarEditar) {
-        btnMostrarEditar.addEventListener('click', () => {
-            datosPerfil.style.display = 'none';
-            formEditarPerfil.style.display = 'block';
-        });
-    }
-
-    // 2. Ocultar formulario y volver a la vista estática
-    if (btnCancelar) {
-        btnCancelar.addEventListener('click', () => {
-            formEditarPerfil.style.display = 'none';
-            datosPerfil.style.display = 'block';
-            formEditarPerfil.reset(); // Limpia los cambios si cancela
-            pwdNueva.disabled = true; // Vuelve a bloquear la contraseña nueva
-            pwdNueva.required = false;
-        });
-    }
-
-    // 3. Habilitar la contraseña nueva solo si se escribe la actual
     if (pwdActual && pwdNueva) {
         pwdActual.addEventListener('input', () => {
             if (pwdActual.value.trim().length > 0) {
                 pwdNueva.disabled = false;
-                pwdNueva.required = true;
             } else {
                 pwdNueva.disabled = true;
-                pwdNueva.required = false;
                 pwdNueva.value = '';
             }
         });
     }
 
-    if (formEditarPerfil) {
-        formEditarPerfil.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Evita que la página recargue normalmente
+    // vivimos en una sociedad en donde si te sientes mal, puedes sentarte mejor.
+    const formulariosAjax = document.querySelectorAll('.form-ajax');
 
-            const formData = new FormData(formEditarPerfil);
+    formulariosAjax.forEach(form => {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+//stagi, viendo el codigo?, que gury responsable. Cuando sea grande quiero ser como vos. 
+            const formData = new FormData(form);
 
             try {
                 const response = await fetch('../php/ajustes-perfil.php', {
                     method: 'POST',
                     body: formData
                 });
-
+// mateo, hijo.
                 const data = await response.json();
 
                 if (data.status === 'success') {
                     alert(data.message);
-                    // Recarga la página para mostrar los datos de la sesión actualizados
                     window.location.reload();
                 } else {
                     alert('Error: ' + data.message);
@@ -66,5 +75,5 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Ocurrió un error al procesar la solicitud.');
             }
         });
-    }
+    });
 });

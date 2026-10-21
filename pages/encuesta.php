@@ -25,6 +25,7 @@
         </nav>
     </header>
 
+<<<<<<< HEAD
     <main class="mainguia">
         <section class="sectionguia contenedor-encuesta-main">
             <div class="header-encuesta-top">
@@ -77,6 +78,45 @@
                 </article>
             </div>
         </section>
+=======
+    <main class="mainencuesta">
+        <section class="sectionencuesta">
+            <h2>Tu opinión nos ayuda mejorar</h2>
+            <p>Responde libremente y de forma critica</p>
+            <br>
+            
+            <form action="../php/guardar_encuesta.php" method="POST">
+                
+        
+ <section class="row">
+
+        <article class="col-md-4 mb-3">
+            <h4>Encuesta de traslados</h4>
+            <p>Evaluá el servicio de traslado en ambulancia.</p>
+            <a href="https://docs.google.com/forms/d/18iFXTlWnNweCAD6Q01t4260O_zkcA7aHbj_ufHkwkk0/edit" class="btn btn-primary">  Completar encuesta
+            </a>
+        </article>
+            
+        
+
+          <article class="col-md-4 mb-3">
+            <h4>Encuesta del hospital</h4>
+            <p>Evaluá el estado de las instalaciones.</p>
+            <a href="https://docs.google.com/forms/d/13el__H0g7vz4br7v5IOwAgdHsVSYPr_7dy3zRLvy21M/edit?usp=forms_home&ouid=114919482076470136106&ths=true">
+                Completar encuesta
+            </a>
+        </article>
+
+        <article class="col-md-4 mb-3">
+            <h4>Encuesta de funcionarios</h4>
+            <a href="https://docs.google.com/forms/d/1jOph8sZjPPxW0phxF59Kb1n-klHsB2_wy8m9Ern5Fjw/edit" class="btn btn-primary">
+                Completar encuesta
+            </a>
+        </article>
+
+  </section> 
+            
+>>>>>>> be9e01aad4c8b7c4bfd51429bf798e811bbf4b56
     </main>
 
     <footer class="footerguia">
