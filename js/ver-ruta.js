@@ -56,29 +56,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const markerDestino = L.marker(coordsDestino, { icon: iconoMapo2, draggable: true }).addTo(map);
     markerDestino.bindPopup('<b>Punto de Destino</b><br>Arrastra para mover');
 
-    // Trazado de línea de la Ruta
-    let lineaRuta = L.polyline([coordsOrigen, coordsDestino], {
-        color: '#1840dd',
-        weight: 6,
-        opacity: 0.8,
-        dashArray: '10, 10'
-    }).addTo(map);
+    let controlRuta = null;
 
+    // Trazado dinámico de la ruta siguiendo el trazado vehicular de las calles
     function actualizarRuta() {
         const posO = markerOrigen.getLatLng();
         const posD = markerDestino.getLatLng();
 
-        lineaRuta.setLatLngs([posO, posD]);
+        if (controlRuta !== null) {
+            map.removeControl(controlRuta);
+            controlRuta = null;
+        }
 
-        const distM = posO.distanceTo(posD);
-        const distKm = (distM / 1000).toFixed(2);
+        // Se invoca el motor OSRM especificando profile: 'driving' para calles
+        controlRuta = L.Routing.control({
+            waypoints: [
+                L.latLng(posO.lat, posO.lng),
+                L.latLng(posD.lat, posD.lng)
+            ],
+            router: L.Routing.osrmv1({
+                serviceUrl: 'https://router.project-osrm.org/route/v1',
+                profile: 'driving'
+            }),
+            createMarker: function() { return null; },
+            lineOptions: {
+                styles: [
+                    { color: '#1840dd', weight: 6, opacity: 0.95 }
+                ]
+            },
+            addWaypoints: false,
+            draggableWaypoints: false,
+            fitSelectedRoutes: false,
+            show: false
+        }).addTo(map);
 
-        const elemDist = document.getElementById('txtDistancia');
-        if (elemDist) elemDist.textContent = `${distKm} km`;
+        controlRuta.on('routesfound', function(e) {
+            const routes = e.routes;
+            if (routes && routes[0]) {
+                const distKm = (routes[0].summary.totalDistance / 1000).toFixed(2);
+                const elemDist = document.getElementById('txtDistancia');
+                if (elemDist) elemDist.textContent = `${distKm} km`;
+            }
+        });
     }
 
-    markerOrigen.on('drag', actualizarRuta);
-    markerDestino.on('drag', actualizarRuta);
+    markerOrigen.on('dragend', actualizarRuta);
+    markerDestino.on('dragend', actualizarRuta);
     actualizarRuta();
 
     // Selección Dinámica de Traslado
@@ -112,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isNaN(lat) && !isNaN(lng)) {
                 markerDestino.setLatLng([lat, lng]);
                 actualizarRuta();
-                map.fitBounds(lineaRuta.getBounds(), { padding: [50, 50] });
+                map.fitBounds(L.latLngBounds([markerOrigen.getLatLng(), [lat, lng]]), { padding: [50, 50] });
             }
         });
     }
