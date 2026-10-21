@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let coordsOrigen = [-34.8883, -56.1561];
     let coordsDestino = [-34.8812, -56.1420];
 
+    // Iconos personalizados del proyecto
     const iconoMapo1 = L.icon({
         iconUrl: '../mape/mapo2.png',
         iconSize: [38, 38],
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         popupAnchor: [0, -38]
     });
 
+    // Inicializar mapa Leaflet
     const map = L.map('mapaRuta').setView(coordsOrigen, 14);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         attribution: '© OpenStreetMap'
     }).addTo(map);
 
+    // Botón de pantalla completa personalizado
     const zoomContainer = document.querySelector('.leaflet-control-zoom');
     if (zoomContainer) {
         const btnFS = document.createElement('a');
@@ -49,62 +52,83 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => map.invalidateSize(), 200);
     });
 
-    // Marcadores con Iconos y Draggable
+    // Marcadores con Iconos personalizados y Arrastrables (Draggable)
     const markerOrigen = L.marker(coordsOrigen, { icon: iconoMapo1, draggable: true }).addTo(map);
     markerOrigen.bindPopup('<b>Punto de Origen</b><br>Hospital de Clínicas').openPopup();
 
     const markerDestino = L.marker(coordsDestino, { icon: iconoMapo2, draggable: true }).addTo(map);
     markerDestino.bindPopup('<b>Punto de Destino</b><br>Arrastra para mover');
 
-    let controlRuta = null;
+    // Capa de polígonos para la ruta por calles
+    let capaRutaCalle = null;
 
-    // Trazado dinámico de la ruta siguiendo el trazado vehicular de las calles
-    function actualizarRuta() {
+    // Función que consulta el servicio OSRM por FETCH directo para evitar bloqueos
+    async function actualizarRuta() {
         const posO = markerOrigen.getLatLng();
         const posD = markerDestino.getLatLng();
 
-        if (controlRuta !== null) {
-            map.removeControl(controlRuta);
-            controlRuta = null;
+        // Eliminar capa anterior si existe
+        if (capaRutaCalle !== null) {
+            map.removeLayer(capaRutaCalle);
+            capaRutaCalle = null;
         }
 
-        // Se invoca el motor OSRM especificando profile: 'driving' para calles
-        controlRuta = L.Routing.control({
-            waypoints: [
-                L.latLng(posO.lat, posO.lng),
-                L.latLng(posD.lat, posD.lng)
-            ],
-            router: L.Routing.osrmv1({
-                serviceUrl: 'https://router.project-osrm.org/route/v1',
-                profile: 'driving'
-            }),
-            createMarker: function() { return null; },
-            lineOptions: {
-                styles: [
-                    { color: '#1840dd', weight: 6, opacity: 0.95 }
-                ]
-            },
-            addWaypoints: false,
-            draggableWaypoints: false,
-            fitSelectedRoutes: false,
-            show: false
-        }).addTo(map);
+        // URL del servicio público OSRM (lon,lat)
+        const urlOSRM = `https://router.project-osrm.org/route/v1/driving/${posO.lng},${posO.lat};${posD.lng},${posD.lat}?overview=full&geometries=geojson`;
 
-        controlRuta.on('routesfound', function(e) {
-            const routes = e.routes;
-            if (routes && routes[0]) {
-                const distKm = (routes[0].summary.totalDistance / 1000).toFixed(2);
+        try {
+            const respuesta = await fetch(urlOSRM);
+            const datos = await respuesta.json();
+
+            if (datos.code === 'Ok' && datos.routes && datos.routes.length > 0) {
+                const rutaGeoJSON = datos.routes[0].geometry;
+                const distanciaMetros = datos.routes[0].distance;
+
+                // Trazar la línea GeoJSON CONTINUA sobre las calles (sin dashArray)
+                capaRutaCalle = L.geoJSON(rutaGeoJSON, {
+                    style: {
+                        color: '#1840dd',
+                        weight: 6,
+                        opacity: 0.9,
+                        lineCap: 'round',
+                        lineJoin: 'round'
+                    }
+                }).addTo(map);
+
+                // Actualizar distancia real por carretera
+                const distKm = (distanciaMetros / 1000).toFixed(2);
                 const elemDist = document.getElementById('txtDistancia');
                 if (elemDist) elemDist.textContent = `${distKm} km`;
+
+            } else {
+                trazarRutaDirectaFallback(posO, posD);
             }
-        });
+        } catch (error) {
+            console.warn('Servidor de enrutamiento no disponible, mostrando ruta directa continua:', error);
+            trazarRutaDirectaFallback(posO, posD);
+        }
     }
 
+    // Trazado de respaldo con línea continua fija si no hay conexión a la API
+    function trazarRutaDirectaFallback(posO, posD) {
+        capaRutaCalle = L.polyline([posO, posD], {
+            color: '#1840dd',
+            weight: 6,
+            opacity: 0.9
+        }).addTo(map);
+
+        const distM = posO.distanceTo(posD);
+        const distKm = (distM / 1000).toFixed(2);
+        const elemDist = document.getElementById('txtDistancia');
+        if (elemDist) elemDist.textContent = `${distKm} km`;
+    }
+
+    // Eventos al soltar los marcadores arrastrables
     markerOrigen.on('dragend', actualizarRuta);
     markerDestino.on('dragend', actualizarRuta);
     actualizarRuta();
 
-    // Selección Dinámica de Traslado
+    // Selección Dinámica de Traslado desde la Base de Datos
     const selectTraslado = document.getElementById('selectTraslado');
     if (selectTraslado) {
         selectTraslado.addEventListener('change', (e) => {
