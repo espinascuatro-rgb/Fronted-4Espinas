@@ -1,105 +1,294 @@
 /* ==========================================================================
-   body, main y diseño de secciones.
+   RESET Y BASE GENERAL
    ========================================================================== */
-body {
+* {
+    box-sizing: border-box;
     margin: 0;
-    min-height: 100vh;
+    padding: 0;
+}
+
+body.bodyguia {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
-    font-family: Arial, sans-serif;
-    background-color: #f4f6f9;
+    min-height: 100vh;
 }
-.mainencuesta {
+
+/* Reset estricto para evitar que los <a> se deformen al 100% */
+a {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+}
+
+/* ==========================================================================
+   HEADER PRINCIPAL
+   ========================================================================== */
+.Headerguia {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    color: #ffffff;
+    gap: 15px;
+    flex-wrap: wrap;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.Headerguia .logo {
+    max-height: 60px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.Headerguia h1 {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.Headerguia p {
+    font-weight: bold;
+    font-size: 0.95rem;
+    color: #eaf1f7;
+}
+
+.navguia {
+    display: flex;
+    gap: 12px;
+}
+
+.navguia a {
+    background-color: #f5f6ff;
+    color: #006eff;
+    font-weight: bold;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 15px rgba(78, 196, 255, 0.59);
+    transition: all 0.3s ease;
+}
+
+.navguia a:hover {
+    background-color: #d7ebff;
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   MAIN Y ESTRUCTURA DE CONTENIDO
+   ========================================================================== */
+.mainguia {
+    flex: 1;
+    padding: 25px;
+    background-color: #ffffff;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
-    flex: 1;
-    box-sizing: border-box;
 }
 
-.sectionencuesta {
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-    padding: 35px;
+.sectionguia.contenedor-encuesta-main {
     width: 100%;
-    max-width: 550px;
-    box-sizing: border-box;
+    max-width: 1200px;
+    background-color: #ffffff;
+    border: 3px solid #1d4ed8;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 0px 23px rgba(14, 197, 221, 0.53), 0 0px 11px rgba(4, 26, 225, 0.4);
+    display: block;
+}
+
+.header-encuesta-top {
+    margin-bottom: 15px;
+}
+
+.btn-volver-atras {
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    color: #ffffff !important;
+    font-weight: bold;
+    padding: 10px 18px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 166, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn-volver-atras:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 166, 255, 0.6);
+}
+
+.titulo-seccion {
+    color: #0a1e6f;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.subtitulo-encuesta {
+    color: #1e293b;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    font-weight: 500;
 }
 
 /* ==========================================================================
-   Diseño de titulos, parrafos y demas.
+   BOTONES NAVEGACIÓN SUPERIOR (AZUL OSCURO)
    ========================================================================== */
-.sectionencuesta h2 {
-    color: #004080; 
-    font-size: 1.5rem;
-    margin-top: 0;
-    margin-bottom: 5px;
-    border-bottom: 2px solid #e9ecef;
-    padding-bottom: 12px;
-}
-
-.sectionencuesta > p {
-    color: #6c757d;
-    font-size: 0.95rem;
+.selector-encuestas-nav {
+    display: flex;
+    gap: 12px;
     margin-bottom: 25px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 15px;
+    flex-wrap: wrap;
 }
 
-.sectionencuesta br {
-    display: none;
+.btn-select-encuesta {
+    background: #0a1e6f;
+    color: #ffffff !important;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(10, 30, 111, 0.3);
+    transition: all 0.3s ease;
 }
 
-.sectionencuesta form p {
+.btn-select-encuesta:hover {
+    background: linear-gradient(135deg, #1840dd, #44abff);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 166, 255, 0.5);
+}
+
+/* ==========================================================================
+   GRID 3 COLUMNAS Y TARJETAS CON QR 100x100
+   ========================================================================== */
+.grid-tres-columnas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: stretch;
+}
+
+.tarjeta-encuesta-col {
+    background: #ffffff;
+    border: 3px solid #2c5de4;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(32, 189, 246, 0.3);
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.sectionencuesta label {
-    font-weight: bold;
-    color: #333333;
-    font-size: 0.95rem;
+.tarjeta-encuesta-col:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(32, 189, 246, 0.5);
 }
+
+.badge-categoria {
+    background: #e0e7ff;
+    color: #1d4ed8;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.tarjeta-encuesta-col h3 {
+    color: #0a1e6f;
+    font-size: 1.15rem;
+    margin-bottom: 15px;
+}
+
+/* Caja de Imagen QR con dimensiones fijadas estrictamente a 100x100px */
+.box-qr-img {
+    width: 108px;
+    height: 108px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 15px;
+}
+
+.qr-encuesta-img {
+    width: 100px !important;
+    height: 100px !important;
+    max-width: 100px !important;
+    max-height: 100px !important;
+    object-fit: contain;
+    display: block;
+}
+
+.desc-encuesta {
+    color: #334155;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    margin-bottom: 18px;
+    flex-grow: 1;
+}
+
+/* Botones de enlace a Google Forms */
+.btn-completar-encuesta {
+    width: 100%;
+    padding: 12px 18px;
+    background: #0a1e6f;
+    color: #ffffff !important;
+    font-weight: bold;
+    font-size: 0.95rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(10, 30, 111, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-completar-encuesta:hover {
+    background: linear-gradient(135deg, #1840dd, #44abff);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 166, 255, 0.5);
+}
+
 /* ==========================================================================
-   Diseño de botones, inputs y selects.
+   FOOTER
    ========================================================================== */
-.sectionencuesta input[type="text"], 
-.sectionencuesta select {
-    padding: 12px 15px;
-    border: 1px solid #ced4da;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    background-color: #f8f9fa;
-    color: #495057;
-    width: 100%;
-    box-sizing: border-box;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+.footerguia {
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    color: #ffffff;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
 }
 
-.sectionencuesta input[type="text"]:focus, 
-.sectionencuesta select:focus {
-    border-color: #0056b3;
-    background-color: #ffffff;
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15);
-}
-
-.sectionencuesta button[type="submit"] {
-    background-color: #0056b3;
-    color: white;
+.logout {
     border: none;
-    border-radius: 25px;
-    padding: 14px 20px;
+    border-radius: 12px;
+    padding: 8px 18px;
+    background-color: #e80d23;
+    color: #ffffff;
     font-weight: bold;
-    font-size: 1rem;
-    width: 100%;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: 10px;
+    box-shadow: 0 4px 20px rgba(153, 0, 0, 0.33);
+    transition: all 0.3s ease;
 }
 
-.sectionencuesta button[type="submit"]:hover {
-    background-color: #003d82;
+.logout:hover {
+    background-color: #ff0000;
+    transform: translateY(-2px);
+}
+
+/* Adaptación responsiva */
+@media (max-width: 900px) {
+    .grid-tres-columnas {
+        grid-template-columns: 1fr;
+    }
 }

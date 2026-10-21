@@ -1,18 +1,22 @@
 <?php require_once __DIR__ . '/../php/checksesion.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encuesta de Satisfacción - Hospital de Clínicas</title>
-    <link rel="stylesheet" href="../css/elementosC.css">
+    <title>Encuestas de Satisfacción - Hospital de Clínicas</title>
+    <!-- Se incluye ÚNICAMENTE este CSS para evitar colisiones globales -->
     <link rel="stylesheet" href="../css/encuesta.css">
 </head>
 
-<body>
+<body class="bodyguia">
     <header class="Headerguia">
-       <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
-        <h1>Encuesta de Satisfacción</h1>
+        <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
+        <div class="header-texto">
+            <h1>Hospital de Clínicas "Dr. Manuel Quintela"</h1>
+            <p>Bienvenido, <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></p>
+        </div>
         <nav class="navguia">
             <a href="../pages/guia.php">Inicio</a>
             <a href="../pages/tratamientos.php">Pacientes</a>
@@ -21,68 +25,66 @@
         </nav>
     </header>
 
-    <main class="mainencuesta">
-        <section class="sectionencuesta">
-            <h2>Tu opinión nos ayuda mejorar</h2>
-            <p>Responde libremente y de forma critica</p>
-            <br>
-            
-            <form action="../php/guardar_encuesta.php" method="POST">
-                
-                <p>
-                    <label for="nombre_paciente">Nombre (opcional):</label>
-                    <input type="text" id="nombre_paciente" name="nombre_paciente" placeholder="Mateo laura">
-                </p>
+    <main class="mainguia">
+        <section class="sectionguia contenedor-encuesta-main">
+            <div class="header-encuesta-top">
+                <a href="../pages/guia.php" class="btn-volver-atras">← Volver al Inicio</a>
+            </div>
 
-                <p>
-                    <label for="servicio">¿Qué servicio utilizaste?</label>
-                    <select id="servicio" name="servicio" required>
-                        <option value="">Selecciona un servicio...</option>
-                        <option value="Urgencias">Urgencias</option>
-                        <option value="Hospitalizacion">Hospitalización</option>
-                        <option value="Ambulancia">Traslado en Ambulancia</option>
-                        <option value="Policlinica">Atención en Policlínica</option>
-                        <option value="Otro">Otro</option>
-                    </select>
-                </p>
+            <h2 class="titulo-seccion">Tu opinión nos ayuda a mejorar</h2>
+            <p class="subtitulo-encuesta">Escanea el código QR o haz clic en el botón azul para abrir la encuesta directamente en Google Forms.</p>
 
-                <p>
-                    <label for="calificacion">¿Cómo calificarías la atención médica recibida?</label>
-                    <select id="calificacion" name="calificacion" required>
-                        <option value="">Selecciona una calificación...</option>
-                        <option value="5">Excelente (5/5)</option>
-                        <option value="4">Muy Buena (4/5)</option>
-                        <option value="3">Buena (3/5)</option>
-                        <option value="2">Regular (2/5)</option>
-                        <option value="1">Mala (1/5)</option>
-                    </select>
-                </p>
+            <!-- Botones superiores en Azul Oscuro -->
+            <div class="selector-encuestas-nav">
+                <a href="#encuesta-traslado" class="btn-select-encuesta">1. Encuesta Traslado</a>
+                <a href="#encuesta-hospital" class="btn-select-encuesta">2. Encuesta Hospital</a>
+                <a href="#encuesta-funcionario" class="btn-select-encuesta">3. Encuesta Funcionarios</a>
+            </div>
 
-                <p>
-                    <label for="instalaciones">¿Cómo calificarías las instalaciones (higiene, comodidad)?</label>
-                    <select id="instalaciones" name="instalaciones" required>
-                        <option value="">Selecciona una calificación...</option>
-                        <option value="5">Excelente (5/5)</option>
-                        <option value="4">Muy Buena (4/5)</option>
-                        <option value="3">Buena (3/5)</option>
-                        <option value="2">Regular (2/5)</option>
-                        <option value="1">Mala (1/5)</option>
-                    </select>
-                </p>
+            <!-- Estructura de 3 columnas -->
+            <div class="grid-tres-columnas">
+                <!-- Columna 1: Traslado -->
+                <article id="encuesta-traslado" class="tarjeta-encuesta-col">
+                    <span class="badge-categoria">Traslados</span>
+                    <h3>Encuesta de Traslado</h3>
+                    <div class="box-qr-img">
+                        <img src="../fotos-videos/Encuesta-Traslado.png" alt="QR Encuesta Traslado" class="qr-encuesta-img" width="100" height="100">
+                    </div>
+                    <p class="desc-encuesta">Evaluación sobre el servicio de ambulancias, tiempos de respuesta y atención médica durante el traslado.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVwcUk_ZKY7ZrNLHozyzYkB_LV4Yx3rVbTzo5mkWUM8doiaQ/viewform?usp=sharing&ouid=114919482076470136106" target="_blank" class="btn-completar-encuesta">Abrir Formulario Traslado ↗</a>
+                </article>
 
-                <p>
-                    <label for="comentarios">Comentarios o sugerencias para mejorar (Opcional):</label>
-                    <input type="text" id="comentarios" name="comentarios" placeholder="Cuéntanos más sobre tu experiencia...">
-                </p>
+                <!-- Columna 2: Hospital -->
+                <article id="encuesta-hospital" class="tarjeta-encuesta-col">
+                    <span class="badge-categoria">Hospital General</span>
+                    <h3>Encuesta del Hospital</h3>
+                    <div class="box-qr-img">
+                        <img src="../fotos-videos/Encuesta-Hospital.png" alt="QR Encuesta Hospital" class="qr-encuesta-img" width="100" height="100">
+                    </div>
+                    <p class="desc-encuesta">Evaluación de la atención médica general, confort e higiene de las instalaciones hospitalarias.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdeZQmWWZSXiLMmZY2d3Di4uRXOjXw-9N0h9tMx0oVRgDN4oA/viewform?usp=sharing&ouid=114919482076470136106" target="_blank" class="btn-completar-encuesta">Abrir Formulario Hospital ↗</a>
+                </article>
 
-                <button type="submit">Enviar Encuesta</button>
-            </form>
+                <!-- Columna 3: Funcionario -->
+                <article id="encuesta-funcionario" class="tarjeta-encuesta-col">
+                    <span class="badge-categoria">Personal Interno</span>
+                    <h3>Encuesta a Funcionarios</h3>
+                    <div class="box-qr-img">
+                        <img src="../fotos-videos/Encuesta-Funcionarios.png" alt="QR Encuesta Funcionarios" class="qr-encuesta-img" width="100" height="100">
+                    </div>
+                    <p class="desc-encuesta">Formulario exclusivo para la evaluación del personal e insumos hospitalarios.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdUcCmLNxYndn0d5CfGckFwLEiE_GYDVxHZ5XfGUy7cLaYRHA/viewform?usp=sharing&ouid=114919482076470136106" target="_blank" class="btn-completar-encuesta">Abrir Formulario Funcionarios ↗</a>
+                </article>
+            </div>
         </section>
     </main>
 
-        <footer class="footerguia">
+    <footer class="footerguia">
         <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
         <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
+
+    <script src="../js/encuesta.js"></script>
 </body>
+
 </html>
