@@ -20,10 +20,6 @@ $res_traslados = $con->query($sql_traslados);
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    
-    <!-- Leaflet Routing Machine CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet-fullscreen.css" />
 </head>
 
 <body class="bodyguia">
@@ -32,7 +28,7 @@ $res_traslados = $con->query($sql_traslados);
         <h1>Visualización en GPS</h1>
         <nav class="navguia">
             <a href="../pages/guia.php">Inicio</a>
-            <a href="chofer-gps.php">Modo Chofer (GPS)</a>
+            <a href="../pages/modo-chofer.php">Modo Chofer (GPS)</a>
             <a href="../pages/trazabilidad.php">Volver a Trazabilidad</a>
         </nav>
     </header>
@@ -42,7 +38,7 @@ $res_traslados = $con->query($sql_traslados);
             <div class="header-acciones-ruta">
                 <div class="grupo-botones-nav">
                     <button class="btnguia4 btn-chofer-nav">
-                        <a href="../pages/chofer-gps.php">Modo Chofer</a>
+                        <a href="../pages/modo-chofer.php">Modo Chofer</a>
                     </button>
                     <button class="btnguia5 btn-trazabilidad">
                         <a href="../pages/trazabilidad.php">Ver Trazabilidad</a>
@@ -78,14 +74,14 @@ $res_traslados = $con->query($sql_traslados);
                     </div>
 
                     <div id="infoTraslado" class="info-traslado-card">
-                        <p><strong>Número de Traslado: </strong> <span id="txtId"></span></p>
+                        <p><strong>Número de Traslado: </strong> <span id="txtId">-</span></p>
                         <p><strong>Origen: </strong> <span id="txtOrigen"> Hospital de Clínicas</span></p>
-                        <p><strong>Destino: </strong> <span id="txtDestino"></span></p>
+                        <p><strong>Destino: </strong> <span id="txtDestino">-</span></p>
                         <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado"> Sin Selección</span></p>
-                        <p><strong>Distancia estimada: </strong> <span id="txtDistancia"> km</span></p>
-                        <p><strong>Hora Salida: </strong> <span id="txtSalida"></span></p>
-                        <p><strong>Llegada Estimada: </strong> <span id="txtEstimada"></span></p>
-                        <p><strong>Unidad Ambulancia: </strong> <span id="txtAmbulancia"></span></p>
+                        <p><strong>Distancia estimada: </strong> <span id="txtDistancia">0.00 km</span></p>
+                        <p><strong>Hora Salida: </strong> <span id="txtSalida">-</span></p>
+                        <p><strong>Llegada Estimada: </strong> <span id="txtEstimada">-</span></p>
+                        <p><strong>Unidad Ambulancia: </strong> <span id="txtAmbulancia">-</span></p>
                     </div>
                 </div>
 
@@ -101,9 +97,8 @@ $res_traslados = $con->query($sql_traslados);
         <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
-    <!-- Scripts de Leaflet y Routing Machine v3.2.12 -->
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
     <script src="../js/ver-ruta.js"></script>
 </body>
 

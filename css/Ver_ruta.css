@@ -184,15 +184,8 @@ header .logo, .header-logo, .logo-container {
     letter-spacing: 0.5px;
 }
 
-/* ==========================================================================
-   CORRECCIÓN OBLIGATORIA: Rutas por calles y línea continua sólida
-   ========================================================================== */
-.leaflet-routing-container,
-.leaflet-routing-alt {
-    display: none !important;
-}
-
+/* Regla estricta para eliminar cualquier línea punteada en el SVG */
 .leaflet-pane svg path {
     stroke-dasharray: none !important;
-    stroke-dashoffset: none !important;
+    stroke-dashoffset: 0 !important;
 }
