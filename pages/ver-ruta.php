@@ -16,20 +16,19 @@ $res_traslados = $con->query($sql_traslados);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Monitoreo GPS - Ver Ruta</title>
     <link rel="stylesheet" href="../css/elementosC.css">
-
     <link rel="stylesheet" href="../css/Ver_ruta.css">
 
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-    
-    <link rel="stylesheet" href="https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet-fullscreen.css" />
 </head>
-<body>
+
+<body class="bodyguia">
     <header class="Headerguia">
         <img src="../fotos-videos/logor.png" alt="Logo del hospital" class="logo">
         <h1>Visualización en GPS</h1>
         <nav class="navguia">
             <a href="../pages/guia.php">Inicio</a>
-            <a href="chofer-gps.php">Modo Chofer (GPS)</a>
+            <a href="../pages/modo-chofer.php">Modo Chofer (GPS)</a>
             <a href="../pages/trazabilidad.php">Volver a Trazabilidad</a>
         </nav>
     </header>
@@ -39,7 +38,7 @@ $res_traslados = $con->query($sql_traslados);
             <div class="header-acciones-ruta">
                 <div class="grupo-botones-nav">
                     <button class="btnguia4 btn-chofer-nav">
-                        <a href="../pages/chofer-gps.php">Modo Chofer</a>
+                        <a href="../pages/modo-chofer.php">Modo Chofer</a>
                     </button>
                     <button class="btnguia5 btn-trazabilidad">
                         <a href="../pages/trazabilidad.php">Ver Trazabilidad</a>
@@ -75,14 +74,14 @@ $res_traslados = $con->query($sql_traslados);
                     </div>
 
                     <div id="infoTraslado" class="info-traslado-card">
-                        <p><strong>Número de Traslado: </strong> <span id="txtId"> </span></p>
+                        <p><strong>Número de Traslado: </strong> <span id="txtId">-</span></p>
                         <p><strong>Origen: </strong> <span id="txtOrigen"> Hospital de Clínicas</span></p>
-                        <p><strong>Destino: </strong> <span id="txtDestino"> </span></p>
+                        <p><strong>Destino: </strong> <span id="txtDestino">-</span></p>
                         <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado"> Sin Selección</span></p>
-                        <p><strong>Distancia estimada: </strong> <span id="txtDistancia"> km</span></p>
-                        <p><strong>Hora Salida: </strong> <span id="txtSalida"> </span></p>
-                        <p><strong>Llegada Estimada: </strong> <span id="txtEstimada"> </span></p>
-                        <p><strong>Unidad Ambulancia: </strong> <span id="txtAmbulancia"> </span></p>
+                        <p><strong>Distancia estimada: </strong> <span id="txtDistancia">0.00 km</span></p>
+                        <p><strong>Hora Salida: </strong> <span id="txtSalida">-</span></p>
+                        <p><strong>Llegada Estimada: </strong> <span id="txtEstimada">-</span></p>
+                        <p><strong>Unidad Ambulancia: </strong> <span id="txtAmbulancia">-</span></p>
                     </div>
                 </div>
 
@@ -92,11 +91,13 @@ $res_traslados = $con->query($sql_traslados);
             </div>
         </section>
     </main>
-            <footer class="footerguia">
+
+    <footer class="footerguia">
         <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
         <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../js/ver-ruta.js"></script>
 </body>
