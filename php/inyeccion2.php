@@ -28,23 +28,30 @@ if ($accion === 'guardar' || ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($ac
     }
 
 } elseif ($accion === 'editar') {
-    $serie_original = trim($_POST['serie_original'] ?? '');
-    $kilometraje   = intval($_POST['kilometraje'] ?? 0);
-    $matricula     = trim($_POST['matricula'] ?? '');
+    $numero_de_serie = trim($_POST['numero_de_serie'] ?? '');
+    // Si no viene 'serie_original', usa el 'numero_de_serie' actual como respaldo
+    $serie_original  = trim($_POST['serie_original'] ?? $numero_de_serie);
+    $kilometraje     = intval($_POST['kilometraje'] ?? 0);
+    $matricula       = trim($_POST['matricula'] ?? '');
+
+    if (empty($numero_de_serie)) {
+        header("Location: ../pages/registro-ambulancia.php?err=" . urlencode("El número de serie es obligatorio."));
+        exit;
+    }
 
     try {
-        $sql = "UPDATE ambulancia SET kilometraje = ?, matricula = ? WHERE numero_de_serie = ?";
+        // Actualiza permitiendo cambiar el número de serie si es necesario y los demás campos
+        $sql = "UPDATE ambulancia SET numero_de_serie = ?, kilometraje = ?, matricula = ? WHERE numero_de_serie = ?";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("iss", $kilometraje, $matricula, $serie_original);
+        $stmt->bind_param("siss", $numero_de_serie, $kilometraje, $matricula, $serie_original);
         $stmt->execute();
         $stmt->close();
 
         header("Location: ../pages/registro-ambulancia.php?msg=editado");
-    } catch (mysqli_sql_exception $e) {
+    } catch (mysqli_sql_exception$e) {
         header("Location: ../pages/registro-ambulancia.php?err=" . urlencode("Error al editar: " . $e->getMessage()));
     }
 
-// 3. ELIMINAR AMBULANCIA
 } elseif ($accion === 'eliminar') {
     $numero_de_serie = trim($_GET['numero_de_serie'] ?? '');
 

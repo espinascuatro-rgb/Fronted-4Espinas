@@ -133,25 +133,30 @@ $res_ambulancias = $con->query($sql_ambulancias);
                             <th>Acciones</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <?php if ($res_ambulancias && $res_ambulancias->num_rows > 0): ?>
-                            <?php while ($amb = $res_ambulancias->fetch_assoc()): ?>
-                                <tr>
-                                    <td><strong><?php echo htmlspecialchars($amb['numero_de_serie']); ?></strong></td>
-                                    <td><?php echo htmlspecialchars($amb['kilometraje'] ?? '0'); ?> km</td>
-                                    <td><?php echo htmlspecialchars($amb['matricula'] ?? 'N/A'); ?></td>
-                                    <td>
-                                        <button type="button" class="btn-tabla-editar" data-ambulancia='<?php echo htmlspecialchars(json_encode($amb), ENT_QUOTES, 'UTF-8'); ?>'>Editar</button>
-                                        <a href="../php/inyeccion2.php?accion=eliminar&numero_de_serie=<?php echo urlencode($amb['numero_de_serie']); ?>" class="btn-tabla-eliminar link-eliminar-confirmar">Eliminar</a>
-                                    </td>
-                                </tr>
-                            <?php endwhile; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="4" class="td-vacio">No hay ambulancias registradas.</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
+<tbody>
+    <?php if ($res_ambulancias && $res_ambulancias->num_rows > 0): ?>
+        <?php while ($amb = $res_ambulancias->fetch_assoc()): ?>
+            <tr>
+                <td><strong><?php echo htmlspecialchars($amb['numero_de_serie']); ?></strong></td>
+                <td><?php echo htmlspecialchars($amb['kilometraje'] ?? '0'); ?> km</td>
+                <td><?php echo htmlspecialchars($amb['matricula'] ?? 'N/A'); ?></td>
+                <td>
+  <button type="button" class="btn-tabla-editar" 
+    data-serie="<?php echo htmlspecialchars($amb['numero_de_serie'], ENT_QUOTES, 'UTF-8'); ?>"
+    data-kilometraje="<?php echo htmlspecialchars($amb['kilometraje'] ?? '', ENT_QUOTES, 'UTF-8'); ?>"
+    data-matricula="<?php echo htmlspecialchars($amb['matricula'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+    Editar
+</button>
+                    <a href="../php/inyeccion2.php?accion=eliminar&numero_de_serie=<?php echo urlencode($amb['numero_de_serie']); ?>" class="btn-tabla-eliminar link-eliminar-confirmar">Eliminar</a>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="4" class="td-vacio">No hay ambulancias registradas.</td>
+        </tr>
+    <?php endif; ?>
+</tbody>
                 </table>
             </div>
         </section>

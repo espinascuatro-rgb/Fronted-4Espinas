@@ -9,37 +9,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnSubmit = document.getElementById('btnSubmit');
     const btnCancelar = document.getElementById('btnCancelar');
 
+    // Botones de editar
     document.querySelectorAll('.btn-tabla-editar').forEach(boton => {
         boton.addEventListener('click', () => {
-            const amb = JSON.parse(boton.getAttribute('data-ambulancia'));
+            try {
+                // Obtenemos los valores de los atributos data-*
+                const serie = boton.getAttribute('data-serie');
+                const kilometraje = boton.getAttribute('data-kilometraje');
+                const matricula = boton.getAttribute('data-matricula');
 
-            tituloForm.textContent = "Modificar Ambulancia";
-            accion.value = "editar";
-            serieOriginal.value = amb.numero_de_serie;
+                if (tituloForm) tituloForm.textContent = "Modificar Ambulancia";
+                if (accion) accion.value = "editar";
+                if (serieOriginal) serieOriginal.value = serie;
 
-            inputSerie.value = amb.numero_de_serie;
-            inputSerie.readOnly = true;
-            inputKms.value = amb.kilometraje || '';
-            inputMatricula.value = amb.matricula || '';
+                if (inputSerie) {
+                    inputSerie.value = serie;
+                    inputSerie.readOnly = true; // Bloquea la clave primaria al editar
+                }
+                if (inputKms) inputKms.value = kilometraje;
+                if (inputMatricula) inputMatricula.value = matricula;
 
-            btnSubmit.textContent = "Actualizar ambulancia";
-            btnCancelar.style.display = "inline-block";
+                if (btnSubmit) btnSubmit.textContent = "Actualizar ambulancia";
+                if (btnCancelar) btnCancelar.style.display = "inline-block";
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (error) {
+                console.error("Error al cargar los datos para editar:", error);
+            }
         });
     });
 
-    if (btnCancelar) {
+    // Botón cancelar
+    if (btnCancelar && formAmbulancia) {
         btnCancelar.addEventListener('click', () => {
-            tituloForm.textContent = "Registro ambulancias";
-            accion.value = "guardar";
+            if (tituloForm) tituloForm.textContent = "Registro ambulancias";
+            if (accion) accion.value = "guardar";
+            if (serieOriginal) serieOriginal.value = "";
             formAmbulancia.reset();
-            inputSerie.readOnly = false;
-            btnSubmit.textContent = "Registrar traslado de ambulancia";
+            if (inputSerie) inputSerie.readOnly = false;
+            if (btnSubmit) btnSubmit.textContent = "Registrar traslado de ambulancia";
             btnCancelar.style.display = "none";
         });
     }
 
+    // Confirmación de eliminación
     document.querySelectorAll('.link-eliminar-confirmar').forEach(enlace => {
         enlace.addEventListener('click', (e) => {
             if (!confirm('¿Está seguro de eliminar esta ambulancia?')) {
