@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-10-2026 a las 02:41:04
+-- Tiempo de generación: 26-10-2026 a las 00:10:06
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -89,6 +89,15 @@ CREATE TABLE `funcionario` (
   `cedula` int(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `funcionario`
+--
+
+INSERT INTO `funcionario` (`id_tipo`, `usuario`, `contrasenia`, `credenciales`, `cedula`) VALUES
+('1234', 'soy gay', '$2y$10$WXiLPpZtU.m283FWxyqileMWXvx07zW.z.bH4v6XVZuauOo2L5GXO', 'zMatepan', NULL),
+('12345', 'Mateopro', '$2y$10$p0E/zLPuwE0oVARBm78aXOnRHrTj6Hcz25HJkkCfWjYeoWwAbNdSW', 'casa', NULL),
+('123456', 'aura', '$2y$10$g83Opw9XS2gYbcYKHY1cZ.iF4B.75YIbD3Nx7W3TQ5kIr7dX0oATO', 'casa', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -124,6 +133,32 @@ CREATE TABLE `insumo_ambulancia` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `organo`
+--
+
+CREATE TABLE `organo` (
+  `id_organo` int(11) NOT NULL,
+  `nombre_organo` varchar(100) NOT NULL,
+  `cantidad` int(11) NOT NULL DEFAULT 0,
+  `tiempo_isquemia_horas` int(11) NOT NULL DEFAULT 4,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `organo`
+--
+
+INSERT INTO `organo` (`id_organo`, `nombre_organo`, `cantidad`, `tiempo_isquemia_horas`, `created_at`) VALUES
+(1, 'Corazón', 2, 4, '2026-10-25 23:09:16'),
+(2, 'Hígado', 4, 12, '2026-10-25 23:09:16'),
+(3, 'Riñón', 8, 24, '2026-10-25 23:09:16'),
+(4, 'Pulmón', 1, 6, '2026-10-25 23:09:16'),
+(5, 'Páncreas', 3, 12, '2026-10-25 23:09:16'),
+(6, 'Córnea', 12, 72, '2026-10-25 23:09:16');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `persona`
 --
 
@@ -143,7 +178,9 @@ CREATE TABLE `persona` (
 --
 
 INSERT INTO `persona` (`cedula`, `primer_nombre`, `segundo_nombre`, `primer_apellido`, `segundo_apellido`, `carne_de_salud`, `numero_de_telefono`, `direccion`) VALUES
-('1234', NULL, NULL, NULL, NULL, '1234', '092171', 'casa');
+('1234', NULL, NULL, NULL, NULL, 'Esta vivo', '327329', 'casa'),
+('12345', NULL, NULL, NULL, NULL, '12345', '12345', 'casa'),
+('123456', NULL, NULL, NULL, NULL, 'tiene', '12345', 'casa');
 
 -- --------------------------------------------------------
 
@@ -232,7 +269,7 @@ CREATE TABLE `traslado` (
 --
 
 INSERT INTO `traslado` (`id_traslado`, `origen`, `hora_de_salida`, `hora_de_llegada`, `hora_estimada_gps`, `cedula_funcionario`, `acompanante`, `matricula_ambulancia`, `destino`, `lat_chofer`, `lng_chofer`, `transporte`, `estado`) VALUES
-(1, 'Hospital de Clinicas', '18:11:38', NULL, '16:23 hs', '1234', 'Thomas', '1', 'Av. Italia 2870', -32.31949714, -58.08386121, 'drive', 'en_proceso');
+(1, 'Hospital de Clinicas', '18:11:38', NULL, '07:10 hs', '1234', 'Thomas', '1', 'Av. Italia 2870', -32.31949714, -58.08386121, 'drive', 'en_proceso');
 
 -- --------------------------------------------------------
 
@@ -354,6 +391,13 @@ ALTER TABLE `insumo_ambulancia`
   ADD UNIQUE KEY `uk_ambulancia_insumo` (`numero_de_serie_ambulancia`);
 
 --
+-- Indices de la tabla `organo`
+--
+ALTER TABLE `organo`
+  ADD PRIMARY KEY (`id_organo`),
+  ADD UNIQUE KEY `nombre_organo` (`nombre_organo`);
+
+--
 -- Indices de la tabla `persona`
 --
 ALTER TABLE `persona`
@@ -466,7 +510,13 @@ ALTER TABLE `equipo_medico`
 -- AUTO_INCREMENT de la tabla `insumo_ambulancia`
 --
 ALTER TABLE `insumo_ambulancia`
-  MODIFY `id_insumo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_insumo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de la tabla `organo`
+--
+ALTER TABLE `organo`
+  MODIFY `id_organo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -502,7 +552,7 @@ ALTER TABLE `tipo_u`
 -- AUTO_INCREMENT de la tabla `traslado`
 --
 ALTER TABLE `traslado`
-  MODIFY `id_traslado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_traslado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

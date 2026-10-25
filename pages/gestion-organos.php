@@ -2,15 +2,8 @@
 require_once __DIR__ . '/../php/checksesion.php'; 
 require_once __DIR__ . '/../php/conexion.php';
 
-// Obtener la lista de pacientes para vincular al órgano
-$sql_pacientes = "SELECT ci_persona, nombre, apellido FROM persona ORDER BY apellido ASC";
-$res_pacientes = $con->query($sql_pacientes);
-
-// Obtener los registros de órganos existentes
-$sql_organos = "SELECT o.*, p.nombre, p.apellido 
-                FROM organo_paciente o 
-                LEFT JOIN persona p ON o.ci_paciente = p.ci_persona 
-                ORDER BY o.id_organo DESC";
+// Obtener todos los órganos del inventario
+$sql_organos = "SELECT * FROM organo ORDER BY nombre_organo ASC";
 $res_organos = $con->query($sql_organos);
 ?>
 <!DOCTYPE html>
@@ -46,94 +39,44 @@ $res_organos = $con->query($sql_organos);
                 </button>
             </div>
 
-            <h2 class="titulo-seccion">Gestión y Trazabilidad de Órganos</h2>
+            <h2 class="titulo-seccion">Gestión e Inventario de Órganos</h2>
 
-            <!-- Formulario para agregar / editar registro de órgano -->
+            <!-- Formulario para Agregar Órgano -->
             <form action="../php/guardar_organo.php" method="POST" class="form-organo">
-                <input type="hidden" id="id_organo" name="id_organo" value="">
-
                 <div class="grid-form-insumos">
                     <div>
-                        <label for="ci_paciente"><strong>Paciente Asociado:</strong></label>
-                        <select id="ci_paciente" name="ci_paciente" class="input-select" required>
-                            <option value="">Seleccione un paciente...</option>
-                            <?php if ($res_pacientes && $res_pacientes->num_rows > 0): ?>
-                                <?php while ($p = $res_pacientes->fetch_assoc()): ?>
-                                    <option value="<?php echo $p['ci_persona']; ?>">
-                                        <?php echo htmlspecialchars($p['apellido'] . ', ' . $p['nombre'] . ' (CI: ' . $p['ci_persona'] . ')'); ?>
-                                    </option>
-                                <?php endwhile; ?>
-                            <?php endif; ?>
-                        </select>
+                        <label for="nombre_organo"><strong>Nombre del Órgano:</strong></label>
+                        <input type="text" id="nombre_organo" name="nombre_organo" class="input-form" placeholder="Ej: Corazón, Hígado, Córnea" required>
                     </div>
 
                     <div>
-                        <label for="tipo_organo"><strong>Tipo de Órgano:</strong></label>
-                        <select id="tipo_organo" name="tipo_organo" class="input-select" required>
-                            <option value="">Seleccione tipo...</option>
-                            <option value="Corazón">Corazón</option>
-                            <option value="Hígado">Hígado</option>
-                            <option value="Riñón">Riñón</option>
-                            <option value="Pulmón">Pulmón</option>
-                            <option value="Páncreas">Páncreas</option>
-                            <option value="Córnea">Córnea</option>
-                            <option value="Tejido / Otro">Tejido / Otro</option>
-                        </select>
+                        <label for="cantidad"><strong>Cantidad Disponible:</strong></label>
+                        <input type="number" id="cantidad" name="cantidad" class="input-form" placeholder="Ej: 1" min="0" required>
                     </div>
 
                     <div>
-                        <label for="tipo_operacion"><strong>Función del Registro:</strong></label>
-                        <select id="tipo_operacion" name="tipo_operacion" class="input-select" required>
-                            <option value="Donante">Donante (Ablación)</option>
-                            <option value="Receptor">Receptor (Transplante)</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="estado_conservacion"><strong>Estado de Conservación:</strong></label>
-                        <select id="estado_conservacion" name="estado_conservacion" class="input-select" required>
-                            <option value="En Espera">En Espera de extracción</option>
-                            <option value="En Isquemia Fría">En Isquemia Fría (Preservado)</option>
-                            <option value="En Tránsito">En Tránsito en Ambulancia</option>
-                            <option value="Implantado">Implantado Exitosamente</option>
-                            <option value="No Viable">No Viable / Descartado</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="tiempo_limite"><strong>Tiempo Límite de Isquemia (Horas):</strong></label>
-                        <input type="number" id="tiempo_limite" name="tiempo_limite" class="input-form" placeholder="Ej: 4" min="1" max="72" required>
-                    </div>
-
-                    <div>
-                        <label for="urgencia"><strong>Nivel de Urgencia:</strong></label>
-                        <select id="urgencia" name="urgencia" class="input-select" required>
-                            <option value="Normal">Normal</option>
-                            <option value="Alta">Alta</option>
-                            <option value="Urgencia Cero">Urgencia Cero (Crítica)</option>
-                        </select>
+                        <label for="tiempo_isquemia_horas"><strong>Tiempo Límite de Isquemia (Horas):</strong></label>
+                        <input type="number" id="tiempo_isquemia_horas" name="tiempo_isquemia_horas" class="input-form" placeholder="Ej: 6" min="1" max="120" required>
                     </div>
                 </div>
 
-                <div class="contenedor-botones">
-                    <button type="submit" id="btnSubmit">Registrar Órgano</button>
+                <div class="contenedor-botones" style="margin-top: 15px;">
+                    <button type="submit" id="btnSubmit">Agregar al Inventario</button>
                 </div>
             </form>
 
-            <h3 class="subtitulo-seccion">Órganos Registrados en Sistema</h3>
+            <h3 class="subtitulo-seccion">Órganos Disponibles en Banco</h3>
 
-            <!-- Tabla de Órganos Registrados -->
+            <!-- Tabla de Órganos con edición directa de cantidad y eliminación -->
             <div class="overflow-tabla">
                 <table class="tabla-insumos-admin">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Paciente</th>
                             <th>Órgano</th>
-                            <th>Función</th>
-                            <th>Estado</th>
-                            <th>Límite (Horas)</th>
-                            <th>Urgencia</th>
+                            <th>Tiempo Máx. Isquemia</th>
+                            <th>Stock / Cantidad</th>
+                            <th>Actualizar Cantidad</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -142,20 +85,24 @@ $res_organos = $con->query($sql_organos);
                             <?php while ($o = $res_organos->fetch_assoc()): ?>
                                 <tr>
                                     <td>#<?php echo $o['id_organo']; ?></td>
-                                    <td><?php echo htmlspecialchars(($o['apellido'] ?? 'Sin asignar') . ', ' . ($o['nombre'] ?? '')); ?></td>
-                                    <td><strong><?php echo htmlspecialchars($o['tipo_organo']); ?></strong></td>
-                                    <td><?php echo htmlspecialchars($o['tipo_operacion']); ?></td>
-                                    <td><span class="badge-insumo"><?php echo htmlspecialchars($o['estado_conservacion']); ?></span></td>
-                                    <td><?php echo htmlspecialchars($o['tiempo_limite']); ?> hs</td>
-                                    <td><strong><?php echo htmlspecialchars($o['urgencia']); ?></strong></td>
+                                    <td><strong><?php echo htmlspecialchars($o['nombre_organo']); ?></strong></td>
+                                    <td><?php echo htmlspecialchars($o['tiempo_isquemia_horas']); ?> horas</td>
+                                    <td><span class="badge-insumo"><?php echo $o['cantidad']; ?> unidades</span></td>
                                     <td>
-                                        <a href="../php/eliminar_organo.php?id=<?php echo $o['id_organo']; ?>" class="btn-tabla-eliminar" onclick="return confirm('¿Desea eliminar este registro de órgano?');">Eliminar</a>
+                                        <form action="../php/editar_cantidad_organo.php" method="POST" style="display: flex; gap: 6px; align-items: center;">
+                                            <input type="hidden" name="id_organo" value="<?php echo $o['id_organo']; ?>">
+                                            <input type="number" name="cantidad" value="<?php echo $o['cantidad']; ?>" min="0" class="input-form" style="width: 80px; padding: 4px 8px;" required>
+                                            <button type="submit" style="background: #0a1e6f; color: white; border: none; border-radius: 4px; padding: 6px 10px; cursor: pointer;">Guardar</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <a href="../php/eliminar_organo.php?id=<?php echo $o['id_organo']; ?>" class="btn-tabla-eliminar" onclick="return confirm('¿Confirma que desea eliminar este órgano del sistema?');">Eliminar</a>
                                     </td>
                                 </tr>
                             <?php endwhile; ?>
                         <?php else: ?>
                             <tr>
-                                <td colspan="8" class="td-vacio">No hay registros de órganos cargados actualmente.</td>
+                                <td colspan="6" class="td-vacio">No hay órganos registrados en la base de datos.</td>
                             </tr>
                         <?php endif; ?>
                     </tbody>
