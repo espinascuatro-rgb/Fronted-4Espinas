@@ -49,7 +49,7 @@ if (!empty($cedula)) {
         <section class="ajustes1">
             <h2 id="aj1">Ajustes de perfil</h2>
 
-           <!-- poco serio que los comentarios en html sean tan dificiles de poner. -->
+
             <div class="perfil-fila">
                 <p><strong>Nombre:</strong> <span class="val-nombre"><?php echo htmlspecialchars($_SESSION['usuario_nombre'] ?? 'No disponible'); ?></span></p>
                 <button type="button" class="btn-toggle-form" data-target="form-nombre">Modificar</button>
@@ -81,7 +81,7 @@ if (!empty($cedula)) {
                 </div>
             </form>
 
-            <!-- Thomas si estas viendo esto, quiero que sepas que me sorprende que estes viendo el codigo, bien ahi. -->
+
             <div class="perfil-fila">
                 <p><strong>Dirección:</strong> <span class="val-direccion"><?php echo htmlspecialchars($_SESSION['direccion'] ?? 'No disponible'); ?></span></p>
                 <button type="button" class="btn-toggle-form" data-target="form-direccion">Modificar</button>
@@ -118,7 +118,7 @@ if (!empty($cedula)) {
                 <p><strong>Cédula:</strong> <?php echo htmlspecialchars($_SESSION['usuario_id'] ?? 'No disponible'); ?></p>
             </div>
 
-            <!-- La vida son como manzanas, todos vinimos de una rama. -->
+
             <div class="perfil-fila">
                 <p><strong>Contraseña:</strong> ********</p>
                 <button type="button" class="btn-toggle-form" data-target="form-password">Modificar</button>
@@ -139,7 +139,7 @@ if (!empty($cedula)) {
             </form>
         </section>
     </main>
-    <!-- Si el html es tu poder, que eres tu sin el? -->
+
     <footer class="footerguia">
         <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
         <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>

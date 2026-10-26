@@ -1,9 +1,9 @@
 <?php
-require_once 'config.php'; // llama a las constante de las credenciales de la bs.
+require_once 'config.php'; 
 
-$con = new mysqli(BDhost, BDuser, BDpass, BDname); // hace la conexion a la bs con las constantes
+$con = new mysqli(BDhost, BDuser, BDpass, BDname); 
 
-if($con->connect_error){ //si hay error y se detiene la conexion.
+if($con->connect_error){ 
     die("error: " . $con->connect_error);
 }
 ?>

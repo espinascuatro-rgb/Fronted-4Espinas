@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../php/checksesion.php';
 require_once __DIR__ . '/../php/conexion.php';
 
-// Obtener los documentos almacenados en la base de datos
+
 $sql_docs = "SELECT * FROM documentos ORDER BY id_documento DESC";
 $res_docs = $con->query($sql_docs);
 ?>
@@ -65,16 +65,16 @@ $res_docs = $con->query($sql_docs);
                                 <td class="td-espaciado"><strong><?php echo htmlspecialchars($doc['nombre_personalizado']); ?></strong> <br><small style="color: #64748b;"><?php echo htmlspecialchars($doc['nombre_original']); ?></small></td>
                                 <td class="td-espaciado"><?php echo strtoupper(htmlspecialchars($doc['tipo_archivo'])); ?></td>
                                 <td class="td-espaciado">
-                                    <!-- Formulario compacto para modificar el nombre del documento -->
-                                    <form action="../php/editar_nombre_documento.php" method="POST" class="form-editar-nombre">
+
+                                <form action="../php/editar_nombre_documento.php" method="POST" class="form-editar-nombre">
                                         <input type="hidden" name="id_documento" value="<?php echo $doc['id_documento']; ?>">
                                         <input type="text" name="nuevo_nombre" value="<?php echo htmlspecialchars($doc['nombre_personalizado']); ?>" class="input-form input-tabla-editar" required>
                                         <button type="submit" class="boton-actualizar">Actualizar</button>
                                     </form>
                                 </td>
                                 <td class="td-espaciado">
-                                    <!-- Enlace de descarga directa -->
-                                    <a href="<?php echo htmlspecialchars($doc['ruta_archivo']); ?>" download="<?php echo htmlspecialchars($doc['nombre_personalizado'] . '.' . $doc['tipo_archivo']); ?>" class="boton2 enlace-descarga">Descargar</a>
+
+                                <a href="<?php echo htmlspecialchars($doc['ruta_archivo']); ?>" download="<?php echo htmlspecialchars($doc['nombre_personalizado'] . '.' . $doc['tipo_archivo']); ?>" class="boton2 enlace-descarga">Descargar</a>
                                     <a href="../php/eliminar_documento.php?id=<?php echo $doc['id_documento']; ?>" class="btn-tabla-eliminar" onclick="return confirm('¿Seguro que deseas eliminar este documento?');">Eliminar</a>
                                 </td>
                             </tr>

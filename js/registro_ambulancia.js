@@ -9,11 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnSubmit = document.getElementById('btnSubmit');
     const btnCancelar = document.getElementById('btnCancelar');
 
-    // Botones de editar
+
     document.querySelectorAll('.btn-tabla-editar').forEach(boton => {
         boton.addEventListener('click', () => {
             try {
-                // Obtenemos los valores de los atributos data-*
+
                 const serie = boton.getAttribute('data-serie');
                 const kilometraje = boton.getAttribute('data-kilometraje');
                 const matricula = boton.getAttribute('data-matricula');
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (inputSerie) {
                     inputSerie.value = serie;
-                    inputSerie.readOnly = true; // Bloquea la clave primaria al editar
+                    inputSerie.readOnly = true; 
                 }
                 if (inputKms) inputKms.value = kilometraje;
                 if (inputMatricula) inputMatricula.value = matricula;
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Botón cancelar
+
     if (btnCancelar && formAmbulancia) {
         btnCancelar.addEventListener('click', () => {
             if (tituloForm) tituloForm.textContent = "Registro ambulancias";

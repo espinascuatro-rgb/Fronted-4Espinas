@@ -1,4 +1,4 @@
-document.getElementById('FLogin').addEventListener('submit', async function (e) { // hace un evento al formo cuando envia el form y hace una funcion igual al registro.
+document.getElementById('FLogin').addEventListener('submit', async function (e) { 
   e.preventDefault(); 
 
   const formData = new FormData(this);
@@ -12,7 +12,7 @@ document.getElementById('FLogin').addEventListener('submit', async function (e) 
     const result = await response.json();
 
     if (result.status === 'success') {
-      window.location.href = result.redirect; // redirige a la pagina que el script de login le dice.
+      window.location.href = result.redirect; 
     } else {
       alert(result.message);
     }

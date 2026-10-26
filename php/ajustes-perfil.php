@@ -5,7 +5,7 @@ require_once 'conexion.php';
 
 date_default_timezone_set('America/Montevideo');
 header('Content-Type: application/json');
-// dale, te reto a intentar entender todo esto.
+
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['direccion'] = $direccion;
             $actualizado = true;
         }
-// pilas que vas bien.
+
         if (isset($_POST['credencial'])) {
             $credencial = trim($_POST['credencial']);
             $sql = "UPDATE funcionario SET credenciales = ? WHERE id_tipo = ?";
@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
         }
-//Esto es muy complicado para vos pive
+
         $con->commit();
 
         if ($actualizado) {
@@ -140,6 +140,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'message' => 'Método de solicitud no permitido.'
     ]);
 }
-//dejaselo a la gente grande, pive.
+
 $con->close();
 ?>

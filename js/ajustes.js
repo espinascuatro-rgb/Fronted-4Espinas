@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
             const targetId = btn.getAttribute('data-target');
             const targetForm = document.getElementById(targetId);
-//obviamente aqui estubo dominicke.
+
             document.querySelectorAll('.perfil-form').forEach(form => {
                 if (form.id !== targetId) form.style.display = 'none';
             });
@@ -47,13 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // vivimos en una sociedad en donde si te sientes mal, puedes sentarte mejor.
+
     const formulariosAjax = document.querySelectorAll('.form-ajax');
 
     formulariosAjax.forEach(form => {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
-//stagi, viendo el codigo?, que gury responsable. Cuando sea grande quiero ser como vos. 
+
             const formData = new FormData(form);
 
             try {
@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     method: 'POST',
                     body: formData
                 });
-// mateo, hijo.
+
                 const data = await response.json();
 
                 if (data.status === 'success') {

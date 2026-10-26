@@ -1,18 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Iniciando módulo de mapas y rutas (Modo Local XAMPP)...");
 
-    // Coordenadas de prueba por defecto (Hospital de Clínicas y zonas aledañas)
+
     let coordsOrigen = [-34.8883, -56.1561];
     let coordsDestino = [-34.8812, -56.1420];
 
-    // Verificar existencia del contenedor del mapa en el DOM
+
     const contenedorMapa = document.getElementById('mapaRuta');
     if (!contenedorMapa) {
         console.error("Error crítico: No se encontró el elemento #mapaRuta en el DOM.");
         return;
     }
 
-    // Inicialización del mapa con control explícito de renderizado
+
     let map = null;
     try {
         map = L.map('mapaRuta', {
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    // Capa base de teselas (Tiles) de OpenStreetMap optimizada para localhost
+
     const capaTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         minZoom: 10,
@@ -35,16 +35,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     capaTiles.addTo(map);
 
-    // Control de eventos de carga de teselas para evitar pantalla gris en XAMPP
+
     capaTiles.on('tileload', function() {
-        // Tesela cargada con éxito
+
     });
 
     capaTiles.on('tileerror', function(errorOcurrido) {
         console.warn("Aviso de red: Error al cargar alguna tesela del mapa localmente.", errorOcurrido);
     });
 
-    // Forzar actualización de tamaño para evitar colapso visual en Grid/Flexbox
+
     setTimeout(function () {
         if (map) {
             map.invalidateSize();
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }, 300);
 
-    // Configuración de iconos personalizados
+
     const iconoMapo1 = L.icon({
         iconUrl: '../mape/mapo2.png',
         iconSize: [38, 38],
@@ -67,7 +67,7 @@ document.addEventListener('DOMContentLoaded', function () {
         popupAnchor: [0, -38]
     });
 
-    // Marcadores iniciales interactivos
+
     const markerOrigen = L.marker(coordsOrigen, { icon: iconoMapo1, draggable: true }).addTo(map);
     markerOrigen.bindPopup('<b>Punto de Origen</b><br>Hospital de Clínicas').openPopup();
 
@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let capaPolylineRuta = null;
 
-    // Función asíncrona robusta para consultar OSRM y trazar la ruta calle por calle
+
     async function actualizarRuta() {
         const posO = markerOrigen.getLatLng();
         const posD = markerDestino.getLatLng();
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const route = json.routes[0];
                 const latLngs = route.geometry.coordinates.map(coord => [coord[1], coord[0]]);
 
-                // Trazado de línea sólida continua por las calles
+
                 capaPolylineRuta = L.polyline(latLngs, {
                     color: '#1840dd',
                     weight: 6,
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Respaldo de línea recta continua si el servidor externo de rutas falla en local
+
     function trazarRutaFallbackDirecta(posO, posD) {
         capaPolylineRuta = L.polyline([posO, posD], {
             color: '#1840dd',
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Eventos para actualizar la ruta al arrastrar los marcadores
+
     markerOrigen.on('dragend', function () {
         actualizarRuta();
     });
@@ -148,10 +148,10 @@ document.addEventListener('DOMContentLoaded', function () {
         actualizarRuta();
     });
 
-    // Ejecutar cálculo inicial
+
     actualizarRuta();
 
-    // Evento dinámico para el selector de traslados de la base de datos
+
     const selectTraslado = document.getElementById('selectTraslado');
     if (selectTraslado) {
         selectTraslado.addEventListener('change', function (e) {
@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const latDestino = parseFloat(opcionSeleccionada.getAttribute('data-lat'));
             const lngDestino = parseFloat(opcionSeleccionada.getAttribute('data-lng'));
 
-            // Actualizar campos de información visual
+
             document.getElementById('txtId').textContent = '#' + opcionSeleccionada.value;
             document.getElementById('txtOrigen').textContent = opcionSeleccionada.getAttribute('data-origen');
             document.getElementById('txtDestino').textContent = opcionSeleccionada.getAttribute('data-destino');

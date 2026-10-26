@@ -42,7 +42,7 @@
                     <p class="desc-encuesta">Evaluación sobre el servicio de ambulancias, tiempos de respuesta y atención médica durante el traslado.</p>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeVwcUk_ZKY7ZrNLHozyzYkB_LV4Yx3rVbTzo5mkWUM8doiaQ/viewform?usp=sharing&ouid=114919482076470136106" target="_blank" class="btn-completar-encuesta">Abrir Formulario Traslado ↗</a>
                 </article>
-<!-- hola, buenas tardes. -->
+
                 <article id="encuesta-hospital" class="tarjeta-encuesta-col">
                     <span class="badge-categoria">Hospital General</span>
                     <h3>Encuesta del Hospital</h3>

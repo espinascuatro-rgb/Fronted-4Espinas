@@ -29,7 +29,7 @@ if ($accion === 'guardar' || ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($ac
 
 } elseif ($accion === 'editar') {
     $numero_de_serie = trim($_POST['numero_de_serie'] ?? '');
-    // Si no viene 'serie_original', usa el 'numero_de_serie' actual como respaldo
+
     $serie_original  = trim($_POST['serie_original'] ?? $numero_de_serie);
     $kilometraje     = intval($_POST['kilometraje'] ?? 0);
     $matricula       = trim($_POST['matricula'] ?? '');
@@ -40,7 +40,7 @@ if ($accion === 'guardar' || ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($ac
     }
 
     try {
-        // Actualiza permitiendo cambiar el número de serie si es necesario y los demás campos
+
         $sql = "UPDATE ambulancia SET numero_de_serie = ?, kilometraje = ?, matricula = ? WHERE numero_de_serie = ?";
         $stmt = $con->prepare($sql);
         $stmt->bind_param("siss", $numero_de_serie, $kilometraje, $matricula, $serie_original);

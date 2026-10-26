@@ -31,8 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $resultado = $stmt->get_result(); 
 
         if ($row = $resultado->fetch_assoc()) { 
-            if (password_verify($contrasenia, $row['contrasenia'])) { //comprueba si coincide la contra con la de BS
-                session_regenerate_id(true); //genera un nuevo id de sesion para evitar hackeos.
+            if (password_verify($contrasenia, $row['contrasenia'])) { 
+                session_regenerate_id(true); 
 
                 $_SESSION['usuario_id']     = $row['cedula']; 
                 $_SESSION['usuario_nombre'] = $row['usuario'];

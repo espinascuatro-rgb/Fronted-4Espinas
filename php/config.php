@@ -1,4 +1,4 @@
-<?php // las credenciales de la BS.
+<?php 
 define('BDhost', 'localhost');
 define('BDuser', 'root');
 define('BDpass', '');

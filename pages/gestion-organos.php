@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../php/checksesion.php'; 
 require_once __DIR__ . '/../php/conexion.php';
 
-// Obtener todos los órganos del inventario
+
 $sql_organos = "SELECT * FROM organo ORDER BY nombre_organo ASC";
 $res_organos = $con->query($sql_organos);
 ?>
@@ -41,7 +41,7 @@ $res_organos = $con->query($sql_organos);
 
             <h2 class="titulo-seccion">Gestión e Inventario de Órganos</h2>
 
-            <!-- Formulario para Agregar Órgano -->
+
             <form action="../php/guardar_organo.php" method="POST" class="form-organo">
                 <div class="grid-form-insumos">
                     <div>
@@ -67,7 +67,7 @@ $res_organos = $con->query($sql_organos);
 
             <h3 class="subtitulo-seccion">Órganos Disponibles en Banco</h3>
 
-            <!-- Tabla de Órganos con edición directa de cantidad y eliminación -->
+
             <div class="overflow-tabla">
                 <table class="tabla-insumos-admin">
                     <thead>

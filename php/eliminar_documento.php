@@ -5,7 +5,7 @@ require_once __DIR__ . '/conexion.php';
 if (isset($_GET['id'])) {
     $id = (int)$_GET['id'];
     
-    // Buscar la ruta física para borrar el archivo del servidor
+
     $stmt = $con->prepare("SELECT ruta_archivo FROM documentos WHERE id_documento = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -19,7 +19,7 @@ if (isset($_GET['id'])) {
     }
     $stmt->close();
 
-    // Borrar el registro de la base de datos
+
     $stmtDel = $con->prepare("DELETE FROM documentos WHERE id_documento = ?");
     $stmtDel->bind_param("i", $id);
     $stmtDel->execute();

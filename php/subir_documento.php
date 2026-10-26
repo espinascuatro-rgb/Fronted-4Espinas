@@ -10,13 +10,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['archivo-subir'])) {
         $nombreOriginal = basename($archivo['name']);
         $extension = strtolower(pathinfo($nombreOriginal, PATHINFO_EXTENSION));
         
-        // Carpeta destino donde se guardarán físicamente los archivos
+
         $carpetaDestino = __DIR__ . '/../uploads/';
         if (!is_dir($carpetaDestino)) {
             mkdir($carpetaDestino, 0755, true);
         }
 
-        // Generar un nombre único para evitar colisiones en el servidor
+
         $nombreUnico = uniqid('doc_', true) . '.' . $extension;
         $rutaFisica = $carpetaDestino . $nombreUnico;
         $rutaRelativa = '../uploads/' . $nombreUnico;
