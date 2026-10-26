@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             lineOptions: {
                 styles: [
-                    { color: '#2563eb', opacity: 0.9, weight: 7 } // Línea azul clásica elegante y gruesa
+                    { color: '#2563eb', opacity: 0.9, weight: 7 } 
                 ]
             }
         }).addTo(mapa);

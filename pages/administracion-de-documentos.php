@@ -27,8 +27,6 @@ $res_docs = $con->query($sql_docs);
         </nav>
     </header>
     <main class="mainadm">
-        
-        <!-- Formulario para subir nuevos archivos y asignarles nombre personalizado -->
         <section class="admdocumento1"> 
             <form action="../php/subir_documento.php" method="POST" enctype="multipart/form-data" class="form-subida-doc">
                 <p>Subir nuevo documento:</p>
@@ -45,8 +43,6 @@ $res_docs = $con->query($sql_docs);
                 <button type="submit" class="boton1" style="margin-top: 10px;">Cargar Archivo</button>
             </form>
         </section>
-        
-        <!-- Sección de listado de archivos -->
         <section class="admdocumento2">
             <h2>Archivos</h2>
             <table>

@@ -18,20 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const kilometraje = boton.getAttribute('data-kilometraje');
             const matricula = boton.getAttribute('data-matricula');
 
-            // Rellenar los campos del formulario de forma segura
             if (inputSerie) inputSerie.value = serie;
             if (inputKilometraje) inputKilometraje.value = kilometraje;
             if (inputMatricula) inputMatricula.value = matricula;
-
-            // Cambiar el estado del formulario a modo edición
             if (inputAccion) inputAccion.value = 'editar';
-            if (inputSerieOriginal) inputSerieOriginal.value = serie; // Clave para que el backend sepa qué registro actualizar
-
+            if (inputSerieOriginal) inputSerieOriginal.value = serie;
             if (tituloForm) tituloForm.textContent = 'Editar Ambulancia #' + serie;
             if (btnSubmit) btnSubmit.textContent = 'Actualizar Ambulancia';
             if (btnCancelar) btnCancelar.style.display = 'inline-block';
-
-            // Desplazar suavemente hacia arriba para ver el formulario activo
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     });

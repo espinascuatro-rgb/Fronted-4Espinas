@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (lblAmbulancia) lblAmbulancia.textContent = '-';
                 if (lblAcompanante) lblAcompanante.textContent = '-';
                 if (lblEstadoTexto) lblEstadoTexto.textContent = 'Sin registro';
-            }
+            } // dominicke estubo aqui
         } catch (e) {
             console.error('Error actualizando trazabilidad:', e);
         }
