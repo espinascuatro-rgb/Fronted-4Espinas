@@ -36,7 +36,6 @@ $resultado = $con->query($sql);
                 <div class="alerta alerta-exito">
                     <?php 
                         if ($_GET['msg'] === 'agregado') echo "Paciente registrado de forma correcta";
-                        if ($_GET['msg'] === 'editado') echo "Los datos se han actualizados ";
                         if ($_GET['msg'] === 'eliminado') echo "El registro ha sido eliminado";
                     ?>
                 </div>
@@ -121,7 +120,6 @@ $resultado = $con->query($sql);
                                     <td><?php echo htmlspecialchars($row['numero_de_telefono'] ?? ''); ?></td>
                                     <td><?php echo htmlspecialchars($row['direccion'] ?? ''); ?></td>
                                     <td>
-                                        <button type="button" class="btn-tabla-editar" data-paciente='<?php echo htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8'); ?>'>Editar</button>
                                         <a href="../php/crud_paciente.php?accion=eliminar&cedula=<?php echo urlencode($row['cedula']); ?>" class="btn-tabla-eliminar link-eliminar-confirmar">Eliminar</a>
                                     </td>
                                 </tr>
