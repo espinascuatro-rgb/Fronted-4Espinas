@@ -2,7 +2,6 @@
 require_once __DIR__ . '/../php/checksesion.php'; 
 require_once __DIR__ . '/../php/conexion.php';
 
-// Consulta para obtener los traslados activos y sus ambulancias asociadas
 $sql_traslados = "SELECT t.*, a.matricula 
                   FROM traslado t 
                   LEFT JOIN ambulancia a ON t.matricula_ambulancia = a.numero_de_serie 
@@ -19,11 +18,8 @@ $res_traslados = $con->query($sql_traslados);
     <link rel="stylesheet" href="../css/elementosC.css">
     <link rel="stylesheet" href="../css/Ver_ruta.css">
 
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <!-- Leaflet Routing Machine CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
-    <!-- Leaflet Fullscreen CSS -->
     <link href="https://unpkg.com/leaflet.fullscreen@latest/Control.FullScreen.css" rel="stylesheet" />
 </head>
 
@@ -33,7 +29,7 @@ $res_traslados = $con->query($sql_traslados);
         <h1>Visualización en GPS</h1>
         <nav class="navguia">
             <a href="../pages/guia.php">Inicio</a>
-            <a href="../pages/modo-chofer.php">Modo Chofer (GPS)</a>
+            <a href="../pages/chofer-gps.php">Modo Chofer (GPS)</a>
             <a href="../pages/trazabilidad.php">Volver a Trazabilidad</a>
         </nav>
     </header>
@@ -43,7 +39,7 @@ $res_traslados = $con->query($sql_traslados);
             <div class="header-acciones-ruta">
                 <div class="grupo-botones-nav">
                     <button class="btnguia4 btn-chofer-nav">
-                        <a href="../pages/modo-chofer.php">Modo Chofer</a>
+                        <a href="../pages/chofer-gps.php">Modo Chofer</a>
                     </button>
                     <button class="btnguia5 btn-trazabilidad">
                         <a href="../pages/trazabilidad.php">Ver Trazabilidad</a>
@@ -54,7 +50,6 @@ $res_traslados = $con->query($sql_traslados);
             <h2 class="titulo-seccion">Seguimiento y Visualización de Rutas</h2>
 
             <div class="panel-ruta-grid">
-                <!-- Tarjeta de Controles y Selector de Traslados -->
                 <div class="tarjeta-controles-ruta">
                     <h3>Selección de Traslado</h3>
                     <div class="form-group-ruta">
@@ -91,7 +86,6 @@ $res_traslados = $con->query($sql_traslados);
                     </div>
                 </div>
 
-                <!-- Contenedor del Mapa con tamaño fijo garantizado para XAMPP -->
                 <div class="tarjeta-mapa-box" style="width: 100%; min-height: 520px; display: block;">
                     <div id="mapaRuta" class="mapa-contenedor" style="width: 100%; height: 520px; min-height: 520px; display: block; position: relative;"></div>
                 </div>
@@ -104,7 +98,6 @@ $res_traslados = $con->query($sql_traslados);
         <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
-    <!-- Leaflet, Routing JS & Fullscreen JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
     <script src="https://unpkg.com/leaflet.fullscreen@latest/Control.FullScreen.js"></script>
@@ -119,9 +112,7 @@ $res_traslados = $con->query($sql_traslados);
             const contenedorMapa = document.getElementById('mapaRuta');
             if (!contenedorMapa) return;
 
-            // Retardo para asegurar que XAMPP y el navegador pinten el Grid antes de montar Leaflet
             setTimeout(() => {
-                // Inicializar mapa con Zoom y Pantalla Completa justo debajo del zoom (topleft)
                 const mapa = L.map('mapaRuta', {
                     zoomControl: true,
                     fullscreenControl: true,
@@ -137,10 +128,8 @@ $res_traslados = $con->query($sql_traslados);
                     attribution: '© OpenStreetMap'
                 }).addTo(mapa);
 
-                // Forzar actualización inmediata del tamaño
                 mapa.invalidateSize();
 
-                // Iconos originales (mapo2 para origen, mapo1 para destino)
                 const iconoMapo2 = L.icon({
                     iconUrl: '../mape/mapo2.png',
                     iconSize: [38, 38],
@@ -157,7 +146,6 @@ $res_traslados = $con->query($sql_traslados);
 
                 let controlRuta = null;
 
-                // Control de rutas con línea AZUL clásica gruesa (7px) y puntos arrastrables
                 controlRuta = L.Routing.control({
                     waypoints: [
                         L.latLng(latOrigenDefault, lngOrigenDefault),
@@ -178,12 +166,11 @@ $res_traslados = $con->query($sql_traslados);
                     },
                     lineOptions: {
                         styles: [
-                            { color: '#2563eb', opacity: 0.9, weight: 7 } // Línea azul clásica elegante y gruesa
+                            { color: '#2563eb', opacity: 0.9, weight: 7 } 
                         ]
                     }
                 }).addTo(mapa);
 
-                // Actualizar distancia y tiempo al calcular la ruta
                 controlRuta.on('routesfound', function(e) {
                     const resumen = e.routes[0].summary;
                     const minutos = Math.round(resumen.totalTime / 60);
@@ -195,7 +182,6 @@ $res_traslados = $con->query($sql_traslados);
                     }
                 });
 
-                // Selector dinámico de traslados desde la base de datos
                 const selectTraslado = document.getElementById('selectTraslado');
                 if (selectTraslado) {
                     selectTraslado.addEventListener('change', (e) => {

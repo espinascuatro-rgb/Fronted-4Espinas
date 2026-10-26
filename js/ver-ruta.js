@@ -7,14 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const contenedorMapa = document.getElementById('mapaRuta');
     if (!contenedorMapa) return;
 
-    // Retardo para asegurar que XAMPP y el navegador pinten el Grid antes de montar Leaflet
     setTimeout(() => {
-        // Inicializar el mapa con Zoom y el Botón de Pantalla Completa activo debajo del zoom
         const mapa = L.map('mapaRuta', {
             zoomControl: true,
             fullscreenControl: true,
             fullscreenControlOptions: {
-                position: 'topleft', // Se ubica arriba a la izquierda, justo debajo de los botones de zoom
+                position: 'topleft', 
                 title: 'Ver en pantalla completa',
                 titleCancel: 'Salir de pantalla completa'
             }
@@ -25,10 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
             attribution: '© OpenStreetMap'
         }).addTo(mapa);
 
-        // Forzar actualización inmediata del tamaño para evitar pantalla gris en XAMPP
         mapa.invalidateSize();
 
-        // Iconos originales solicitados (mapo1 y mapo2)
         const iconoMapo2 = L.icon({
             iconUrl: '../mape/mapo2.png',
             iconSize: [38, 38],
@@ -45,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let controlRuta = null;
 
-        // Implementación de Leaflet Routing Machine con línea AZUL clásica gruesa (7px) y puntos arrastrables
         controlRuta = L.Routing.control({
             waypoints: [
                 L.latLng(latOrigenDefault, lngOrigenDefault),
@@ -53,8 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             routeWhileDragging: true,
             addWaypoints: false,
-            draggableWaypoints: true, // Permite arrastrar los puntos por el mapa
-            show: false, // Oculta panel de texto lateral
+            draggableWaypoints: true, 
+            show: false, 
             createMarker: function(i, wp, nWps) {
                 let iconoUsar = (i === 0) ? iconoMapo2 : iconoMapo1;
                 let tituloPopup = (i === 0) ? "<b>Origen (Arrastra para mover)</b>" : "<b>Destino (Arrastra para mover)</b>";
@@ -71,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }).addTo(mapa);
 
-        // Escuchar cuando la ruta se calcula o se arrastra para actualizar la distancia y tiempo
         controlRuta.on('routesfound', function(e) {
             const resumen = e.routes[0].summary;
             const minutos = Math.round(resumen.totalTime / 60);
@@ -83,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Evento dinámico para cambiar el destino seleccionando un traslado de la base de datos
         const selectTraslado = document.getElementById('selectTraslado');
         if (selectTraslado) {
             selectTraslado.addEventListener('change', (e) => {
