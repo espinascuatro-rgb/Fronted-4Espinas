@@ -18,7 +18,7 @@ $res_traslados = $con->query($sql_traslados);
     <link rel="stylesheet" href="../css/elementosC.css">
     <link rel="stylesheet" href="../css/Ver_ruta.css">
 
-    <!-- Leaflet CSS -->
+    <!-- Leaflet CSS Oficial -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 </head>
 
@@ -85,8 +85,9 @@ $res_traslados = $con->query($sql_traslados);
                     </div>
                 </div>
 
-                <div class="tarjeta-mapa-box" id="mapaBox">
-                    <div id="mapaRuta" class="mapa-contenedor"></div>
+                <!-- CONTENEDOR DEL MAPA CON TAMAÑO ABSOLUTO EN LÍNEA PARA EVITAR COLAPSO EN XAMPP -->
+                <div class="tarjeta-mapa-box" id="mapaBox" style="width: 100%; min-height: 520px; display: block; position: relative;">
+                    <div id="mapaRuta" class="mapa-contenedor" style="width: 100%; height: 520px; min-height: 520px; position: relative; z-index: 10; background-color: #e2e8f0;"></div>
                 </div>
             </div>
         </section>
@@ -97,8 +98,8 @@ $res_traslados = $con->query($sql_traslados);
         <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Leaflet JS Oficial -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="../js/ver-ruta.js"></script>
 </body>
 

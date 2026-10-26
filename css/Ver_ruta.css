@@ -82,7 +82,7 @@ header .logo, .header-logo, .logo-container {
     display: grid;
     grid-template-columns: 380px 1fr;
     gap: 24px;
-    align-items: start;
+    align-items: stretch;
 }
 
 @media (max-width: 1024px) {
@@ -167,11 +167,20 @@ header .logo, .header-logo, .logo-container {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
 }
 
+/* ==========================================================================
+   CORRECCIÓN CRÍTICA DE VISIBILIDAD DEL MAPA
+   ========================================================================== */
 .mapa-contenedor {
-    width: 100%;
-    height: 520px;
+    width: 100% !important;
+    height: 520px !important;
+    min-height: 520px !important;
+    display: block !important;
+    position: relative;
+    z-index: 1;
     background-color: #e2e8f0;
 }
 
@@ -184,7 +193,6 @@ header .logo, .header-logo, .logo-container {
     letter-spacing: 0.5px;
 }
 
-/* Regla estricta para eliminar cualquier línea punteada en el SVG */
 .leaflet-pane svg path {
     stroke-dasharray: none !important;
     stroke-dashoffset: 0 !important;

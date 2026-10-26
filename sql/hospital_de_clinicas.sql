@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2026 a las 00:10:06
+-- Tiempo de generación: 26-10-2026 a las 01:05:57
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -51,6 +51,21 @@ CREATE TABLE `documento` (
   `ruta` varchar(150) NOT NULL,
   `nombre` varchar(70) NOT NULL,
   `id_qr` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `documentos`
+--
+
+CREATE TABLE `documentos` (
+  `id_documento` int(11) NOT NULL,
+  `nombre_original` varchar(255) NOT NULL,
+  `nombre_personalizado` varchar(255) NOT NULL,
+  `tipo_archivo` varchar(50) NOT NULL,
+  `ruta_archivo` varchar(255) NOT NULL,
+  `fecha_subida` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -149,12 +164,12 @@ CREATE TABLE `organo` (
 --
 
 INSERT INTO `organo` (`id_organo`, `nombre_organo`, `cantidad`, `tiempo_isquemia_horas`, `created_at`) VALUES
-(1, 'Corazón', 2, 4, '2026-10-25 23:09:16'),
-(2, 'Hígado', 4, 12, '2026-10-25 23:09:16'),
+(2, 'Hígado', 5, 12, '2026-10-25 23:09:16'),
 (3, 'Riñón', 8, 24, '2026-10-25 23:09:16'),
 (4, 'Pulmón', 1, 6, '2026-10-25 23:09:16'),
 (5, 'Páncreas', 3, 12, '2026-10-25 23:09:16'),
-(6, 'Córnea', 12, 72, '2026-10-25 23:09:16');
+(6, 'Córnea', 12, 72, '2026-10-25 23:09:16'),
+(8, 'Corazón', 10, 1, '2026-10-25 23:16:43');
 
 -- --------------------------------------------------------
 
@@ -358,6 +373,12 @@ ALTER TABLE `documento`
   ADD UNIQUE KEY `id_qr` (`id_qr`);
 
 --
+-- Indices de la tabla `documentos`
+--
+ALTER TABLE `documentos`
+  ADD PRIMARY KEY (`id_documento`);
+
+--
 -- Indices de la tabla `encuesta`
 --
 ALTER TABLE `encuesta`
@@ -495,6 +516,12 @@ ALTER TABLE `documento`
   MODIFY `id_documentos` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `documentos`
+--
+ALTER TABLE `documentos`
+  MODIFY `id_documento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `encuesta`
 --
 ALTER TABLE `encuesta`
@@ -516,7 +543,7 @@ ALTER TABLE `insumo_ambulancia`
 -- AUTO_INCREMENT de la tabla `organo`
 --
 ALTER TABLE `organo`
-  MODIFY `id_organo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_organo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`

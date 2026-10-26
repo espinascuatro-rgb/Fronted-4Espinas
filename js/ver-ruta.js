@@ -1,81 +1,191 @@
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("Iniciando módulo de mapas y rutas (Modo Local XAMPP)...");
 
-let solicitudRuta = null;
+    // Coordenadas de prueba por defecto (Hospital de Clínicas y zonas aledañas)
+    let coordsOrigen = [-34.8883, -56.1561];
+    let coordsDestino = [-34.8812, -56.1420];
 
-async function actualizarRuta() {
-    const posO = markerOrigen.getLatLng();
-    const posD = markerDestino.getLatLng();
-
-    if (solicitudRuta) {
-        solicitudRuta.abort();
+    // Verificar existencia del contenedor del mapa en el DOM
+    const contenedorMapa = document.getElementById('mapaRuta');
+    if (!contenedorMapa) {
+        console.error("Error crítico: No se encontró el elemento #mapaRuta en el DOM.");
+        return;
     }
 
-    const controlador = new AbortController();
-    solicitudRuta = controlador;
-
-    if (capaPolylineRuta) {
-        map.removeLayer(capaPolylineRuta);
-        capaPolylineRuta = null;
-    }
-
-    const distancia = document.getElementById('txtDistancia');
-    if (distancia) distancia.textContent = 'Calculando ruta...';
-
-    const url = `https://router.project-osrm.org/route/v1/driving/${posO.lng},${posO.lat};${posD.lng},${posD.lat}?overview=full&geometries=geojson&steps=true`;
-
+    // Inicialización del mapa con control explícito de renderizado
+    let map = null;
     try {
-        const respuesta = await fetch(url, {
-            signal: controlador.signal
-        });
+        map = L.map('mapaRuta', {
+            zoomControl: true,
+            attributionControl: true
+        }).setView(coordsOrigen, 14);
+        console.log("Instancia de Leaflet creada correctamente.");
+    } catch (e) {
+        console.error("Error al inicializar Leaflet:", e);
+        return;
+    }
 
-        if (!respuesta.ok) {
-            throw new Error('No se pudo conectar con el servicio de rutas.');
+    // Capa base de teselas (Tiles) de OpenStreetMap optimizada para localhost
+    const capaTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        minZoom: 10,
+        subdomains: ['a', 'b', 'c'],
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    });
+
+    capaTiles.addTo(map);
+
+    // Control de eventos de carga de teselas para evitar pantalla gris en XAMPP
+    capaTiles.on('tileload', function() {
+        // Tesela cargada con éxito
+    });
+
+    capaTiles.on('tileerror', function(errorOcurrido) {
+        console.warn("Aviso de red: Error al cargar alguna tesela del mapa localmente.", errorOcurrido);
+    });
+
+    // Forzar actualización de tamaño para evitar colapso visual en Grid/Flexbox
+    setTimeout(function () {
+        if (map) {
+            map.invalidateSize();
+            console.log("Dimensiones del mapa recalculadas e invalidadas correctamente.");
+        }
+    }, 300);
+
+    // Configuración de iconos personalizados
+    const iconoMapo1 = L.icon({
+        iconUrl: '../mape/mapo2.png',
+        iconSize: [38, 38],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -38]
+    });
+
+    const iconoMapo2 = L.icon({
+        iconUrl: '../mape/mapo1.png',
+        iconSize: [38, 38],
+        iconAnchor: [19, 38],
+        popupAnchor: [0, -38]
+    });
+
+    // Marcadores iniciales interactivos
+    const markerOrigen = L.marker(coordsOrigen, { icon: iconoMapo1, draggable: true }).addTo(map);
+    markerOrigen.bindPopup('<b>Punto de Origen</b><br>Hospital de Clínicas').openPopup();
+
+    const markerDestino = L.marker(coordsDestino, { icon: iconoMapo2, draggable: true }).addTo(map);
+    markerDestino.bindPopup('<b>Punto de Destino</b><br>Arrastra para mover el destino');
+
+    let capaPolylineRuta = null;
+
+    // Función asíncrona robusta para consultar OSRM y trazar la ruta calle por calle
+    async function actualizarRuta() {
+        const posO = markerOrigen.getLatLng();
+        const posD = markerDestino.getLatLng();
+
+        if (capaPolylineRuta !== null) {
+            map.removeLayer(capaPolylineRuta);
+            capaPolylineRuta = null;
         }
 
-        const datos = await respuesta.json();
+        const urlOSRM = `https://router.project-osrm.org/route/v1/driving/${posO.lng},${posO.lat};${posD.lng},${posD.lat}?overview=full&geometries=geojson`;
 
-        if (solicitudRuta !== controlador) return;
+        try {
+            console.log("Consultando servicio de enrutamiento OSRM...");
+            const respuesta = await fetch(urlOSRM);
+            const json = await respuesta.json();
 
-        if (datos.code !== 'Ok' || !datos.routes?.length) {
-            throw new Error('No se encontró una ruta por calles.');
+            if (json.code === 'Ok' && json.routes && json.routes.length > 0) {
+                const route = json.routes[0];
+                const latLngs = route.geometry.coordinates.map(coord => [coord[1], coord[0]]);
+
+                // Trazado de línea sólida continua por las calles
+                capaPolylineRuta = L.polyline(latLngs, {
+                    color: '#1840dd',
+                    weight: 6,
+                    opacity: 0.95,
+                    lineCap: 'round',
+                    lineJoin: 'round'
+                }).addTo(map);
+
+                const distKm = (route.distance / 1000).toFixed(2);
+                const elemDist = document.getElementById('txtDistancia');
+                if (elemDist) {
+                    elemDist.textContent = `${distKm} km`;
+                }
+                console.log("Ruta trazada exitosamente por las calles. Distancia:", distKm, "km");
+            } else {
+                trazarRutaFallbackDirecta(posO, posD);
+            }
+        } catch (errorDeRed) {
+            console.warn("Fallo de conexión con OSRM en localhost, aplicando respaldo directo:", errorDeRed);
+            trazarRutaFallbackDirecta(posO, posD);
         }
+    }
 
-        const ruta = datos.routes[0];
-
-        // Utilizar TODOS los puntos de la ruta calculada por calles.
-        const puntos = ruta.geometry.coordinates.map(([lng, lat]) => [
-            lat,
-            lng
-        ]);
-
-        capaPolylineRuta = L.polyline(puntos, {
+    // Respaldo de línea recta continua si el servidor externo de rutas falla en local
+    function trazarRutaFallbackDirecta(posO, posD) {
+        capaPolylineRuta = L.polyline([posO, posD], {
             color: '#1840dd',
             weight: 6,
             opacity: 0.95,
             lineCap: 'round',
-            lineJoin: 'round',
-            className: 'ruta-continua',
-            interactive: false,
-            smoothFactor: 1
+            lineJoin: 'round'
         }).addTo(map);
 
-        if (distancia) {
-            distancia.textContent =
-                (ruta.distance / 1000).toFixed(2) + ' km';
-        }
-
-    } catch (error) {
-        if (error.name === 'AbortError') return;
-
-        console.error('Error al calcular la ruta:', error);
-
-        if (solicitudRuta !== controlador) return;
-
-        if (distancia) {
-            distancia.textContent = 'No se pudo calcular la ruta';
-        }
-    } finally {
-        if (solicitudRuta === controlador) {
-            solicitudRuta = null;
+        const distMetros = posO.distanceTo(posD);
+        const distKm = (distMetros / 1000).toFixed(2);
+        const elemDist = document.getElementById('txtDistancia');
+        if (elemDist) {
+            elemDist.textContent = `${distKm} km`;
         }
     }
-}
+
+    // Eventos para actualizar la ruta al arrastrar los marcadores
+    markerOrigen.on('dragend', function () {
+        actualizarRuta();
+    });
+
+    markerDestino.on('dragend', function () {
+        actualizarRuta();
+    });
+
+    // Ejecutar cálculo inicial
+    actualizarRuta();
+
+    // Evento dinámico para el selector de traslados de la base de datos
+    const selectTraslado = document.getElementById('selectTraslado');
+    if (selectTraslado) {
+        selectTraslado.addEventListener('change', function (e) {
+            const opcionSeleccionada = e.target.options[e.target.selectedIndex];
+            if (!opcionSeleccionada.value) return;
+
+            const latDestino = parseFloat(opcionSeleccionada.getAttribute('data-lat'));
+            const lngDestino = parseFloat(opcionSeleccionada.getAttribute('data-lng'));
+
+            // Actualizar campos de información visual
+            document.getElementById('txtId').textContent = '#' + opcionSeleccionada.value;
+            document.getElementById('txtOrigen').textContent = opcionSeleccionada.getAttribute('data-origen');
+            document.getElementById('txtDestino').textContent = opcionSeleccionada.getAttribute('data-destino');
+            document.getElementById('txtSalida').textContent = opcionSeleccionada.getAttribute('data-salida');
+            document.getElementById('txtEstimada').textContent = opcionSeleccionada.getAttribute('data-estimada');
+            document.getElementById('txtAmbulancia').textContent = 'Unidad N° ' + opcionSeleccionada.getAttribute('data-ambulancia');
+
+            const estadoTraslado = opcionSeleccionada.getAttribute('data-estado');
+            const txtEstado = document.getElementById('txtEstado');
+            if (txtEstado) {
+                txtEstado.textContent = estadoTraslado.replace('_', ' ').toUpperCase();
+                txtEstado.className = 'badge-estado badge-' + estadoTraslado;
+            }
+
+            if (!isNaN(latDestino) && !isNaN(lngDestino)) {
+                markerDestino.setLatLng([latDestino, lngDestino]);
+                actualizarRuta();
+                map.fitBounds(L.latLngBounds([markerOrigen.getLatLng(), [latDestino, lngDestino]]), {
+                    padding: [50, 50]
+                });
+                setTimeout(function () {
+                    map.invalidateSize();
+                }, 150);
+            }
+        });
+    }
+});
