@@ -33,12 +33,6 @@ $res_organos = $con->query($sql_organos);
 
     <main class="mainguia">
         <section class="sectionguia contenedor-insumos-main">
-            <div class="contenedor-botones">
-                <button class="btnguia1 btn-volver">
-                    <a href="../pages/guia.php">← Volver al Inicio</a>
-                </button>
-            </div>
-
             <h2 class="titulo-seccion">Gestión e Inventario de Órganos</h2>
 
 

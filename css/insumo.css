@@ -193,9 +193,9 @@
 }
 
 .btn-tabla-eliminar {
-    background: #fee2e2;
-    color: #991b1b;
-    border: 1px solid #fecaca;
+    background: #ea0000;
+    color: #d90101;
+    border: 1px solid #fe0000;
     padding: 6px 12px;
     border-radius: 6px;
     text-decoration: none;
@@ -206,6 +206,6 @@
 }
 
 .btn-tabla-eliminar:hover {
-    background: #fecaca;
+    background: #f40404;
     transform: translateY(-1px);
 }
