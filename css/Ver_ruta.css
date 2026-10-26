@@ -167,20 +167,12 @@ header .logo, .header-logo, .logo-container {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
-    display: flex;
-    flex-direction: column;
 }
 
-/* ==========================================================================
-   CORRECCIÓN CRÍTICA DE VISIBILIDAD DEL MAPA
-   ========================================================================== */
 .mapa-contenedor {
     width: 100% !important;
     height: 520px !important;
     min-height: 520px !important;
-    display: block !important;
-    position: relative;
-    z-index: 1;
     background-color: #e2e8f0;
 }
 
@@ -191,9 +183,4 @@ header .logo, .header-logo, .logo-container {
     font-size: 0.75rem;
     display: inline-block;
     letter-spacing: 0.5px;
-}
-
-.leaflet-pane svg path {
-    stroke-dasharray: none !important;
-    stroke-dashoffset: 0 !important;
 }

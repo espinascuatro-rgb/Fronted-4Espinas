@@ -1,191 +1,120 @@
-document.addEventListener('DOMContentLoaded', function () {
-    console.log("Iniciando módulo de mapas y rutas (Modo Local XAMPP)...");
-
-
-    let coordsOrigen = [-34.8883, -56.1561];
-    let coordsDestino = [-34.8812, -56.1420];
-
+document.addEventListener('DOMContentLoaded', () => {
+    const latOrigenDefault = -34.8883;
+    const lngOrigenDefault = -56.1561;
+    const latDestinoDefault = -34.8812;
+    const lngDestinoDefault = -56.1420;
 
     const contenedorMapa = document.getElementById('mapaRuta');
-    if (!contenedorMapa) {
-        console.error("Error crítico: No se encontró el elemento #mapaRuta en el DOM.");
-        return;
-    }
+    if (!contenedorMapa) return;
 
-
-    let map = null;
-    try {
-        map = L.map('mapaRuta', {
+    // Retardo para asegurar que XAMPP y el navegador pinten el Grid antes de montar Leaflet
+    setTimeout(() => {
+        // Inicializar el mapa con Zoom y el Botón de Pantalla Completa activo debajo del zoom
+        const mapa = L.map('mapaRuta', {
             zoomControl: true,
-            attributionControl: true
-        }).setView(coordsOrigen, 14);
-        console.log("Instancia de Leaflet creada correctamente.");
-    } catch (e) {
-        console.error("Error al inicializar Leaflet:", e);
-        return;
-    }
-
-
-    const capaTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        minZoom: 10,
-        subdomains: ['a', 'b', 'c'],
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
-
-    capaTiles.addTo(map);
-
-
-    capaTiles.on('tileload', function() {
-
-    });
-
-    capaTiles.on('tileerror', function(errorOcurrido) {
-        console.warn("Aviso de red: Error al cargar alguna tesela del mapa localmente.", errorOcurrido);
-    });
-
-
-    setTimeout(function () {
-        if (map) {
-            map.invalidateSize();
-            console.log("Dimensiones del mapa recalculadas e invalidadas correctamente.");
-        }
-    }, 300);
-
-
-    const iconoMapo1 = L.icon({
-        iconUrl: '../mape/mapo2.png',
-        iconSize: [38, 38],
-        iconAnchor: [19, 38],
-        popupAnchor: [0, -38]
-    });
-
-    const iconoMapo2 = L.icon({
-        iconUrl: '../mape/mapo1.png',
-        iconSize: [38, 38],
-        iconAnchor: [19, 38],
-        popupAnchor: [0, -38]
-    });
-
-
-    const markerOrigen = L.marker(coordsOrigen, { icon: iconoMapo1, draggable: true }).addTo(map);
-    markerOrigen.bindPopup('<b>Punto de Origen</b><br>Hospital de Clínicas').openPopup();
-
-    const markerDestino = L.marker(coordsDestino, { icon: iconoMapo2, draggable: true }).addTo(map);
-    markerDestino.bindPopup('<b>Punto de Destino</b><br>Arrastra para mover el destino');
-
-    let capaPolylineRuta = null;
-
-
-    async function actualizarRuta() {
-        const posO = markerOrigen.getLatLng();
-        const posD = markerDestino.getLatLng();
-
-        if (capaPolylineRuta !== null) {
-            map.removeLayer(capaPolylineRuta);
-            capaPolylineRuta = null;
-        }
-
-        const urlOSRM = `https://router.project-osrm.org/route/v1/driving/${posO.lng},${posO.lat};${posD.lng},${posD.lat}?overview=full&geometries=geojson`;
-
-        try {
-            console.log("Consultando servicio de enrutamiento OSRM...");
-            const respuesta = await fetch(urlOSRM);
-            const json = await respuesta.json();
-
-            if (json.code === 'Ok' && json.routes && json.routes.length > 0) {
-                const route = json.routes[0];
-                const latLngs = route.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-
-
-                capaPolylineRuta = L.polyline(latLngs, {
-                    color: '#1840dd',
-                    weight: 6,
-                    opacity: 0.95,
-                    lineCap: 'round',
-                    lineJoin: 'round'
-                }).addTo(map);
-
-                const distKm = (route.distance / 1000).toFixed(2);
-                const elemDist = document.getElementById('txtDistancia');
-                if (elemDist) {
-                    elemDist.textContent = `${distKm} km`;
-                }
-                console.log("Ruta trazada exitosamente por las calles. Distancia:", distKm, "km");
-            } else {
-                trazarRutaFallbackDirecta(posO, posD);
+            fullscreenControl: true,
+            fullscreenControlOptions: {
+                position: 'topleft', // Se ubica arriba a la izquierda, justo debajo de los botones de zoom
+                title: 'Ver en pantalla completa',
+                titleCancel: 'Salir de pantalla completa'
             }
-        } catch (errorDeRed) {
-            console.warn("Fallo de conexión con OSRM en localhost, aplicando respaldo directo:", errorDeRed);
-            trazarRutaFallbackDirecta(posO, posD);
-        }
-    }
+        }).setView([latOrigenDefault, lngOrigenDefault], 14);
 
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap'
+        }).addTo(mapa);
 
-    function trazarRutaFallbackDirecta(posO, posD) {
-        capaPolylineRuta = L.polyline([posO, posD], {
-            color: '#1840dd',
-            weight: 6,
-            opacity: 0.95,
-            lineCap: 'round',
-            lineJoin: 'round'
-        }).addTo(map);
+        // Forzar actualización inmediata del tamaño para evitar pantalla gris en XAMPP
+        mapa.invalidateSize();
 
-        const distMetros = posO.distanceTo(posD);
-        const distKm = (distMetros / 1000).toFixed(2);
-        const elemDist = document.getElementById('txtDistancia');
-        if (elemDist) {
-            elemDist.textContent = `${distKm} km`;
-        }
-    }
+        // Iconos originales solicitados (mapo1 y mapo2)
+        const iconoMapo2 = L.icon({
+            iconUrl: '../mape/mapo2.png',
+            iconSize: [38, 38],
+            iconAnchor: [19, 38],
+            popupAnchor: [0, -38]
+        });
 
+        const iconoMapo1 = L.icon({
+            iconUrl: '../mape/mapo1.png',
+            iconSize: [38, 38],
+            iconAnchor: [19, 38],
+            popupAnchor: [0, -38]
+        });
 
-    markerOrigen.on('dragend', function () {
-        actualizarRuta();
-    });
+        let controlRuta = null;
 
-    markerDestino.on('dragend', function () {
-        actualizarRuta();
-    });
-
-
-    actualizarRuta();
-
-
-    const selectTraslado = document.getElementById('selectTraslado');
-    if (selectTraslado) {
-        selectTraslado.addEventListener('change', function (e) {
-            const opcionSeleccionada = e.target.options[e.target.selectedIndex];
-            if (!opcionSeleccionada.value) return;
-
-            const latDestino = parseFloat(opcionSeleccionada.getAttribute('data-lat'));
-            const lngDestino = parseFloat(opcionSeleccionada.getAttribute('data-lng'));
-
-
-            document.getElementById('txtId').textContent = '#' + opcionSeleccionada.value;
-            document.getElementById('txtOrigen').textContent = opcionSeleccionada.getAttribute('data-origen');
-            document.getElementById('txtDestino').textContent = opcionSeleccionada.getAttribute('data-destino');
-            document.getElementById('txtSalida').textContent = opcionSeleccionada.getAttribute('data-salida');
-            document.getElementById('txtEstimada').textContent = opcionSeleccionada.getAttribute('data-estimada');
-            document.getElementById('txtAmbulancia').textContent = 'Unidad N° ' + opcionSeleccionada.getAttribute('data-ambulancia');
-
-            const estadoTraslado = opcionSeleccionada.getAttribute('data-estado');
-            const txtEstado = document.getElementById('txtEstado');
-            if (txtEstado) {
-                txtEstado.textContent = estadoTraslado.replace('_', ' ').toUpperCase();
-                txtEstado.className = 'badge-estado badge-' + estadoTraslado;
+        // Implementación de Leaflet Routing Machine con línea AZUL clásica gruesa (7px) y puntos arrastrables
+        controlRuta = L.Routing.control({
+            waypoints: [
+                L.latLng(latOrigenDefault, lngOrigenDefault),
+                L.latLng(latDestinoDefault, lngDestinoDefault)
+            ],
+            routeWhileDragging: true,
+            addWaypoints: false,
+            draggableWaypoints: true, // Permite arrastrar los puntos por el mapa
+            show: false, // Oculta panel de texto lateral
+            createMarker: function(i, wp, nWps) {
+                let iconoUsar = (i === 0) ? iconoMapo2 : iconoMapo1;
+                let tituloPopup = (i === 0) ? "<b>Origen (Arrastra para mover)</b>" : "<b>Destino (Arrastra para mover)</b>";
+                
+                return L.marker(wp.latLng, {
+                    draggable: true,
+                    icon: iconoUsar
+                }).bindPopup(tituloPopup);
+            },
+            lineOptions: {
+                styles: [
+                    { color: '#2563eb', opacity: 0.9, weight: 7 } // Línea azul clásica elegante y gruesa
+                ]
             }
+        }).addTo(mapa);
 
-            if (!isNaN(latDestino) && !isNaN(lngDestino)) {
-                markerDestino.setLatLng([latDestino, lngDestino]);
-                actualizarRuta();
-                map.fitBounds(L.latLngBounds([markerOrigen.getLatLng(), [latDestino, lngDestino]]), {
-                    padding: [50, 50]
-                });
-                setTimeout(function () {
-                    map.invalidateSize();
-                }, 150);
+        // Escuchar cuando la ruta se calcula o se arrastra para actualizar la distancia y tiempo
+        controlRuta.on('routesfound', function(e) {
+            const resumen = e.routes[0].summary;
+            const minutos = Math.round(resumen.totalTime / 60);
+            const km = (resumen.totalDistance / 1000).toFixed(1);
+
+            const elemDist = document.getElementById('txtDistancia');
+            if (elemDist) {
+                elemDist.textContent = `${km} km (${minutos} min)`;
             }
         });
-    }
+
+        // Evento dinámico para cambiar el destino seleccionando un traslado de la base de datos
+        const selectTraslado = document.getElementById('selectTraslado');
+        if (selectTraslado) {
+            selectTraslado.addEventListener('change', (e) => {
+                const op = e.target.options[e.target.selectedIndex];
+                if (!op.value) return;
+
+                const lat = parseFloat(op.getAttribute('data-lat'));
+                const lng = parseFloat(op.getAttribute('data-lng'));
+
+                document.getElementById('txtId').textContent = '#' + op.value;
+                document.getElementById('txtOrigen').textContent = op.getAttribute('data-origen');
+                document.getElementById('txtDestino').textContent = op.getAttribute('data-destino');
+                document.getElementById('txtSalida').textContent = op.getAttribute('data-salida');
+                document.getElementById('txtEstimada').textContent = op.getAttribute('data-estimada');
+                document.getElementById('txtAmbulancia').textContent = 'Unidad N° ' + op.getAttribute('data-ambulancia');
+
+                const estado = op.getAttribute('data-estado');
+                const txtEstado = document.getElementById('txtEstado');
+                if (txtEstado) {
+                    txtEstado.textContent = estado.replace('_', ' ').toUpperCase();
+                    txtEstado.className = 'badge-estado badge-' + estado;
+                }
+
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    controlRuta.setWaypoints([
+                        L.latLng(latOrigenDefault, lngOrigenDefault),
+                        L.latLng(lat, lng)
+                    ]);
+                    setTimeout(() => mapa.invalidateSize(), 150);
+                }
+            });
+        }
+    }, 300);
 });

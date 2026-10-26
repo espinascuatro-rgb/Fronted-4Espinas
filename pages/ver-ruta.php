@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../php/checksesion.php'; 
 require_once __DIR__ . '/../php/conexion.php';
 
+// Consulta para obtener los traslados activos y sus ambulancias asociadas
 $sql_traslados = "SELECT t.*, a.matricula 
                   FROM traslado t 
                   LEFT JOIN ambulancia a ON t.matricula_ambulancia = a.numero_de_serie 
@@ -18,8 +19,12 @@ $res_traslados = $con->query($sql_traslados);
     <link rel="stylesheet" href="../css/elementosC.css">
     <link rel="stylesheet" href="../css/Ver_ruta.css">
 
-    <!-- Leaflet CSS Oficial -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+    <!-- Leaflet Fullscreen CSS -->
+    <link href="https://unpkg.com/leaflet.fullscreen@latest/Control.FullScreen.css" rel="stylesheet" />
 </head>
 
 <body class="bodyguia">
@@ -49,6 +54,7 @@ $res_traslados = $con->query($sql_traslados);
             <h2 class="titulo-seccion">Seguimiento y Visualización de Rutas</h2>
 
             <div class="panel-ruta-grid">
+                <!-- Tarjeta de Controles y Selector de Traslados -->
                 <div class="tarjeta-controles-ruta">
                     <h3>Selección de Traslado</h3>
                     <div class="form-group-ruta">
@@ -75,9 +81,9 @@ $res_traslados = $con->query($sql_traslados);
 
                     <div id="infoTraslado" class="info-traslado-card">
                         <p><strong>Número de Traslado: </strong> <span id="txtId">-</span></p>
-                        <p><strong>Origen: </strong> <span id="txtOrigen"> Hospital de Clínicas</span></p>
+                        <p><strong>Origen: </strong> <span id="txtOrigen">Hospital de Clínicas</span></p>
                         <p><strong>Destino: </strong> <span id="txtDestino">-</span></p>
-                        <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado"> Sin Selección</span></p>
+                        <p><strong>Estado:</strong> <span id="txtEstado" class="badge-estado">Sin Selección</span></p>
                         <p><strong>Distancia estimada: </strong> <span id="txtDistancia">0.00 km</span></p>
                         <p><strong>Hora Salida: </strong> <span id="txtSalida">-</span></p>
                         <p><strong>Llegada Estimada: </strong> <span id="txtEstimada">-</span></p>
@@ -85,9 +91,9 @@ $res_traslados = $con->query($sql_traslados);
                     </div>
                 </div>
 
-                <!-- CONTENEDOR DEL MAPA CON TAMAÑO ABSOLUTO EN LÍNEA PARA EVITAR COLAPSO EN XAMPP -->
-                <div class="tarjeta-mapa-box" id="mapaBox" style="width: 100%; min-height: 520px; display: block; position: relative;">
-                    <div id="mapaRuta" class="mapa-contenedor" style="width: 100%; height: 520px; min-height: 520px; position: relative; z-index: 10; background-color: #e2e8f0;"></div>
+                <!-- Contenedor del Mapa con tamaño fijo garantizado para XAMPP -->
+                <div class="tarjeta-mapa-box" style="width: 100%; min-height: 520px; display: block;">
+                    <div id="mapaRuta" class="mapa-contenedor" style="width: 100%; height: 520px; min-height: 520px; display: block; position: relative;"></div>
                 </div>
             </div>
         </section>
@@ -98,9 +104,132 @@ $res_traslados = $con->query($sql_traslados);
         <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
 
-    <!-- Leaflet JS Oficial -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="../js/ver-ruta.js"></script>
-</body>
+    <!-- Leaflet, Routing JS & Fullscreen JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet.fullscreen@latest/Control.FullScreen.js"></script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const latOrigenDefault = -34.8883;
+            const lngOrigenDefault = -56.1561;
+            const latDestinoDefault = -34.8812;
+            const lngDestinoDefault = -56.1420;
+
+            const contenedorMapa = document.getElementById('mapaRuta');
+            if (!contenedorMapa) return;
+
+            // Retardo para asegurar que XAMPP y el navegador pinten el Grid antes de montar Leaflet
+            setTimeout(() => {
+                // Inicializar mapa con Zoom y Pantalla Completa justo debajo del zoom (topleft)
+                const mapa = L.map('mapaRuta', {
+                    zoomControl: true,
+                    fullscreenControl: true,
+                    fullscreenControlOptions: {
+                        position: 'topleft',
+                        title: 'Ver en pantalla completa',
+                        titleCancel: 'Salir de pantalla completa'
+                    }
+                }).setView([latOrigenDefault, lngOrigenDefault], 14);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap'
+                }).addTo(mapa);
+
+                // Forzar actualización inmediata del tamaño
+                mapa.invalidateSize();
+
+                // Iconos originales (mapo2 para origen, mapo1 para destino)
+                const iconoMapo2 = L.icon({
+                    iconUrl: '../mape/mapo2.png',
+                    iconSize: [38, 38],
+                    iconAnchor: [19, 38],
+                    popupAnchor: [0, -38]
+                });
+
+                const iconoMapo1 = L.icon({
+                    iconUrl: '../mape/mapo1.png',
+                    iconSize: [38, 38],
+                    iconAnchor: [19, 38],
+                    popupAnchor: [0, -38]
+                });
+
+                let controlRuta = null;
+
+                // Control de rutas con línea AZUL clásica gruesa (7px) y puntos arrastrables
+                controlRuta = L.Routing.control({
+                    waypoints: [
+                        L.latLng(latOrigenDefault, lngOrigenDefault),
+                        L.latLng(latDestinoDefault, lngDestinoDefault)
+                    ],
+                    routeWhileDragging: true,
+                    addWaypoints: false,
+                    draggableWaypoints: true,
+                    show: false,
+                    createMarker: function(i, wp, nWps) {
+                        let iconoUsar = (i === 0) ? iconoMapo2 : iconoMapo1;
+                        let tituloPopup = (i === 0) ? "<b>Origen (Arrastra para mover)</b>" : "<b>Destino (Arrastra para mover)</b>";
+                        
+                        return L.marker(wp.latLng, {
+                            draggable: true,
+                            icon: iconoUsar
+                        }).bindPopup(tituloPopup);
+                    },
+                    lineOptions: {
+                        styles: [
+                            { color: '#2563eb', opacity: 0.9, weight: 7 } // Línea azul clásica elegante y gruesa
+                        ]
+                    }
+                }).addTo(mapa);
+
+                // Actualizar distancia y tiempo al calcular la ruta
+                controlRuta.on('routesfound', function(e) {
+                    const resumen = e.routes[0].summary;
+                    const minutos = Math.round(resumen.totalTime / 60);
+                    const km = (resumen.totalDistance / 1000).toFixed(1);
+
+                    const elemDist = document.getElementById('txtDistancia');
+                    if (elemDist) {
+                        elemDist.textContent = `${km} km (${minutos} min)`;
+                    }
+                });
+
+                // Selector dinámico de traslados desde la base de datos
+                const selectTraslado = document.getElementById('selectTraslado');
+                if (selectTraslado) {
+                    selectTraslado.addEventListener('change', (e) => {
+                        const op = e.target.options[e.target.selectedIndex];
+                        if (!op.value) return;
+
+                        const lat = parseFloat(op.getAttribute('data-lat'));
+                        const lng = parseFloat(op.getAttribute('data-lng'));
+
+                        document.getElementById('txtId').textContent = '#' + op.value;
+                        document.getElementById('txtOrigen').textContent = op.getAttribute('data-origen');
+                        document.getElementById('txtDestino').textContent = op.getAttribute('data-destino');
+                        document.getElementById('txtSalida').textContent = op.getAttribute('data-salida');
+                        document.getElementById('txtEstimada').textContent = op.getAttribute('data-estimada');
+                        document.getElementById('txtAmbulancia').textContent = 'Unidad N° ' + op.getAttribute('data-ambulancia');
+
+                        const estado = op.getAttribute('data-estado');
+                        const txtEstado = document.getElementById('txtEstado');
+                        if (txtEstado) {
+                            txtEstado.textContent = estado.replace('_', ' ').toUpperCase();
+                            txtEstado.className = 'badge-estado badge-' + estado;
+                        }
+
+                        if (!isNaN(lat) && !isNaN(lng)) {
+                            controlRuta.setWaypoints([
+                                L.latLng(latOrigenDefault, lngOrigenDefault),
+                                L.latLng(lat, lng)
+                            ]);
+                            setTimeout(() => mapa.invalidateSize(), 150);
+                        }
+                    });
+                }
+            }, 300);
+        });
+    </script>
+</body>
 </html>
