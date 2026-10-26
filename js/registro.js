@@ -5,10 +5,19 @@ document.getElementById('FRegistro').addEventListener('submit', async function (
 
   try {
     const response = await fetch('../php/insercionT.php', { 
+      method: 'POST',
       body: formData
     });
+    const textData = await response.text();
+    console.log("Respuesta del servidor:", textData);
 
-    const result = await response.json();
+    let result;
+    try {
+      result = JSON.parse(textData);
+    } catch (err) {
+      alert("Error del servidor:\n" + textData);
+      return;
+    }
 
     if (result.status === 'success') { 
       alert(result.message); 
@@ -17,6 +26,6 @@ document.getElementById('FRegistro').addEventListener('submit', async function (
       alert(result.message); 
     }
   } catch (error) {
-    alert('Hubo un error al procesar la solicitud.');
+    alert('Hubo un error de red o en el fetch: ' + error.message);
   }
 });
