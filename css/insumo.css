@@ -1,46 +1,46 @@
 .mainguia {
-    padding: 30px 20px;
-    background-color: #f1f5f9;
-    min-height: calc(100vh - 150px);
+    display: block;
+    flex: 1;
+    padding: 1px 20px;
+    background-color: #ffffff;
 }
 
 .contenedor-insumos-main {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1100px;
+    margin: 30px auto;
     background: #ffffff;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     display: block;
 }
 
 
 .alerta {
-    padding: 12px 16px;
+    padding: 12px 15px;
     border-radius: 8px;
     margin-bottom: 20px;
     font-weight: 600;
-    font-size: 0.95rem;
 }
 
 .alerta-exito {
-    background-color: #dcfce7;
-    color: #166534;
-    border: 1px solid #bbf7d0;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }
 
 .alerta-error {
-    background-color: #fee2e2;
-    color: #991b1b;
-    border: 1px solid #fecaca;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
 }
 
 .titulo-seccion {
     color: #0a1e6f;
     font-size: 1.5rem;
     font-weight: 700;
-    margin-bottom: 20px;
     margin-top: 10px;
+    margin-bottom: 20px;
     border-bottom: 2px solid #e2e8f0;
     padding-bottom: 8px;
 }
@@ -51,6 +51,8 @@
     font-weight: 600;
     margin-top: 25px;
     margin-bottom: 15px;
+    border-bottom: 1px dashed #cbd5e1;
+    padding-bottom: 8px;
 }
 
 .form-select-ambulancia {
@@ -67,65 +69,68 @@
 
 .input-select, .input-form {
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 8px;
+    padding: 10px 12px;
+    border-radius: 6px;
     border: 1px solid #cbd5e1;
+    margin-top: 6px;
     font-size: 0.95rem;
-    background-color: #f8fafc;
-    color: #334155;
-    transition: all 0.2s;
+    background: #ffffff;
+    color: #1e293b;
+    transition: border-color 0.2s, box-shadow 0.2s;
     box-sizing: border-box;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .input-select:focus, .input-form:focus {
     outline: none;
-    border-color: #1491f8;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(20, 145, 248, 0.15);
+    border-color: #1840dd;
+    box-shadow: 0 0 0 3px rgba(24, 64, 221, 0.15);
 }
 
 .grid-form-insumos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 15px;
     margin-bottom: 24px;
 }
 
 .grid-form-insumos > div {
     display: flex;
     flex-direction: column;
+    padding: 14px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
 }
 
 .contenedor-botones {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
     margin-bottom: 30px;
 }
 
 #btnSubmit {
-    background: linear-gradient(135deg, #0a1e6f, #1491f8);
+    background: linear-gradient(135deg, #0a1e6f, #1840dd);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     padding: 12px 24px;
-    font-weight: 600;
+    font-weight: bold;
     cursor: pointer;
     font-size: 1rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 6px rgba(10, 30, 111, 0.2);
+    transition: opacity 0.2s, transform 0.1s;
 }
 
 #btnSubmit:hover {
+    opacity: 0.92;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(20, 145, 248, 0.3);
 }
 
 .overflow-tabla {
     overflow-x: auto;
     border-radius: 8px;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     margin-top: 15px;
 }
 
@@ -138,74 +143,84 @@
 }
 
 .tabla-insumos-admin th {
-    background: linear-gradient(100deg, #0033ff, #145cf8, #0033ff);
+    background: linear-gradient(100deg, #3257e8, #1491f8, #3257e8);
     color: white;
-    padding: 14px 16px;
+    padding: 12px 15px;
     font-weight: 600;
-    border: none;
 }
 
 .tabla-insumos-admin td {
-    padding: 14px 16px;
-    border-bottom: 1px solid #f1f5f9;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e2e8f0;
     color: #334155;
     vertical-align: middle;
 }
 
 .tabla-insumos-admin tbody tr:hover {
-    background-color: #f8fafc;
+    background: #f8fafc;
 }
 
 .td-vacio {
     text-align: center;
-    padding: 30px;
+    padding: 20px;
     color: #64748b;
-    font-style: italic;
 }
 
 .badge-insumo {
-    background-color: #f1f5f9;
+    background-color: #f8fafc;
     color: #334155;
     padding: 4px 10px;
-    border-radius: 6px;
+    border-radius: 4px;
     font-size: 0.8rem;
-    font-weight: 500;
+    font-weight: 600;
     display: inline-block;
     margin: 3px;
     border: 1px solid #e2e8f0;
 }
 
 .btn-tabla-editar {
-    background: #fef08a;
-    color: #854d0e;
-    border: 1px solid #fde047;
+    background: #ffc107;
+    color: #000000;
+    border: none;
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: 4px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 0.85rem;
-    transition: all 0.2s;
+    font-weight: bold;
+    transition: background 0.2s;
 }
 
 .btn-tabla-editar:hover {
-    background: #fde047;
-    transform: translateY(-1px);
+    background: #e0a800;
 }
 
 .btn-tabla-eliminar {
-    background: #ea0000;
-    color: #d90101;
-    border: 1px solid #fe0000;
+    background: #dc3545;
+    color: #ffffff;
+    border: none;
     padding: 6px 12px;
-    border-radius: 6px;
+    border-radius: 4px;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 0.85rem;
+    font-weight: bold;
     display: inline-block;
-    transition: all 0.2s;
+    transition: background 0.2s;
 }
 
 .btn-tabla-eliminar:hover {
-    background: #f40404;
-    transform: translateY(-1px);
+    background: #c82333;
+}
+
+@media (max-width: 600px) {
+    .mainguia {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .contenedor-insumos-main {
+        margin: 12px auto;
+        padding: 20px;
+    }
+
+    .titulo-seccion {
+        font-size: 1.25rem;
+    }
 }

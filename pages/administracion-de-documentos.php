@@ -29,23 +29,25 @@ $res_docs = $con->query($sql_docs);
     <main class="mainadm">
         <section class="admdocumento1"> 
             <form action="../php/subir_documento.php" method="POST" enctype="multipart/form-data" class="form-subida-doc">
-                <p>Subir nuevo documento:</p>
-                
+                <h2>Subir nuevo documento</h2>
+
                 <div class="grupo-input-doc">
                     <label for="nombre_personalizado"><strong>Nombre personalizado del documento:</strong></label>
                     <input type="text" name="nombre_personalizado" id="nombre_personalizado" class="input-form" placeholder="Ej: Protocolo de Traslado 2026" required>
                 </div>
 
-                <div class="grupo-input-doc" style="margin-top: 10px;">
+                <div class="grupo-input-doc">
+                    <label for="archivo-subir"><strong>Seleccionar archivo:</strong></label>
                     <input type="file" name="archivo-subir" id="archivo-subir" required>
                 </div>
 
-                <button type="submit" class="boton1" style="margin-top: 10px;">Cargar Archivo</button>
+                <button type="submit" class="boton1">Cargar Archivo</button>
             </form>
         </section>
         <section class="admdocumento2">
             <h2>Archivos</h2>
-            <table>
+            <div class="tabla-documentos">
+            <table class="tabla-documentos-lista">
                 <thead>
                     <tr>
                         <th>Nombre del Documento</th>
@@ -58,11 +60,11 @@ $res_docs = $con->query($sql_docs);
                     <?php if ($res_docs && $res_docs->num_rows > 0): ?>
                         <?php while ($doc = $res_docs->fetch_assoc()): ?>
                             <tr>
-                                <td class="td-espaciado"><strong><?php echo htmlspecialchars($doc['nombre_personalizado']); ?></strong> <br><small style="color: #64748b;"><?php echo htmlspecialchars($doc['nombre_original']); ?></small></td>
+                                <td class="td-espaciado"><strong><?php echo htmlspecialchars($doc['nombre_personalizado']); ?></strong> <br><small class="nombre-original"><?php echo htmlspecialchars($doc['nombre_original']); ?></small></td>
                                 <td class="td-espaciado"><?php echo strtoupper(htmlspecialchars($doc['tipo_archivo'])); ?></td>
                                 <td class="td-espaciado">
 
-                                <form action="../php/editar_nombre_documento.php" method="POST" class="form-editar-nombre">
+                                    <form action="../php/editar_nombre_documento.php" method="POST" class="form-editar-nombre">
                                         <input type="hidden" name="id_documento" value="<?php echo $doc['id_documento']; ?>">
                                         <input type="text" name="nuevo_nombre" value="<?php echo htmlspecialchars($doc['nombre_personalizado']); ?>" class="input-form input-tabla-editar" required>
                                         <button type="submit" class="boton-actualizar">Actualizar</button>
@@ -70,7 +72,7 @@ $res_docs = $con->query($sql_docs);
                                 </td>
                                 <td class="td-espaciado">
 
-                                <a href="<?php echo htmlspecialchars($doc['ruta_archivo']); ?>" download="<?php echo htmlspecialchars($doc['nombre_personalizado'] . '.' . $doc['tipo_archivo']); ?>" class="boton2 enlace-descarga">Descargar</a>
+                                    <a href="<?php echo htmlspecialchars($doc['ruta_archivo']); ?>" download="<?php echo htmlspecialchars($doc['nombre_personalizado'] . '.' . $doc['tipo_archivo']); ?>" class="boton2 enlace-descarga">Descargar</a>
                                     <a href="../php/eliminar_documento.php?id=<?php echo $doc['id_documento']; ?>" class="btn-tabla-eliminar" onclick="return confirm('¿Seguro que deseas eliminar este documento?');">Eliminar</a>
                                 </td>
                             </tr>
@@ -82,6 +84,7 @@ $res_docs = $con->query($sql_docs);
                     <?php endif; ?>
                 </tbody>
             </table>
+            </div>
         </section>
     </main>
     <footer class="footerguia">
