@@ -6,20 +6,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['accion']) && $_GET['acc
     $numero_de_serie = trim($_GET['numero_de_serie'] ?? '');
 
     if (!empty($numero_de_serie)) {
-        $stmt = $con->prepare("DELETE FROM ambulancia WHERE numero_de_serie = ?");
-        if ($stmt) {
-            $stmt->bind_param("s", $numero_de_serie);
-            if ($stmt->execute()) {
-                $stmt->close();
-                header('Location: ../pages/registro-ambulancia.php?msg=eliminado');
-                exit;
-            } else {
-                $stmt->close();
-                header('Location: ../pages/registro-ambulancia.php?err=No_se_puede_eliminar_la_ambulancia_porque_tiene_traslados_activos_asociados');
-                exit;
+        $con->begin_transaction();
+
+        try {
+            $stmt_traslados = $con->prepare("DELETE FROM traslado WHERE matricula_ambulancia = ?");
+            if (!$stmt_traslados) {
+                throw new Exception("Error al preparar la consulta de traslados");
             }
+            $stmt_traslados->bind_param("s", $numero_de_serie);
+            $stmt_traslados->execute();
+            $stmt_traslados->close();
+            $stmt_ambulancia = $con->prepare("DELETE FROM ambulancia WHERE numero_de_serie = ?");
+            if (!$stmt_ambulancia) {
+                throw new Exception("Error al preparar la consulta de ambulancia");
+            }
+            $stmt_ambulancia->bind_param("s", $numero_de_serie);
+            $stmt_ambulancia->execute();
+            $stmt_ambulancia->close();
+            $con->commit();
+            header('Location: ../pages/registro-ambulancia.php?msg=eliminado');
+            exit;
+
+        } catch (Exception $e) {
+            $con->rollback();
+            header('Location: ../pages/registro-ambulancia.php?err=No_se_pudo_eliminar_la_ambulancia_y_sus_registros');
+            exit;
         }
     }
+    
     header('Location: ../pages/registro-ambulancia.php?err=No_se_pudo_eliminar');
     exit;
 }
@@ -30,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $serie_original = trim($_POST['serie_original'] ?? '');
     $kilometraje = trim($_POST['kilometraje'] ?? '');
     $matricula = trim($_POST['matricula'] ?? '');
-
     $nombre_solicitante = trim($_POST['nombre_solicitante'] ?? '');
     $telefono_solicitante = trim($_POST['telefono_solicitante'] ?? '');
     $nombre_paciente = trim($_POST['nombre_paciente'] ?? '');
