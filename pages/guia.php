@@ -27,7 +27,7 @@
             <p>Aquí esta la información del hospital.</p>
 
             <button class="btnguia1" style="background-color: #007bff;"><a href="../pages/administracion-pacientes.php" style="color: white;">Administración de pacientes</a></button>
-            <p>Agregar, editar y eliminar pacientes del sistema.</p>
+            <p>Agregar y eliminar pacientes del sistema.</p>
 
             <button class="btnguia1" style="background-color: #8b5cf6;"><a href="../pages/gestion-organos.php" style="color: white;">Gestión de Órganos</a></button>
             <p>Registro y control de ablación, conservación y transporte de órganos.</p>
