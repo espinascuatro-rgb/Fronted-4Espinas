@@ -142,6 +142,74 @@ $resultado = $con->query($sql);
     </footer>
 
     <script src="../js/admin-pacientes.js"></script>
-</body>
 
+
+
+
+<script>
+const cedula = document.getElementById("cedula");
+
+cedula.addEventListener("input", function() {
+    cedula.value = cedula.value.replace(/[a-zA-Z]/g, "");
+});
+</script>
+
+
+
+
+<script>
+const primernombre = document.getElementById("primer_nombre");
+
+primernombre.addEventListener("input", function() {
+    primernombre.value = primernombre.value.replace(/[0-9]/g, "");
+});
+</script>
+
+
+
+
+<script>
+const segundonombre = document.getElementById("segundo_nombre");
+
+segundonombre.addEventListener("input", function() {
+    segundonombre.value = segundonombre.value.replace(/[0-9]/g, "");
+});
+</script>
+
+
+
+<script>
+const primerapellido = document.getElementById("primer_apellido");
+
+primerapellido.addEventListener("input", function() {
+    primerapellido.value = primerapellido.value.replace(/[0-9]/g, "");
+});
+</script>
+
+
+
+<script>
+const segundoapellido = document.getElementById("segundo_apellido");
+
+segundoapellido.addEventListener("input", function() {
+    segundoapellido.value = segundoapellido.value.replace(/[0-9]/g, "");
+});
+</script>
+
+
+
+
+<script>
+const Telefono = document.getElementById("numero_de_telefono");
+
+Telefono.addEventListener("input", function() {
+    Telefono.value = Telefono.value.replace(/[a-zA-Z]/g, "");
+});
+</script>
+
+
+
+
+
+</body>
 </html>

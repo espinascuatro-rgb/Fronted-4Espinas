@@ -109,6 +109,20 @@ $res_organos = $con->query($sql_organos);
         <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
         <button class="logout"><a href="../php/logout.php">Cerrar Sesión</a></button>
     </footer>
-</body>
 
+
+
+<script>
+const organos = document.getElementById("nombre_organo");
+
+organos.addEventListener("input", function() {
+    organos.value = organos.value.replace(/[0-9]/g, "");
+});
+</script>
+
+
+
+
+
+</body>
 </html>

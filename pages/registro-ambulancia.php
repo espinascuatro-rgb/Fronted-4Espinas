@@ -170,6 +170,69 @@ $res_ambulancias = $con->query($sql_ambulancias);
     </footer>
 
     <script src="../js/registro-ambulancia.js"></script>
-</body>
 
+
+    <script>
+const nombre = document.getElementById("nombre_solicitante");
+
+nombre.addEventListener("input", function() {
+    nombre.value = nombre.value.replace(/[0-9]/g, "");
+});
+</script>
+
+
+
+<script>
+const Telefono = document.getElementById("telefono_solicitante");
+
+Telefono.addEventListener("input", function() {
+    Telefono.value = Telefono.value.replace(/[a-zA-Z]/g, "");
+});
+</script>
+
+
+
+
+<script>
+const nombre1 = document.getElementById("nombre_paciente");
+
+nombre1.addEventListener("input", function() {
+    nombre1.value = nombre1.value.replace(/[0-9]/g, "");
+});
+</script>
+
+
+
+<script>
+const numeroidentificacion = document.getElementById("numero_de_serie");
+
+numeroidentificacion.addEventListener("input", function() {
+    numeroidentificacion.value = numeroidentificacion.value.replace(/[a-zA-Z]/g, "");
+});
+</script>
+
+
+
+<script>
+const Kilometraje = document.getElementById("kilometraje");
+
+Kilometraje.addEventListener("input", function() {
+    Kilometraje.value = Kilometraje.value.replace(/[a-zA-Z]/g, "");
+});
+</script>
+
+
+
+
+<script>
+const Matrícula = document.getElementById("matricula");
+
+Matrícula.addEventListener("input", function() {
+    Matrícula.value = Matrícula.value.replace(/[a-zA-Z]/g, "");
+});
+</script>
+
+
+
+</body>
 </html>

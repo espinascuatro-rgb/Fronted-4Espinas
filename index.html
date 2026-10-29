@@ -25,6 +25,11 @@
                 <p>
                     <label for="contrasenia">Contraseña:</label>
                     <input type="password" id="contrasenia" name="contrasenia" required>
+
+                    <label>
+                    <input type="checkbox" id="mostrar">
+                              Mostrar contraseña
+                   </label>
                 </p>
                 <p>
                     <label for="cedula">Cédula de identidad:</label>
@@ -46,5 +51,24 @@
         <p>Equipo 4 Espinas - Mateo Cáceres - Dominicke Alvarez - Emiliano Stagi - Thomas Zabala</p>
     </footer>
     <script src="../Fronted-4Espinas/js/login.js"></script>
+
+
+
+
+<script>
+    const contrasenia = document.getElementById("contrasenia");
+    const mostrar = document.getElementById("mostrar");
+
+    mostrar.addEventListener("change", function() {
+        if (mostrar.checked) {
+            contrasenia.type = "text";
+        } else {
+            contrasenia.type = "password";
+        }
+    });
+</script>
+
+
+
 </body>
 </html>

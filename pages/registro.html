@@ -41,6 +41,10 @@
                 <p>
                     <label for="Contrasena1">Escribe una contraseña: </label>
                     <input type="password" id="Contrasena1" name="Contrasena1" required>
+                    <label>
+                    <input type="checkbox" id="mostrar">
+                              Mostrar contraseña
+                   </label>
                 </p>
                 <p>
                     <label for="cedula">Escribe tu cédula: </label>
@@ -59,5 +63,23 @@
     </footer>
     <script src="../js/registro.js"></script>
     <script src="../js/credencial.js"></script>
+
+
+<script>
+    const contrasenia = document.getElementById("Contrasena1");
+    const mostrar = document.getElementById("mostrar");
+
+    mostrar.addEventListener("change", function() {
+        if (mostrar.checked) {
+            contrasenia.type = "text";
+        } else {
+            contrasenia.type = "password";
+        }
+    });
+</script>
+
+
+
+
 </body>
 </html>
