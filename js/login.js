@@ -8,7 +8,6 @@ document.getElementById('FLogin').addEventListener('submit', async function (e) 
       method: 'POST',
       body: formData
     });
-//dominicke sigue aqui.
     const result = await response.json();
 
     if (result.status === 'success') {

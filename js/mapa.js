@@ -184,7 +184,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-// dominicke aqui estubo alguna vess
     if (btnIniciar) {
         btnIniciar.addEventListener('click', async () => {
             trasladoActivo = true;
